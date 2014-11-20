@@ -12,7 +12,7 @@ class User extends CI_Controller{
     {
        
         if (($this->session->userdata('user_username')!="")) {
-            $this->welcome();
+            $this->Feed();
         } else {
             $data['title']= 'Home';
             
@@ -24,11 +24,11 @@ class User extends CI_Controller{
     }
 
 
-    public function welcome()
+    public function Feed()
     {
         $data['title']= 'Feed';
         $this->load->view('header_view_user',$data);
-        //$this->load->view('feed_view');
+        $this->display_feed();
         $this->load->view('footer_view',$data);
     }
 
@@ -39,7 +39,7 @@ class User extends CI_Controller{
         
         $result=$this->user_model->login($email,$password);
         if ($result) {
-            $this->welcome();      
+            $this->Feed();      
             
         } else {
             $this->index();
@@ -76,6 +76,12 @@ class User extends CI_Controller{
         $this->session->unset_userdata($newdata );
         $this->session->sess_destroy();
         $this->index();
+    }
+
+    public function display_feed()
+    {
+	    $data['rec'] = $this->user_model->get_songs();
+	    $this->load->view('feed_view', $data);
     }
     
     public function show_update_rec()

@@ -44,6 +44,11 @@ class User_model extends CI_Model {
         $this->db->insert('user',$data);
     }
 
+    public function get_songs()
+    {
+        return $this->db->get("audio");
+    }
+
     public function get_records()
     {
         return $this->db->get("user");
