@@ -13,20 +13,20 @@
           <label for="user_password">Password</label>
           <input type="password" id="user_password" name="user_password" value="" required/>
           <br />
-        <a href="#" id="forgot_password">Forgot password?</a>
+        <a href="<?php echo base_url('index.php/user/forgot'); ?>" id="forgot_password">Forgot password?</a>
           <div class="action_btns">
             <input type="submit" class="btn btn_white"  value="Login" />
             <input type="reset" class="btn btn_red"  value="Reset" />
           </div>   
         </form>
-        <?php echo form_close(); ?>
+        <?php echo form_close();?>
 
         <div>
           <p style="font-size:13px">
           <a href="#" class="social_box fb">
             <span class="icon"><i class="fa fa-facebook"></i></span>
             <span class="icon_title">Log in with Facebook</span>
-          </a>or <a href=# id="register_form" style="display:inline">Register</a> now!
+          </a>or <a href="<?php echo base_url('index.php/user/registration'); ?>" id="register_form" style="display:inline">Register</a> now!
           </p>
         </div>
       </div>

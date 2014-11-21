@@ -10,7 +10,6 @@
           <input type="text" id="user_email" style="height:12px"; name="user_email" value="<?php echo set_value('user_email'); ?>" required/>
           <div class="action_btns">
             <input type="submit" class="btn btn_white" value="Submit">
-            <a href="#" id="back_btn" class="btn"><i class="fa fa-angle-double-left"></i>Back</a>
           </div>
         </form>
         <?php echo form_close(); ?>

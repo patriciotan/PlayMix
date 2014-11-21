@@ -29,7 +29,6 @@
           <div class="action_btns">
             <input type="submit" class="btn btn_white" value="Sign Up">
             <input type="reset" class="btn btn_red"  value="Reset" />
-            <a href="#" id="back_btn" class="btn"><i class="fa fa-angle-double-left"></i>Back</a>
           </div>
         </form>
         <?php echo form_close(); ?>
