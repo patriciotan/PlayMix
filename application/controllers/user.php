@@ -11,8 +11,8 @@ class User extends CI_Controller{
     {      
         if (($this->session->userdata('logged_in')!=TRUE)) 
         {
-            $data['title']= 'Home';        
-
+            $data['title']= 'Home'; 
+        	$this->load->view('header_view_user',$data); 
             $this->load->view("login_view.php", $data);
         } 
         else 

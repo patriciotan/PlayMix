@@ -53,6 +53,7 @@ class User_model extends CI_Model {
         //$this->db->select('*');
         $this->db->from('user');
         $this->db->join('audio', 'user.user_id = audio.user_id');
+        $this->db->order_by('audio.audio_play_count','desc');
 
         $query = $this->db->get();
         if ($query->num_rows()>0) {
