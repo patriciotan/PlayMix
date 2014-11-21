@@ -24,8 +24,7 @@ class User extends CI_Controller{
         
         $result=$this->user_model->login($email,$password);
         if ($result) {
-            $this->feed();      
-            
+            $this->feed();                
         } else {
             $this->index();
             $this->login_error();
@@ -47,7 +46,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
         if ($this->form_validation->run() == FALSE) {
-            $this->registration();
+
         } else {
             $this->user_model->add_user();
             $this->index();
