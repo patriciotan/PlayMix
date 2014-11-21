@@ -11,9 +11,12 @@ class User extends CI_Controller{
     public function index()
     {
        
-        if (($this->session->userdata('user_username')!="")) {
+        if (($this->session->userdata('user_username')!="")) 
+        {
             $this->Feed();
-        } else {
+        } 
+        else 
+        {
             $data['title']= 'Home';
             
             $this->load->view('header_view_user',$data);
@@ -26,7 +29,8 @@ class User extends CI_Controller{
 
     public function Feed()
     {
-        if($this->session->userdata('logged_in')) {
+        if($this->session->userdata('logged_in')) 
+        {
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
             $this->display_feed();
@@ -36,21 +40,55 @@ class User extends CI_Controller{
 
     public function login()
     {
-        if($this->session->userdata('logged_in')) {
+        if(! $this->session->userdata('logged_in')) 
+        {
             
-        }
-        else{
             $email=$this->input->post('user_email');
             $password=md5($this->input->post('user_password'));
             
             $result=$this->user_model->login($email,$password);
-            if ($result) {
+            if ($result) 
+            {
                 $this->Feed();      
                 
-            } else {
+            } 
+            else 
+            {
                 $this->index();
                 $this->login_error();
             }
+        }
+    }
+    
+    public function forgot_login()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');
+         if ($this->form_validation->run() == FALSE) 
+         {
+            
+        } 
+        else 
+        {
+            $this->send_email();
+            $this->index();
+        }
+    }
+
+    public function send_email()
+    {
+        $this->load->library('form_validation');
+
+        $this->email->from('your@example.com', 'Your Name');
+        $this->email->to('someone@example.com'); 
+
+        $this->email->subject('PlayMix Forgot Password');
+        $this->email->message('');
+
+        if (! $this->email->send())
+        {
+            // Generate error
         }
     }
 
@@ -63,9 +101,12 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
-         if ($this->form_validation->run() == FALSE) {
+         if ($this->form_validation->run() == FALSE) 
+         {
             
-        } else {
+        } 
+        else 
+        {
             $this->user_model->add_user();
             $this->index();
         }
