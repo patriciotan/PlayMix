@@ -9,28 +9,16 @@ class User extends CI_Controller{
     }
     
     public function index()
-    {
-       
+    {      
         if (($this->session->userdata('user_username')!="")) {
-            $this->Feed();
+            $this->feed();
         } else {
-            $data['title']= 'Home';
-            
-            $this->load->view('header_view_user',$data);
-          
-            $this->load->view("registration_view.php", $data);
-
+            $data['title']= 'Home';        
+            $this->load->view('header_view_user',$data);         
+            $this->load->view("login_view.php", $data);
         }
     }
 
-
-    public function Feed()
-    {
-        $data['title']= 'Feed';
-        $this->load->view('header_view_user',$data);
-        $this->display_feed();
-        $this->load->view('footer_view',$data);
-    }
 
     public function login()
     {
@@ -39,7 +27,7 @@ class User extends CI_Controller{
         
         $result=$this->user_model->login($email,$password);
         if ($result) {
-            $this->Feed();      
+            $this->feed();      
             
         } else {
             $this->index();
@@ -49,6 +37,9 @@ class User extends CI_Controller{
 
     public function registration()
     {
+        $data['title']= 'Registration';  
+        $this->load->view('header_view_user',$data);  
+        $this->load->view("registration_view.php", $data);
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_username', 'User Name', 'trim|required|min_length[4]|xss_clean');
@@ -56,10 +47,26 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
-         if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE) {
             
         } else {
             $this->user_model->add_user();
+            $this->index();
+        }
+    }
+
+    public function forgot()
+    {        
+        $data['title']= 'Forgot Password';  
+        $this->load->view('header_view_user',$data);  
+        $this->load->view('login_forgot_view', $data);
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');      
+        if ($this->form_validation->run() == FALSE) {
+            
+        } else {
+            //$this->user_model->add_user();
             $this->index();
         }
     }
@@ -76,6 +83,15 @@ class User extends CI_Controller{
         $this->session->unset_userdata($newdata );
         $this->session->sess_destroy();
         $this->index();
+    }
+
+
+    public function feed()
+    {
+        $data['title']= 'Feed';
+        $this->load->view('header_view_user',$data);
+        $this->display_feed();
+        $this->load->view('footer_view',$data);
     }
 
     public function display_feed()
