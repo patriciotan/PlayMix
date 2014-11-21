@@ -58,6 +58,9 @@ class User extends CI_Controller{
         $data['title']= 'Forgot Password';  
         $this->load->view('header_view_user',$data);  
         $this->load->view('login_forgot_view', $data);
+    }
+    public function forgot_validation()
+    {
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');      
@@ -65,8 +68,40 @@ class User extends CI_Controller{
             
         } else {
             $this->send_email();
-            $this->index();
         }
+    }
+    public function send_email()
+    {
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'mictest12345678910@gmail.com', // change it to yours
+            'smtp_pass' => '123456789Ten', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+            $email=$this->input->post('user_email');
+            $newpass = random_string('alnum','8');
+            $message = 'New password: '+$newpass; //new password
+
+            $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('mictest12345678910@gmail.com'); // change it to yours
+            $this->email->to($email);// change it to yours
+            $this->email->subject('PlayMix Forgot Password');
+            $this->email->message($message);
+
+            if($this->email->send())
+            {
+                $this->index();
+            }
+            else
+            {
+
+            }
+
     }
     
     public function logout()
