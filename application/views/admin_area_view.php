@@ -1,1 +1,0 @@
-<div style="position:relative; top:100px; padding-left:10px; width: 1000px;"><legend><h1>Admin Area</h1></legend></div>
