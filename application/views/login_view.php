@@ -5,7 +5,7 @@
     <div id="user_login" class="centered" style="width:240px;">
       <div class="signup_wrap centered">
         <?php echo form_open("user/login"); ?>
-        <form class="centered" action="<?php echo base_url('user/login'); ?>">
+        <form class="centered">
           <label for="user_email">Email</label>
           <input type="text" id="user_email" name="user_email" value="" required />
           <br />

@@ -5,7 +5,7 @@
       <div class="signup_wrap centered">
         <?php echo validation_errors('<p class="error">'); ?>
         <?php echo form_open("user/login"); ?>       
-        <form action="<?php echo base_url('user/forgot_login'); ?>">
+        <form action="<?php echo base_url('user/forgot'); ?>">
           <label for="user_email">Enter your e-mail address:</label>
           <input type="text" id="user_email" style="height:12px"; name="user_email" value="<?php echo set_value('user_email'); ?>" required/>
           <div class="action_btns">

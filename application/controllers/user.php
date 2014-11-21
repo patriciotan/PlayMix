@@ -36,6 +36,9 @@ class User extends CI_Controller{
         $data['title']= 'Registration';  
         $this->load->view('header_view_user',$data);  
         $this->load->view("registration_view.php", $data);
+    }
+    public function reg_validation()
+    {
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_username', 'User Name', 'trim|required|min_length[4]|xss_clean');
@@ -44,7 +47,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
         if ($this->form_validation->run() == FALSE) {
-            
+            $this->registration();
         } else {
             $this->user_model->add_user();
             $this->index();
@@ -61,7 +64,7 @@ class User extends CI_Controller{
         if ($this->form_validation->run() == FALSE) {
             
         } else {
-            //$this->user_model->add_user();
+            $this->send_email();
             $this->index();
         }
     }
