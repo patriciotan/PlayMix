@@ -25,5 +25,5 @@
 
 
 </head>
-<body background="<?php echo base_url(); ?>assets/musicmin.jpg" style="background-size: 100%; position:absolute; top:-162.5px;left:10px;height:200px;width:100px">
+<body background="<?php echo base_url(); ?>assets/musicmin.png" style="background-size: 100%;">
  

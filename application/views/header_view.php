@@ -13,7 +13,6 @@
     <link href="<?php echo base_url(); ?>assets/themes/default/css/custom.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
 
-    <link rel="icon" href="<?php echo base_url(); ?>assets/forward.ico" type="image/x-icon"/>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.0.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.leanModal.min.js" type="text/javascript"></script>
@@ -25,5 +24,5 @@
 
 
 </head>
-<body background="<?php echo base_url(); ?>assets/bluemin.jpg" style="background-size: 200%; position:absolute; top:12.5px;left:10px;height:200px;width:100px">
+<body background="<?php echo base_url(); ?>assets/bluemin.jpg" style="background-size: 200%;">
  

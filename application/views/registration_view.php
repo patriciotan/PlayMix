@@ -1,72 +1,43 @@
-<div id="wrapper">
+<div class="wrapper" style="height:500px">
 
- <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div style="position:relative; left:-120px;">
-          <div style="position:relative; padding-top:8px; top:5px;left:30px;"><img src="<?php echo base_url(); ?>assets/forward.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></div>
-          <div style="padding-left:50px;">
-          <a class="brand" href="#">PlayMix</a>
-          </div>
-          <div style="height: 0px;" class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="<?php echo base_url(); ?>index.php/user">Home</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/user/about">About Us</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-</div>
-
-<div class="container" >
-  <!-- Login form -->
-    <div id="user_login">
-      <div class="signup_wrap" style="position: relative; margin-top:40%; margin-left:50%;">
-      <div class="signin_form">
+<div class="container centered" style="top:60%; transform:translateY(-50%); min-width:800px">
+  <!-- Username & Password Login form -->
+    <div id="user_login" class="centered" style="width:240px;">
+      <div class="signup_wrap centered">
         <?php echo form_open("user/login"); ?>
-        <form action="<?php echo base_url('user/login'); ?>">
+        <form class="centered">
           <label for="user_email">Email</label>
-          <input type="user_email" id="user_email" name="user_email" value="" required />
+          <input type="text" id="user_email" name="user_email" value="" required />
           <br />
 
           <label for="user_password">Password</label>
           <input type="password" id="user_password" name="user_password" value="" required/>
           <br />
-
-        <a href="#" class="forgot_password">Forgot password?</a>
-
+        <a href="#" id="forgot_password">Forgot password?</a>
           <div class="action_btns">
             <input type="submit" class="btn btn_white"  value="Login" />
             <input type="reset" class="btn btn_red"  value="Reset" />
           </div>   
         </form>
         <?php echo form_close(); ?>
-      </div>
-      </div>
 
-      <div style="position: relative; margin-left:50%;">
-      <p>
-        <a href="#" class="social_box fb">
-          <span class="icon"><i class="fa fa-facebook"></i></span>
-          <span class="icon_title">Connect with Facebook</span>
-        </a>or <a href="#" class="forgot_password" id="register_form" style="display:inline">Register</a> now!
-      </p>
+        <div>
+          <p style="font-size:13px">
+          <a href="#" class="social_box fb">
+            <span class="icon"><i class="fa fa-facebook"></i></span>
+            <span class="icon_title">Log in with Facebook</span>
+          </a>or <a href="#" class="forgot_password" id="register_form" style="display:inline">Register</a> now!
+          </p>
+        </div>
       </div>
     </div>
 
       <!-- Register Form -->
-    <div id="register_container">
-      <div class="signup_wrap" style="position: relative; margin-top:40%; margin-left:50%;">
-      <div class="reg_form">
+    <div id="user_register" class="centered" style="width:240px">
+      <div class="signup_wrap centered">
       <?php echo validation_errors('<p class="error">'); ?>
       <?php echo form_open("user/registration"); ?>       
-        <form action="<?php echo base_url('user/registration'); ?>">
+        <form>
           <label for="user_username">User Name</label>
           <input type="text" id="user_username" style="height:12px"; name="user_username" value="<?php echo set_value('user_username'); ?>" required/>
           
@@ -84,50 +55,77 @@
          
 
           <div class="action_btns">
-            <div class="one_half"><input type="submit" class="btn btn_red" value="Sign Up"></div>
-            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i>Back</a></div>
+            <input type="submit" class="btn btn_white" value="Sign Up">
+            <input type="reset" class="btn btn_red"  value="Reset" />
+            <a href="#" id="back_btn" class="btn"><i class="fa fa-angle-double-left"></i>Back</a>
           </div>
         </form>
         <?php echo form_close(); ?>
         <div>
           <a href="#" class="social_box fb">
             <span class="icon"><i class="fa fa-facebook"></i></span>
-            <span class="icon_title">Connect with Facebook</span>
+            <span class="icon_title">Sign up with Facebook</span>
           </a>
         </div>
-
-
-      </div>       <!-- type="submit" class="btn btn-primary" value="Submit" -->
+       <!-- type="submit" class="btn btn-primary" value="Submit" -->
       </div>
-  </div>
+    </div>
 
+    <div id="user_forgot" class="centered" style="width:240px">
+      <div class="signup_wrap centered">
+        <?php echo validation_errors('<p class="error">'); ?>
+        <?php echo form_open("user/login"); ?>       
+        <form>
+          <label for="user_email">Enter your e-mail address:</label>
+          <input type="text" id="user_email" style="height:12px"; name="user_email" value="<?php echo set_value('user_email'); ?>" required/>
+          <div class="action_btns">
+            <input type="submit" class="btn btn_white" value="Submit">
+            <a href="#" id="back_btn" class="btn"><i class="fa fa-angle-double-left"></i>Back</a>
+          </div>
+        </form>
+        <?php echo form_close(); ?>
+      </div>
+    </div>
+
+</div>
+</div>
 
 <script type="text/javascript">
-  $("#modal_trigger").leanModal({
-      top: 140,
-      overlay: 0.6,
-      closeButton: ".modal_close"
-  });
+  $("#user_register").hide();
+  $("#user_forgot").hide();
 
-  $("#register_container").hide();
 
   $(function() {
 
       // Calling Register Form
-      $("#register_form").click(function() {
-          $("#user_login").hide();
-          $("#register_container").show();
+      $("#register_form").click(function() {      
+          $("#user_login").fadeOut("slow"); 
+          $("#user_login").hide();        
+          $("#user_register").fadeIn("slow");
+          $("#user_register").show();
           $(".header_title").text('Register');
           return false;
       });
 
       // Going back to Login
-      $(".back_btn").click(function() {
-          $("#register_container").hide();
+      $("#back_btn").click(function() {
+          $("#user_register").fadeOut("slow");
+          $("#user_register").hide();
+          $("#user_forgot").fadeOut("slow");
+          $("#user_forgot").hide();          
+          $("#user_login").fadeIn("slow");
           $("#user_login").show();
           $(".header_title").text('Login');
           return false;
+            });
+      //Forgot password
+      $("#forgot_password").click(function() {
+          $("#user_login").fadeOut("slow");
+          $("#user_login").hide();
+          $("#user_forgot").fadeIn("slow");
+          $("#user_forgot").show();
+          $(".header_title").text('Forgot Password');
+          return false;
       });
-
-  })
+    })
 </script>
