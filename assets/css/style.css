@@ -32,6 +32,7 @@ body {font-family: 'Source Sans Pro', sans-serif; font-size: 14px; color: #666;}
 
 a.btn {color:#666; text-align: center; text-decoration: none;}
 a.btn_red {color: #FFF;}
+a {color:black;}
 
 .one_half {width:50%; display: block; float:left;}
 .one_half.last {width:45%; margin-left:5%;}
@@ -78,3 +79,7 @@ a.btn_red {color: #FFF;}
 .user_register .checkbox {margin-bottom: 10px; clear: both; overflow: hidden;}
 
 .centered {position: relative; width:90%; margin-left:auto; margin-right:auto;}
+
+.feed_table {width:800px; margin-left:auto; margin-right:auto;}
+.feed_table tr:hover {background-color: #e3e3e3;}
+
