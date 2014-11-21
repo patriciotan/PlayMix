@@ -9,9 +9,11 @@ class User extends CI_Controller{
     
     public function index()
     {      
-        if (($this->session->userdata('logged_in')!=FALSE)) {
+        if (($this->session->userdata('logged_in')!=FALSE)) 
+        {
             $this->feed();
-        } else {
+        } else 
+        {
             $data['title']= 'Home';        
             $this->load->view('header_view_user',$data);         
             $this->load->view("login_view.php", $data);
@@ -112,16 +114,16 @@ class User extends CI_Controller{
         'user_id'    =>'',
         'user_username'  =>'',
         'user_email' =>'',
-        'user_role'  =>'',
-        'logged_in'  =>FALSE,
+        'logged_in'  =>FALSE
         );
-        $this->session->unset_userdata($newdata );
+        $this->session->unset_userdata($newdata);
         $this->session->sess_destroy();
         $this->index();
     }
     public function feed()
     {
-        if (($this->session->userdata('logged_in')!=FALSE)) {
+        if (($this->session->userdata('logged_in')!=FALSE)) 
+        {
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
             $this->load->view('navbar',$data);
@@ -135,8 +137,15 @@ class User extends CI_Controller{
     }
     public function display_feed()
     {
-        $data['rec'] = $this->user_model->get_songs();
-        $this->load->view('feed_view', $data);
+        if (($this->session->userdata('logged_in')!=FALSE)) 
+        {
+            $data['rec'] = $this->user_model->get_songs();
+            $this->load->view('feed_view', $data);
+        }
+        else
+        {
+            $this->index();
+        }
     }
     
     public function show_update_rec()
