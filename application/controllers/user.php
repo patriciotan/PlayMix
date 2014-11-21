@@ -9,7 +9,7 @@ class User extends CI_Controller{
     }
     
     public function index()
-<<<<<<< HEAD
+
     {
        
         if (($this->session->userdata('user_username')!="")) 
@@ -24,7 +24,7 @@ class User extends CI_Controller{
           
             $this->load->view("registration_view.php", $data);
 
-=======
+
     {      
         if (($this->session->userdata('user_username')!="")) {
             $this->feed();
@@ -32,12 +32,12 @@ class User extends CI_Controller{
             $data['title']= 'Home';        
             $this->load->view('header_view_user',$data);         
             $this->load->view("login_view.php", $data);
->>>>>>> 5924ede82539d6831a6f7178f3d5fe41e806aa1e
+
         }
     }
 
 
-<<<<<<< HEAD
+
     public function Feed()
     {
         if($this->session->userdata('logged_in')) 
@@ -78,7 +78,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');
          if ($this->form_validation->run() == FALSE) 
          {
-=======
+
     public function login()
     {
         $email=$this->input->post('user_email');
@@ -87,7 +87,7 @@ class User extends CI_Controller{
         $result=$this->user_model->login($email,$password);
         if ($result) {
             $this->feed();      
->>>>>>> 5924ede82539d6831a6f7178f3d5fe41e806aa1e
+
             
         } 
         else 
@@ -125,12 +125,11 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
-<<<<<<< HEAD
+
          if ($this->form_validation->run() == FALSE) 
          {
-=======
+
         if ($this->form_validation->run() == FALSE) {
->>>>>>> 5924ede82539d6831a6f7178f3d5fe41e806aa1e
             
         } 
         else 
