@@ -8,8 +8,8 @@
     <div id="user_register" class="centered" style="width:240px">
       <div class="signup_wrap centered">
       <?php echo validation_errors('<p class="error">'); ?>
-      <?php echo form_open("user/registration"); ?>       
-        <form action="<?php echo base_url('user/reg_validation'); ?>">
+      <?php echo form_open("user/reg_validation"); ?>       
+        <form>
           <label for="user_username">User Name</label>
           <input type="text" id="user_username" style="height:12px"; name="user_username" value="<?php echo set_value('user_username'); ?>" required/>
           
