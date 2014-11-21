@@ -9,14 +9,15 @@ class User extends CI_Controller{
     
     public function index()
     {      
-        if (($this->session->userdata('logged_in')!=FALSE)) 
-        {
-            $this->feed();
-        } else 
+        if (($this->session->userdata('logged_in')!=TRUE)) 
         {
             $data['title']= 'Home';        
-            $this->load->view('header_view_user',$data);         
-            $this->load->view("login_view", $data);
+
+            $this->load->view("login_view.php", $data);
+        } 
+        else 
+        {
+            $this->feed();
         }
     }
     public function login()
@@ -25,11 +26,13 @@ class User extends CI_Controller{
         $password=md5($this->input->post('user_password'));
         
         $result=$this->user_model->login($email,$password);
-        if ($result) {
-            $this->feed();                
-        } else {
-            $this->index();
-            $this->login_error();
+        if (!$result && $this->session->userdata('logged_in')!=TRUE) 
+        { 
+            $this->index();         
+        } 
+        else 
+        {
+            $this->feed(); 
         }
     }
     public function registration()
@@ -50,9 +53,19 @@ class User extends CI_Controller{
         if ($this->form_validation->run() == FALSE) {
             $this->registration();
         } else {
-            $this->user_model->add_user();
-            $this->index();
+            $this->terms();
         }
+    }
+    public function terms()
+    {        
+        $data['title']= 'Terms of Agreement';  
+        $this->load->view('header_view_user',$data);  
+        $this->load->view('terms_view', $data);
+    }
+    public function terms_agree()
+    {
+        $this->user_model->add_user();
+        $this->index();
     }
     public function forgot()
     {        
@@ -114,7 +127,7 @@ class User extends CI_Controller{
         'user_id'    =>'',
         'user_username'  =>'',
         'user_email' =>'',
-        'logged_in'  =>FALSE
+        'logged_in'  => FALSE
         );
         $this->session->unset_userdata($newdata);
         $this->session->sess_destroy();
@@ -122,7 +135,11 @@ class User extends CI_Controller{
     }
     public function feed()
     {
-        if (($this->session->userdata('logged_in')!=FALSE)) 
+        if (($this->session->userdata('logged_in')!=TRUE)) 
+        {
+            $this->index();
+        }
+        else
         {
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
@@ -130,21 +147,17 @@ class User extends CI_Controller{
             $this->display_feed();
             $this->load->view('footer_view',$data);
         }
-        else
-        {
-            $this->index();
-        }
     }
     public function display_feed()
     {
-        if (($this->session->userdata('logged_in')!=FALSE)) 
+        if (($this->session->userdata('logged_in')!=TRUE)) 
         {
-            $data['rec'] = $this->user_model->get_songs();
-            $this->load->view('feed_view', $data);
+            $this->index();
         }
         else
         {
-            $this->index();
+            $data['rec'] = $this->user_model->get_songs();
+            $this->load->view('feed_view', $data);
         }
     }
     
