@@ -1,7 +1,6 @@
 <?php if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
-
 class User extends CI_Controller{
     public function __construct()
     {
@@ -9,22 +8,6 @@ class User extends CI_Controller{
     }
     
     public function index()
-
-    {
-       
-        if (($this->session->userdata('user_username')!="")) 
-        {
-            $this->Feed();
-        } 
-        else 
-        {
-            $data['title']= 'Home';
-            
-            $this->load->view('header_view_user',$data);
-          
-            $this->load->view("registration_view.php", $data);
-
-
     {      
         if (($this->session->userdata('user_username')!="")) {
             $this->feed();
@@ -32,53 +15,8 @@ class User extends CI_Controller{
             $data['title']= 'Home';        
             $this->load->view('header_view_user',$data);         
             $this->load->view("login_view.php", $data);
-
         }
     }
-
-
-
-    public function Feed()
-    {
-        if($this->session->userdata('logged_in')) 
-        {
-            $data['title']= 'Feed';
-            $this->load->view('header_view_user',$data);
-            $this->display_feed();
-            $this->load->view('footer_view',$data);
-        }
-    }
-
-    public function login()
-    {
-        if(! $this->session->userdata('logged_in')) 
-        {
-            
-            $email=$this->input->post('user_email');
-            $password=md5($this->input->post('user_password'));
-            
-            $result=$this->user_model->login($email,$password);
-            if ($result) 
-            {
-                $this->Feed();      
-                
-            } 
-            else 
-            {
-                $this->index();
-                $this->login_error();
-            }
-        }
-    }
-    
-    public function forgot_login()
-    {
-        $this->load->library('form_validation');
-        // field name, error message, validation rules
-        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');
-         if ($this->form_validation->run() == FALSE) 
-         {
-
     public function login()
     {
         $email=$this->input->post('user_email');
@@ -87,32 +25,12 @@ class User extends CI_Controller{
         $result=$this->user_model->login($email,$password);
         if ($result) {
             $this->feed();      
-
             
-        } 
-        else 
-        {
-            $this->send_email();
+        } else {
             $this->index();
+            $this->login_error();
         }
     }
-
-    public function send_email()
-    {
-        $this->load->library('form_validation');
-
-        $this->email->from('your@example.com', 'Your Name');
-        $this->email->to('someone@example.com'); 
-
-        $this->email->subject('PlayMix Forgot Password');
-        $this->email->message('');
-
-        if (! $this->email->send())
-        {
-            // Generate error
-        }
-    }
-
     public function registration()
     {
         $data['title']= 'Registration';  
@@ -125,20 +43,13 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
-
-         if ($this->form_validation->run() == FALSE) 
-         {
-
         if ($this->form_validation->run() == FALSE) {
             
-        } 
-        else 
-        {
+        } else {
             $this->user_model->add_user();
             $this->index();
         }
     }
-
     public function forgot()
     {        
         $data['title']= 'Forgot Password';  
@@ -168,8 +79,6 @@ class User extends CI_Controller{
         $this->session->sess_destroy();
         $this->index();
     }
-
-
     public function feed()
     {
         $data['title']= 'Feed';
@@ -178,11 +87,10 @@ class User extends CI_Controller{
         $this->display_feed();
         $this->load->view('footer_view',$data);
     }
-
     public function display_feed()
     {
-	    $data['rec'] = $this->user_model->get_songs();
-	    $this->load->view('feed_view', $data);
+        $data['rec'] = $this->user_model->get_songs();
+        $this->load->view('feed_view', $data);
     }
     
     public function show_update_rec()
@@ -197,7 +105,6 @@ class User extends CI_Controller{
         
     }
     
-
     public function update_rec($user_id)
     {
         $this->user_model->row_update($user_id);
@@ -211,7 +118,6 @@ class User extends CI_Controller{
         $this->user_model->row_delete($id);
         $this->welcome();    
     }
-
     public function about()
     { 
       $data['title']= 'Home';          
@@ -231,11 +137,9 @@ class User extends CI_Controller{
     {
       $this->load->view('login_error_view');
     }
-
     public function sel_role_error()
     {
       $this->load->view('sel_role_error_view');
     }
-
 }
 ?>
