@@ -60,6 +60,31 @@ class User_model extends CI_Model {
         }
     }
 
+    public function check_email($email)
+    {
+        $this->db->where("user_email",$email);
+
+        $query=$this->db->get("user");
+        if ($query->num_rows()>0) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function change_password($email,$newpass)
+    {
+        $data = array(
+            'user_password' => md5($newpass)
+        );
+
+        $this->db->where("user_email",$email);
+        $this->db->update('user', $data); 
+
+    }
+
     public function get_records()
     {
         return $this->db->get("user");

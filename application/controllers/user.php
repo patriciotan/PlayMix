@@ -82,23 +82,26 @@ class User extends CI_Controller{
             'charset' => 'iso-8859-1'
         );
             $email = $this->input->post('user_email');
-            $newpass = random_string('alnum','8');
-            $message = "New password: "+$newpass; //new password
+            $newpass = random_string('alnum','8'); //new password
 
-            $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from($from); // change it to yours
-            $this->email->to($email); // change it to yours
-            $this->email->subject('PlayMix Forgot Password');
-            $this->email->message($message);
-
-            if($this->email->send())
+            if($this->user_model->check_email($email))
             {
-                $this->index();
-            }
-            else
-            {
+                $this->load->library('email', $config);
+                $this->email->set_newline("\r\n");
+                $this->email->from($from); // change it to yours
+                $this->email->to($email); // change it to yours
+                $this->email->subject('PlayMix Forgot Password');
+                $this->email->message('New password: '. $newpass);
 
+                if($this->email->send())
+                {
+                    $this->user_model->change_password($email,$newpass);
+                    $this->index();
+                }
+                else
+                {
+
+                }
             }
 
     }
