@@ -90,6 +90,7 @@ class User extends CI_Controller{
     {
         $data['title']= 'Feed';
         $this->load->view('header_view_user',$data);
+        $this->load->view('navbar',$data);
         $this->display_feed();
         $this->load->view('footer_view',$data);
     }
