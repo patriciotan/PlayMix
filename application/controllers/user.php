@@ -9,7 +9,7 @@ class User extends CI_Controller{
     
     public function index()
     {      
-        if (($this->session->userdata('user_username')!="")) {
+        if (($this->session->userdata('logged_in')!=FALSE)) {
             $this->feed();
         } else {
             $data['title']= 'Home';        
@@ -71,24 +71,24 @@ class User extends CI_Controller{
     }
     public function send_email()
     {
+        $from = 'mictest12345678910@gmail.com';
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'mictest12345678910@gmail.com', // change it to yours
+            'smtp_user' => $from, // change it to yours
             'smtp_pass' => '123456789Ten', // change it to yours
             'mailtype' => 'html',
-            'charset' => 'iso-8859-1',
-            'wordwrap' => TRUE
+            'charset' => 'iso-8859-1'
         );
-            $email=$this->input->post('user_email');
+            $email = $this->input->post('user_email');
             $newpass = random_string('alnum','8');
-            $message = 'New password: '+$newpass; //new password
+            $message = "New password: "+$newpass; //new password
 
             $this->load->library('email', $config);
             $this->email->set_newline("\r\n");
-            $this->email->from('mictest12345678910@gmail.com'); // change it to yours
-            $this->email->to($email);// change it to yours
+            $this->email->from($from); // change it to yours
+            $this->email->to($email); // change it to yours
             $this->email->subject('PlayMix Forgot Password');
             $this->email->message($message);
 
@@ -118,11 +118,17 @@ class User extends CI_Controller{
     }
     public function feed()
     {
-        $data['title']= 'Feed';
-        $this->load->view('header_view_user',$data);
-        $this->load->view('navbar',$data);
-        $this->display_feed();
-        $this->load->view('footer_view',$data);
+        if (($this->session->userdata('logged_in')!=FALSE)) {
+            $data['title']= 'Feed';
+            $this->load->view('header_view_user',$data);
+            $this->load->view('navbar',$data);
+            $this->display_feed();
+            $this->load->view('footer_view',$data);
+        }
+        else
+        {
+            $this->index();
+        }
     }
     public function display_feed()
     {

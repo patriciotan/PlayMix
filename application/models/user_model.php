@@ -22,7 +22,7 @@ class User_model extends CI_Model {
                 $newdata = array(
                 'user_id'    => $rows->user_id,
                 'user_username'  => $rows->user_username,
-                'user_email' => $rows->user_email,
+                'user_email' => $rows->user_email
                 //'user_role'  => 'User', //User gets a role, user.
                // 'logged_in'  => TRUE,
                 );
