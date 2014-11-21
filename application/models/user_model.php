@@ -61,10 +61,39 @@ class User_model extends CI_Model {
         }
     }
 
+    public function check_username($username)
+    {
+        $this->db->where("user_username",$username);
+
+        $query=$this->db->get("user");
+        if ($query->num_rows()>0) {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public function check_email($email)
     {
         $this->db->where("user_email",$email);
 
+        $query=$this->db->get("user");
+        if ($query->num_rows()>0) {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public function validate_email($email,$password)
+    {
+        $this->db->where("user_email",$email);
+        $this->db->where("user_password",$password);
+        
         $query=$this->db->get("user");
         if ($query->num_rows()>0) {
             return true;

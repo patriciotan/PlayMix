@@ -24,8 +24,14 @@ class User extends CI_Controller{
     {
         $email=$this->input->post('user_email');
         $password=md5($this->input->post('user_password'));
-        
-        $result=$this->user_model->login($email,$password);
+        if($this->log_validation())
+        {
+            $this->index();  
+        }
+        else
+        {
+            $result=$this->user_model->login($email,$password);
+        }
         if (!$result && $this->session->userdata('logged_in')!=TRUE) 
         { 
             $this->index();         
@@ -35,6 +41,28 @@ class User extends CI_Controller{
             $this->feed(); 
         }
     }
+    public function log_validation()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email|callback_validate_email');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
+      
+        if ($this->form_validation->run() == FALSE) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public function validate_email() {
+        if($this->user_model->validate_email($this->input->post('user_email'),$this->input->post('user_email'))) {
+            return true;
+        }
+        else {
+            $this->form_validation->set_message('validate_email','Incorrect email address/password!');
+            return false;
+        }
+    } 
     public function registration()
     {
         $data['title']= 'Registration';  
@@ -45,18 +73,37 @@ class User extends CI_Controller{
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('user_username', 'User Name', 'trim|required|min_length[4]|xss_clean');
-        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('user_username', 'User Name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
+        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email|callback_check_email');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
         if ($this->form_validation->run() == FALSE) {
             $this->registration();
         } else {
-            $this->terms();
+            $this->user_model->add_user();
+            $this->index();
         }
     }
-    public function terms()
+    public function check_username() {
+        if($this->user_model->check_username($this->input->post('user_username'))) {
+            return true;
+        }
+        else {
+            $this->form_validation->set_message('check_username','Username already exists!');
+            return false;
+        }
+    } 
+    public function check_email() {
+        if($this->user_model->check_email($this->input->post('user_email'))) {
+            return true;
+        }
+        else {
+            $this->form_validation->set_message('check_email','Email address already exists!');
+            return false;
+        }
+    } 
+    /*public function terms()
     {        
         $data['title']= 'Terms of Agreement';  
         $this->load->view('header_view_user',$data);  
@@ -66,7 +113,7 @@ class User extends CI_Controller{
     {
         $this->user_model->add_user();
         $this->index();
-    }
+    }*/
     public function forgot()
     {        
         $data['title']= 'Forgot Password';  

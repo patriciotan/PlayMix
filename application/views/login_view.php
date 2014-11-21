@@ -4,6 +4,7 @@
   <!-- Username & Password Login form -->
     <div id="user_login" class="centered" style="width:240px;">
       <div class="signup_wrap centered">
+      <?php echo validation_errors('<p class="error">'); ?>
         <?php echo form_open("user/login"); ?>
         <form class="centered">
           <label for="user_email">Email</label>
