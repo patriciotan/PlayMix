@@ -46,7 +46,18 @@ class User_model extends CI_Model {
 
     public function get_songs()
     {
-        return $this->db->get("audio");
+        $this->db->select('audio.audio_title');
+        $this->db->select('user.user_username');
+        $this->db->select('audio.audio_date_added');
+        $this->db->select('audio.audio_play_count');
+        //$this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('audio', 'user.user_id = audio.user_id');
+
+        $query = $this->db->get();
+        if ($query->num_rows()>0) {
+            return $query;
+        }
     }
 
     public function get_records()
