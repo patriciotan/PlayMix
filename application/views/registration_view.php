@@ -13,7 +13,7 @@
           <label for="user_password">Password</label>
           <input type="password" id="user_password" name="user_password" value="" required/>
           <br />
-        <a href="#" id="forgot_password">Forgot password?</a>
+        <a href="" id="forgot_password">Forgot password?</a>
           <div class="action_btns">
             <input type="submit" class="btn btn_white"  value="Login" />
             <input type="reset" class="btn btn_red"  value="Reset" />

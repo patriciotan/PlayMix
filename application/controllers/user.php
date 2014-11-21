@@ -26,24 +26,31 @@ class User extends CI_Controller{
 
     public function Feed()
     {
-        $data['title']= 'Feed';
-        $this->load->view('header_view_user',$data);
-        $this->display_feed();
-        $this->load->view('footer_view',$data);
+        if($this->session->userdata('logged_in')) {
+            $data['title']= 'Feed';
+            $this->load->view('header_view_user',$data);
+            $this->display_feed();
+            $this->load->view('footer_view',$data);
+        }
     }
 
     public function login()
     {
-        $email=$this->input->post('user_email');
-        $password=md5($this->input->post('user_password'));
-        
-        $result=$this->user_model->login($email,$password);
-        if ($result) {
-            $this->Feed();      
+        if($this->session->userdata('logged_in')) {
             
-        } else {
-            $this->index();
-            $this->login_error();
+        }
+        else{
+            $email=$this->input->post('user_email');
+            $password=md5($this->input->post('user_password'));
+            
+            $result=$this->user_model->login($email,$password);
+            if ($result) {
+                $this->Feed();      
+                
+            } else {
+                $this->index();
+                $this->login_error();
+            }
         }
     }
 
