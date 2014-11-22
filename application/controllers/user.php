@@ -16,7 +16,7 @@ class User extends CI_Controller{
         {
             $data['title']= 'Home';        
             $this->load->view('header_view_user',$data);         
-            $this->load->view("login_view.php", $data);
+            $this->load->view("login_view", $data);
         }
     }
     public function login()
@@ -36,7 +36,7 @@ class User extends CI_Controller{
     {
         $data['title']= 'Registration';  
         $this->load->view('header_view_user',$data);  
-        $this->load->view("registration_view.php", $data);
+        $this->load->view("registration_view", $data);
     }
     public function reg_validation()
     {
@@ -48,7 +48,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
         if ($this->form_validation->run() == FALSE) {
-
+            $this->registration();
         } else {
             $this->user_model->add_user();
             $this->index();
@@ -66,7 +66,7 @@ class User extends CI_Controller{
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');      
         if ($this->form_validation->run() == FALSE) {
-            
+            $this->registration_error();
         } else {
             $this->send_email();
         }
@@ -196,5 +196,6 @@ class User extends CI_Controller{
     {
       $this->load->view('sel_role_error_view');
     }
+ 
 }
 ?>
