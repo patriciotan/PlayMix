@@ -54,7 +54,7 @@ class User_model extends CI_Model {
         $this->db->from('user');
         $this->db->join('audio', 'user.user_id = audio.user_id');
         $this->db->order_by('audio.audio_play_count','desc');
-
+        $this->db->where('audio.audio_private','Public');
         $query = $this->db->get();
         if ($query->num_rows()>0) {
             return $query;
@@ -89,7 +89,21 @@ class User_model extends CI_Model {
         }
     }
 
-    public function validate_email($email,$password)
+    public function validate_email($email)
+    {
+        $this->db->where("user_email",$email);
+        
+        $query=$this->db->get("user");
+        if ($query->num_rows()>0) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function validate_emailpass($email,$password)
     {
         $this->db->where("user_email",$email);
         $this->db->where("user_password",$password);

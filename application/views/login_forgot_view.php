@@ -1,9 +1,10 @@
 <div class="wrapper" style="height:500px">
 
-<div class="container centered" style="top:60%; transform:translateY(-50%); min-width:800px">
+<div class="container centered" style="top:30%; transform:translateY(-50%); min-width:800px">
     <div id="user_forgot" class="centered" style="width:240px">
       <div class="signup_wrap centered">
-        <?php echo validation_errors('<p class="error">'); ?>
+        <p><a href="<?php echo base_url('index.php/user/index'); ?>" id="register_form" style="display:inline">Home</a> / Registration</p>
+        <p>&nbsp;</p><p>&nbsp;</p>
         <?php echo form_open("user/forgot_validation"); ?>       
         <form>
           <label for="user_email">Enter your e-mail address:</label>
@@ -13,6 +14,8 @@
           </div>
         </form>
         <?php echo form_close(); ?>
+
+        <?php echo validation_errors('<p class="error">'); ?>
       </div>
     </div>
 

@@ -9,7 +9,7 @@ class User extends CI_Controller{
     
     public function index()
     {      
-        if (($this->session->userdata('logged_in')!=TRUE)) 
+        if (($this->session->userdata('logged_in')==FALSE)) 
         {
             $data['title']= 'Home'; 
         	$this->load->view('header_view_user',$data); 
@@ -17,7 +17,7 @@ class User extends CI_Controller{
         } 
         else 
         {
-            $this->feed();
+            redirect('user/feed');
         }
     }
     public function login()
@@ -32,21 +32,21 @@ class User extends CI_Controller{
         {
             $result=$this->user_model->login($email,$password);
         }
-        if (!$result && $this->session->userdata('logged_in')!=TRUE) 
+        if (!$result && $this->session->userdata('logged_in')==FALSE) 
         { 
-            $this->index();         
+            redirect('user/index');        
         } 
         else 
         {
-            $this->feed(); 
+            redirect('user/feed'); 
         }
     }
     public function log_validation()
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email|callback_validate_email');
-        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_emailpass');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required');
       
         if ($this->form_validation->run() == FALSE) {
             return false;
@@ -54,12 +54,12 @@ class User extends CI_Controller{
             return true;
         }
     }
-    public function validate_email() {
-        if($this->user_model->validate_email($this->input->post('user_email'),$this->input->post('user_email'))) {
+    public function validate_emailpass() {
+        if($this->user_model->validate_emailpass($this->input->post('user_email'),$this->input->post('user_password'))) {
             return true;
         }
         else {
-            $this->form_validation->set_message('validate_email','Incorrect email address/password!');
+            $this->form_validation->set_message('validate_emailpass','Incorrect email address/password!');
             return false;
         }
     } 
@@ -73,9 +73,9 @@ class User extends CI_Controller{
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('user_username', 'User Name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
-        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email|callback_check_email');
-        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]|max_length[32]');
+        $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_check_email');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
         $this->form_validation->set_rules('user_conpassword', 'Password Confirmation', 'trim|required|matches[user_password]');
       
         if ($this->form_validation->run() == FALSE) {
@@ -124,9 +124,9 @@ class User extends CI_Controller{
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('user_email', 'Your Email', 'trim|required|valid_email');      
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');      
         if ($this->form_validation->run() == FALSE) {
-            $this->registration_error();
+            $this->forgot();
         } else {
             $this->send_email();
         }
@@ -146,7 +146,7 @@ class User extends CI_Controller{
             $email = $this->input->post('user_email');
             $newpass = random_string('alnum','8'); //new password
 
-            if($this->user_model->check_email($email))
+            if($this->user_model->validate_email($email))
             {
                 $this->load->library('email', $config);
                 $this->email->set_newline("\r\n");
@@ -158,16 +158,36 @@ class User extends CI_Controller{
                 if($this->email->send())
                 {
                     $this->user_model->change_password($email,$newpass);
+
                     $this->index();
                 }
                 else
                 {
-
+            		$this->forgot();
                 }
+            }
+            else
+            {
+            	$this->load->library('form_validation');
+        		// field name, error message, validation rules
+        		$this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
+        		if ($this->form_validation->run() == FALSE) {
+		            $this->forgot();
+		        } else {
+		            $this->index();
+		        }
             }
 
     }
-    
+    public function validate_email() {
+        if($this->user_model->validate_email($this->input->post('user_email'))) {
+            return true;
+        }
+        else {
+            $this->form_validation->set_message('validate_email','Account does not exist with the associated email address!');
+            return false;
+        }
+    } 
     public function logout()
     {
         $newdata = array(
@@ -178,13 +198,13 @@ class User extends CI_Controller{
         );
         $this->session->unset_userdata($newdata);
         $this->session->sess_destroy();
-        $this->index();
+        redirect('user/index');
     }
     public function feed()
     {
-        if (($this->session->userdata('logged_in')!=TRUE)) 
+        if (($this->session->userdata('logged_in')==FALSE)) 
         {
-            $this->index();
+            redirect('user/index');
         }
         else
         {
@@ -197,9 +217,9 @@ class User extends CI_Controller{
     }
     public function display_feed()
     {
-        if (($this->session->userdata('logged_in')!=TRUE)) 
+        if (($this->session->userdata('logged_in')==FALSE)) 
         {
-            $this->index();
+            redirect('user/index');
         }
         else
         {
@@ -208,54 +228,8 @@ class User extends CI_Controller{
         }
     }
     
-    public function show_update_rec()
-    {
-        $data['id']=$this->input->post('id');
-        
-        $id=$data['id'];
-        
-        $data=$this->user_model->fetch_data($id);
-        
-        $this->load->view('update_view', $data);
-        
-    }
-    
-    public function update_rec($user_id)
-    {
-        $this->user_model->row_update($user_id);
-        $this->welcome();  
-    }
-    
-    public function delete_rec()
-    {   
-        $id=$this->input->post('id');
-        $this->load->model('user_model');
-        $this->user_model->row_delete($id);
-        $this->welcome();    
-    }
-    public function about()
-    { 
-      $data['title']= 'Home';          
-      $this->load->view('header_view_user',$data);
-      $this->load->view('about_view');
-      $this->load->view('footer_view',$data);
-    }
-    public function about_log_user()
-    { 
-      $data['title']= 'Home';          
-      $this->load->view('header_view_user',$data);
-      $this->load->view('about_view_log_user');
-      $this->load->view('footer_view',$data);
-    }
-    
-    public function login_error()
-    {
-      $this->load->view('login_error_view');
-    }
-    public function sel_role_error()
-    {
-      $this->load->view('sel_role_error_view');
-    }
+
+
  
 }
 ?>
