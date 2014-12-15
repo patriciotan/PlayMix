@@ -1,6 +1,6 @@
 <div class="wrapper" style="height:500px">
 
-<div class="container centered" style="top:30%; transform:translateY(-50%); min-width:800px">
+<div class="container centered" style="top:50%; transform:translateY(-50%); min-width:800px">
   <!-- Username & Password Login form -->
     <div id="user_login" class="centered" style="width:240px;">
       <div class="signup_wrap centered">

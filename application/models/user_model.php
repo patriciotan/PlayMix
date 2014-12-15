@@ -18,12 +18,11 @@ class User_model extends CI_Model {
         if ($query->num_rows()>0) {
             foreach($query->result() as $rows)
             {
-                //add all data to session
                 $newdata = array(
                 'user_id'    => $rows->user_id,
                 'user_username'  => $rows->user_username,
                 'user_email' => $rows->user_email,
-                //'user_role'  => 'User', //User gets a role, user.
+                'user_type' => $rows->user_type,
                 'logged_in'  => TRUE
                 );
             }

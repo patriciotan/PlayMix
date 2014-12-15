@@ -26,4 +26,3 @@
 
 </head>
 <body background="<?php echo base_url(); ?>assets/white.jpg" style="background-size: 100%;">
- 

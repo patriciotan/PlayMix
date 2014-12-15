@@ -1,9 +1,12 @@
 <div class="wrapper" style="height:500px">
 
-<div class="container centered" style="top:30%; transform:translateY(-50%); min-width:800px">
+<div class="container centered" style="top:50%; transform:translateY(-50%); min-width:800px">
     <div id="user_forgot" class="centered" style="width:240px">
       <div class="signup_wrap centered">
-        <p><a href="<?php echo base_url('index.php/user/index'); ?>" id="register_form" style="display:inline">Home</a> / Registration</p>
+      <ul class="breadcrumb">
+        <li><a href="<?php echo base_url('index.php/user/index'); ?>">Home</a> <span class="divider">/</span></li>
+        <li class="active">Forgot password</li>
+      </ul>
         <p>&nbsp;</p><p>&nbsp;</p>
         <?php echo form_open("user/forgot_validation"); ?>       
         <form>

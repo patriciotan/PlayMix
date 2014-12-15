@@ -17,7 +17,15 @@ class User extends CI_Controller{
         } 
         else 
         {
-            redirect('user/feed');
+            if($this->session->userdata('user_type')=='Admin')
+            {
+                $navbar = 'navbar_admin';
+            }
+            else
+            {
+                $navbar = 'navbar_user';
+            }
+            $this->feed($navbar);
         }
     }
     public function login()
@@ -34,11 +42,19 @@ class User extends CI_Controller{
         }
         if (!$result && $this->session->userdata('logged_in')==FALSE) 
         { 
-            redirect('user/index');        
+            $this->index();        
         } 
         else 
         {
-            redirect('user/feed'); 
+        	if($this->session->userdata('user_type')=='Admin')
+        	{
+        		$navbar = 'navbar_admin';
+        	}
+        	else
+        	{
+        		$navbar = 'navbar_user';
+        	}
+            $this->feed($navbar);
         }
     }
     public function log_validation()
@@ -59,7 +75,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('validate_emailpass','Incorrect email address/password!');
+            $this->form_validation->set_message('validate_emailpass','Email address and password do not match!');
             return false;
         }
     } 
@@ -198,28 +214,27 @@ class User extends CI_Controller{
         );
         $this->session->unset_userdata($newdata);
         $this->session->sess_destroy();
-        redirect('user/index');
+        $this->index();
     }
-    public function feed()
+    public function feed($navbar)
     {
         if (($this->session->userdata('logged_in')==FALSE)) 
         {
-            redirect('user/index');
+            $this->index();
         }
         else
         {
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
-            $this->load->view('navbar',$data);
+            $this->load->view($navbar,$data);
             $this->display_feed();
-            $this->load->view('footer_view',$data);
         }
     }
     public function display_feed()
     {
         if (($this->session->userdata('logged_in')==FALSE)) 
         {
-            redirect('user/index');
+            $this->index();
         }
         else
         {
@@ -227,7 +242,23 @@ class User extends CI_Controller{
             $this->load->view('feed_view', $data);
         }
     }
-    
+    public function admin()
+    {
+        if (($this->session->userdata('logged_in')==FALSE)) 
+        {
+            $this->index();
+        }
+        else
+        {
+            $data['title'] = 'Admin';
+            $data['ban'] = $this->load->view('ban_tab','',true);
+            $data['banned'] = $this->load->view('banned_tab','',true);
+            $data['delete'] = $this->load->view('delete_tab','',true);
+            $this->load->view('header_view_user',$data);
+            $this->load->view('navbar_admin',$data);
+            $this->load->view('admin_view', $data);
+        }
+    }
 
 
  

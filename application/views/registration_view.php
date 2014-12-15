@@ -1,13 +1,16 @@
 <div class="wrapper" style="height:500px">
 
-<div class="container centered" style="top:20%; transform:translateY(-50%); min-width:800px">
+<div class="container centered" style="top:60%; transform:translateY(-50%); min-width:800px">
 
 
 
       <!-- Register Form -->
     <div id="user_register" class="centered" style="width:240px">
       <div class="signup_wrap centered">
-      <p><a href="<?php echo base_url('index.php/user/index'); ?>" id="register_form" style="display:inline">Home</a> / Registration</p>
+      <ul class="breadcrumb">
+        <li><a href="<?php echo base_url('index.php/user/index'); ?>">Home</a> <span class="divider">/</span></li>
+        <li class="active">Registration</li>
+      </ul>
       <p>&nbsp;</p>
       <p><legend>Register an Account</legend></p>
       <?php echo form_open("user/reg_validation"); ?>       
