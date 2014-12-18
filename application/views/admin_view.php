@@ -1,13 +1,13 @@
 <div id="wrapper">
   <div class="container" > <!-- This is the div that contains the most-played songs according to the database -->
-    <div class="centered" style="position:relative; top:150px; width:870px;">
+    <div class="centered span12" style="top:100px; left:45px;">
       <div class="tabbable tabs-left" id="adminTab">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#ban" data-toggle="tab" id="banTab">Ban Users</a></li>
           <li><a href="#banned" data-toggle="tab" id="bannedTab">Banned Users</a></li>
           <li><a href="#delete" data-toggle="tab" id="deleteTab">Delete Songs</a></li>
         </ul>
-        <div class="tab-content">
+        <div class="tab-content active box_container span9">
           <div class="tab-pane active" id="ban">
             <?php echo $ban; ?>
           </div>

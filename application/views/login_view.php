@@ -26,7 +26,7 @@
 
         <div>
           <p style="font-size:13px">
-          <a href="#" class="social_box fb">
+          <a href="#" id="loginFb" class="social_box fb">
             <span class="icon"><i class="fa fa-facebook"></i></span>
             <span class="icon_title">Log in with Facebook</span>
           </a>or <a href="<?php echo base_url('index.php/user/registration'); ?>" id="register_form" style="display:inline">Register</a> now!
@@ -38,3 +38,13 @@
 
 </div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#loginFb').click(function(){
+			alert('This functionality will be coming soon!');
+		});
+
+	});
+</script>

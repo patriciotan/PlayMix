@@ -13,7 +13,11 @@
           </div>
           <div style="height: 0px;" class="nav-collapse collapse">
             <ul class="nav">
+<<<<<<< HEAD
               <li><a href="<?php echo base_url('index.php/user/profile'); ?>">Profile</a></li>
+=======
+              <li class="active"><a href="#">Profile</a></li>
+>>>>>>> c280b563bf2844a12c883d80c2f4d4d319f94266
               <li><a href="#">Upload</a></li>
               <li><a href="<?php echo base_url('index.php/user/admin'); ?>">Admin</a></li>
               <li><div class="input-group">
@@ -28,3 +32,14 @@
       </div>
     </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('li > a').click(function() {
+      $('li').removeClass();
+      $(this).parent().addClass('active');
+    });
+
+  });
+</script>

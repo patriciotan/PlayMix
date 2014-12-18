@@ -99,6 +99,7 @@ class User extends CI_Controller{
         } else {
             $this->user_model->add_user();
             $this->index();
+            $this->load->view('registered_script');
         }
     }
     public function check_username() {
@@ -106,7 +107,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('check_username','Username already exists!');
+            $this->form_validation->set_message('check_username','This user name already exists!');
             return false;
         }
     } 
@@ -115,7 +116,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('check_email','Email address already exists!');
+            $this->form_validation->set_message('check_email','This email address already exists!');
             return false;
         }
     } 
@@ -162,36 +163,30 @@ class User extends CI_Controller{
             $email = $this->input->post('user_email');
             $newpass = random_string('alnum','8'); //new password
 
-            if($this->user_model->validate_email($email))
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $this->forgot();
+            }
+            else
             {
                 $this->load->library('email', $config);
                 $this->email->set_newline("\r\n");
                 $this->email->from($from); // change it to yours
                 $this->email->to($email); // change it to yours
                 $this->email->subject('PlayMix Forgot Password');
-                $this->email->message('New password: '. $newpass);
+                $this->email->message('This is your new password: '. $newpass . '. You may change it in your profile page.');
 
                 if($this->email->send())
                 {
                     $this->user_model->change_password($email,$newpass);
-
                     $this->index();
+                    $this->load->view('sent_email_script');
                 }
-                else
-                {
-            		$this->forgot();
-                }
-            }
-            else
-            {
-            	$this->load->library('form_validation');
-        		// field name, error message, validation rules
-        		$this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
-        		if ($this->form_validation->run() == FALSE) {
-		            $this->forgot();
-		        } else {
-		            $this->index();
-		        }
+                
+                $this->forgot();
             }
 
     }
@@ -200,7 +195,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('validate_email','Account does not exist with the associated email address!');
+            $this->form_validation->set_message('validate_email','This email address does not exist!');
             return false;
         }
     } 

@@ -3,7 +3,9 @@
 
 <div class="container" > <!-- This is the div that contains the most-played songs according to the database -->
 
-<div class="centered" style="position:relative; top:150px; width:870px;"><ul style="width:500px;"><h1>FEED</h1></ul>
+<div class="centered" style="position:relative; top:150px; width:870px;">
+
+<ul style="width:500px;"><h1>FEED</h1></ul>
 
   <table class="feed_table">  
     <?php foreach($rec->result() as $row): ?>
