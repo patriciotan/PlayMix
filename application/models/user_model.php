@@ -182,5 +182,15 @@ class User_model extends CI_Model {
         
     }
 
+    public function get_photo($id)
+    {
+        $query = $this->db->query("SELECT * FROM `user` WHERE `id`=$id");
+
+        $newdata = array(
+        'user_photo' => $row->photo
+        );
+        return $newdata;
+    }
+
 }
 ?>

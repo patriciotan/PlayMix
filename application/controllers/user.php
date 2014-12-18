@@ -260,7 +260,25 @@ class User extends CI_Controller{
         }
     }
 
+    public function profile()
+    {
+        if (($this->session->userdata('logged_in')==FALSE)) 
+        {
+            $this->index();
+        }
+        else
+        {
+            $data['title'] = 'Profile';
+            $data['personal_info'] = $this->load->view('personal_info_tab','',true);
+            $data['uploaded'] = $this->load->view('uploaded_tab','',true);
+            $data['playlists'] = $this->load->view('playlists_tab','',true);
+            $data['account'] = $this->load->view('account_tab','',true); 
+            $data['photo'] = $this->user_model->get_photo();         
+            $this->load->view('header_view_user',$data);
+            $this->load->view('navbar',$data);
+            $this->load->view('profile_view', $data);
+        }
+    }
 
- 
 }
 ?>
