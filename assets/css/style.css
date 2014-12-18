@@ -88,8 +88,8 @@ a {color:black;}
 
 .profile-circular-mask {
 display: inline-block;
-width: 100px;
-height: 100px;
+width: 200px;
+height: 200px;
 border-radius: 50%;
 overflow: hidden;
 }
@@ -97,9 +97,9 @@ overflow: hidden;
 .profile-circular-mask img {
 max-width: 100%;
 }
-=======
+
 .admin_container {border:1px solid #ccc; overflow-y: scroll;}
 .box_container {border:1px solid #ccc;}
 
 .error{ color: red; }
->>>>>>> c280b563bf2844a12c883d80c2f4d4d319f94266
+
