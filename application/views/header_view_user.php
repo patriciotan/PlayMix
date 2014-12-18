@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
- <title><?php echo (isset($title)) ? $title : "Home" ?> </title>
+ <title><?php echo (isset($title)) ? $title : "Home" ?></title>
 
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" /> 

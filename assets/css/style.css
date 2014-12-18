@@ -83,4 +83,7 @@ a {color:black;}
 .feed_table {width:800px; margin-left:auto; margin-right:auto;}
 .feed_table tr:hover {background-color: #e3e3e3;}
 
+.admin_container {border:1px solid #ccc; overflow-y: scroll;}
+.box_container {border:1px solid #ccc;}
+
 .error{ color: red; }
