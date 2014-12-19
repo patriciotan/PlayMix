@@ -9,7 +9,7 @@
 
 		<?php echo form_open("user/unban"); ?>
 		<form>
-			<div class="offset1 span3">
+			<div class="span3"><br/>
 				<h3>Banned Users</h3><br/>
 				<div class="admin_container">
 					<table class="feed_table" style="width:250px;">
