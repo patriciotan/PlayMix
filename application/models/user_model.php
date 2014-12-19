@@ -37,8 +37,7 @@ class User_model extends CI_Model {
         $data=array(
         'user_username'   =>$this->input->post('user_username'),
         'user_email'      =>$this->input->post('user_email'),
-        'user_password'   =>md5($this->input->post('user_password')),
-        
+        'user_password'   =>md5($this->input->post('user_password'))
         );
         $this->db->insert('user',$data);
     }
@@ -58,6 +57,139 @@ class User_model extends CI_Model {
         if ($query->num_rows()>0) {
             return $query;
         }
+    }
+
+    public function get_all_users()
+    {
+        $query = $this->db->get("user");
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
+    public function get_all_songs()
+    {
+        $query = $this->db->get("audio");
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
+    public function get_ban_list()
+    {
+        $query = $this->db->get("ban_list");
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
+    public function get_delete_list()
+    {
+        $query = $this->db->get("delete_list");
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
+    public function get_banned_list()
+    {
+        $this->db->where("user_status","Banned");
+        $query = $this->db->get("user");
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+    public function add_ban($user)
+    {
+        $this->db->where("user_id",$user);
+        $query = $this->db->get("user");
+        if ($query->num_rows()>0) {
+            foreach($query->result() as $row)
+            {
+                $data=array(
+                'user_id' => $row->user_id,
+                'user_username' =>$row->user_username
+                );
+
+                $this->db->where("user_id",$row->user_id);
+                $query = $this->db->get("ban_list");
+
+                if ($query->num_rows()<1) {
+                    $this->db->insert('ban_list',$data);
+                }
+            }
+        }
+    }
+    public function add_delete($song)
+    {
+        $this->db->where("audio_id",$song);
+        $query = $this->db->get("audio");
+        if ($query->num_rows()>0) {
+            foreach($query->result() as $row)
+            {
+                $data=array(
+                'audio_id' => $row->audio_id,
+                'audio_title' =>$row->audio_title
+                );
+
+                $this->db->where("audio_id",$row->audio_id);
+                $query = $this->db->get("delete_list");
+
+                if ($query->num_rows()<1) {
+                    $this->db->insert('delete_list',$data);
+                }
+            }
+        }
+    }
+    public function unban($user)
+    {
+        $this->db->where("user_id",$user);
+        $query = $this->db->get("user");
+
+        if ($query->num_rows()>0) {
+            foreach($query->result() as $row)
+            {
+                $data = array(
+                'user_status' => "Okay"
+                ); 
+
+                $this->db->where("user_id",$row->user_id);
+                $this->db->update("user", $data);
+            }
+        }
+    }
+    public function ban_list()
+    {
+        $query = $this->db->get('ban_list');
+        $data = array(
+        'user_status' => "Banned"
+        ); 
+        if ($query->num_rows()>0) {
+            foreach($query->result() as $row)
+            {
+                $this->db->where("user_id",$row->user_id);
+                $this->db->update("user", $data);
+            }
+        }
+    }
+    public function delete_list()
+    {
+        $query = $this->db->get('delete_list');
+        if ($query->num_rows()>0) {
+            foreach($query->result() as $row)
+            {
+                $this->db->where("audio_id",$row->audio_id);
+                $this->db->delete("audio");
+            }
+        }
+    }
+    public function ban_reset()
+    {
+        $this->db->truncate('ban_list');
+    }
+    public function delete_reset()
+    {
+        $this->db->truncate('delete_list');
     }
 
     public function check_username($username)

@@ -6,57 +6,50 @@
 
 <div class="span8" style="margin-left: 95px;">
 	<div class="row">
+
+	<?php echo form_open("user/ban"); ?>
+	<form>
 		<div class="span3"><br />
 			<h3>Banning List</h3><br />
 			<div class="admin_container">
 				<table class="feed_table" style="width:250px;">
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td>asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td>asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td>asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td>asdf asdf</td>
-					</tr>
+					<?php if(!is_null($banlist)) { if(is_array($banlist->result())) { foreach($banlist->result() as $row): ?>
+						<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+							<td><?=$row->user_username;?></td>
+						</tr>
+					<?php endforeach; } } ?>
 				</table>
+			</div><br/>
+			<div class="btn-group">
+				<button type="submit" class="btn" style="width:135px;">Ban</button>
+	<?php echo form_close();?>
+	<?php echo form_open("user/ban_reset"); ?>
+				<button type="submit" class="btn" style="width:135px;">Reset</button>
 			</div>
 		</div>
-		<div class="offset1 span3"><br />
+	</form>
+	<?php echo form_close();?>
+
+	<?php echo form_open("user/add_ban"); ?>
+	<form>
+		<div class="offset1 span3">
 			<h3>PlayMix Users</h3><br/>
 			<div class="admin_container">
 				<table class="feed_table" style="width:250px;">
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td><input type="checkbox" />asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td><input type="checkbox" />asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td><input type="checkbox" />asdf asdf</td>
-					</tr>
-					<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-						<td><input type="checkbox" />asdf asdf</td>
-					</tr>
+					<?php foreach($users->result() as $row): ?>
+						<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+							<td><input name="users[]" type="checkbox" value="<?=$row->user_id;?>" /><?=$row->user_username;?></td>
+						</tr>
+					<?php endforeach;?>
 				</table>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span3"><br />
+			</div><br/>
 			<div class="btn-group">
-				<button class="btn" style="width:135px;">Ban</button>
-				<button class="btn" style="width:135px;">Reset</button>
+				<button type="submit" class="btn" style="width:135px;">Add</button>
 			</div>
 		</div>
-		<div class="offset1 span3"><br />
-			<div class="btn-group">
-			  <button class="btn" style="width:135px;">Add</button>
-			</div>
-		</div>
+	</form>
+	<?php echo form_close();?>
+
 	</div>
 <br />
 </div>

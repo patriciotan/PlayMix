@@ -245,14 +245,80 @@ class User extends CI_Controller{
         }
         else
         {
+            $data['users'] = $this->user_model->get_all_users();
+            $data['songs'] = $this->user_model->get_all_songs();
+            $data['banlist'] = $this->user_model->get_ban_list();
+            $data['bannedlist'] = $this->user_model->get_banned_list();
+            $data['deletelist'] = $this->user_model->get_delete_list();
+
             $data['title'] = 'Admin';
-            $data['ban'] = $this->load->view('ban_tab','',true);
-            $data['banned'] = $this->load->view('banned_tab','',true);
-            $data['delete'] = $this->load->view('delete_tab','',true);
+            $data['ban'] = $this->load->view('ban_tab',$data,true);
+            $data['banned'] = $this->load->view('banned_tab',$data,true);
+            $data['delete'] = $this->load->view('delete_tab',$data,true);
+
             $this->load->view('header_view_user',$data);
             $this->load->view('navbar_admin',$data);
             $this->load->view('admin_view', $data);
         }
+    }
+    public function add_ban()
+    {
+        $users = $this->input->post('users');
+        if(is_array($users))
+        {
+            foreach($users as $user)
+            {
+                $this->user_model->add_ban($user);
+            }
+        }
+        $this->admin();
+    }
+    public function add_delete()
+    {
+        $songs = $this->input->post('songs');
+        if(is_array($songs))
+        {
+            foreach($songs as $song)
+            {
+                $this->user_model->add_delete($song);
+            }
+        }
+        $this->admin();
+    }
+    public function ban()
+    {
+        $this->user_model->ban_list();
+        $this->admin();
+        $this->load->view('banned_script');
+    }
+    public function delete()
+    {
+        $this->user_model->delete_list();
+        $this->admin();
+        $this->load->view('deleted_script');
+    }
+    public function unban()
+    {
+        $users = $this->input->post('users');
+        if(is_array($users))
+        {
+            foreach($users as $user)
+            {
+                $this->user_model->unban($user);
+            }
+        }
+        $this->admin();
+        $this->load->view('unbanned_script');
+    }
+    public function ban_reset()
+    {
+        $this->user_model->ban_reset();
+        $this->admin();
+    }
+    public function delete_reset()
+    {
+        $this->user_model->delete_reset();
+        $this->admin();
     }
 
     public function profile()

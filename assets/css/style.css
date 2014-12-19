@@ -97,8 +97,8 @@ overflow: hidden;
 max-width: 100%;
 }
 
-.admin_container {border:1px solid #ccc; overflow-y: scroll;}
-.box_container {border:1px solid #ccc;}
+.admin_container {border:1px solid #ccc; overflow-y: scroll; height: 290px;}
+.box_container {border:1px solid #ccc; height: 450px;}
 
 .error{ color: red; }
 
