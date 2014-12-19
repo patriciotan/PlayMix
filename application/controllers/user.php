@@ -264,8 +264,8 @@ class User extends CI_Controller{
         else
         {
             $uid = $this->session->userdata('user_id');
+            $data['rec'] = $this->user_model->get_user_songs($uid);            
             $data['info'] = $this->user_model->get_info($uid);            
-            $data['rec'] = $this->user_model->get_user_songs($uid);
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
@@ -306,6 +306,23 @@ class User extends CI_Controller{
         }
     }
 
+    public function edit_account_info()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_name', 'User name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_check_email');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');       
+        /*
+        if ($this->form_validation->run() == FALSE) {
+            $this->registration();
+        } else {
+            $this->user_model->add_user();
+            $this->index();
+            $this->load->view('registered_script');
+        }
+        */
+    }
         
 
 }

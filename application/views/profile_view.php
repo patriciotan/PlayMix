@@ -70,7 +70,7 @@
     $('#edit_account_button').click(function(){
       //onclick, remove personal info contents, replace with forms
       $("#account_contents").hide();
-      $("#edit_account").show();
+      $("#edit_account_info").show();
     });
 
     function readURL(input) {
