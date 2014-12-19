@@ -23,7 +23,8 @@
                 <div id="user_sites" style="border-top:1px solid gray; margin-top:20px">
                   <br/>
                   <h3>Websites</h3>
-                  <ul class="user_websites">                  	
+                  <ul class="user_websites">
+                    <br/>
                     <a href="<?php echo $info['user_fb']?>" id="fb"><img src="" id="fb_img"/></a>
                     <a href="<?php echo $info['user_google']?>" id="google"><img src="" id="google_img"/></a>
                     <a href="<?php echo $info['user_twitter']?>" id="twitter"><img src="" id="twitter_img"/></a>

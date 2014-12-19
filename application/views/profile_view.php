@@ -10,59 +10,10 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="personal_info">
-            <div class="centered">
-              <div id="image">
-                <div id="img_container" class="profile-circular-mask">
-                  <img class="img_profile" src="<?php echo base_url();?><?php echo $info['user_photo']?>"/>
-                </div>
-              </div>
-            
-            
-              <div id="info">
-                <div id="user_name">
-                  <h1><?=$info['user_fname']?>&nbsp;<?=$info['user_lname']?></h1>
-                </div>
-                <div id="user_country">
-                  <h3><?=$info['user_city']?>, &nbsp;<?=$info['user_country']?></h3>
-                </div>
-                <div id="user_bio" style="border-top:1px solid gray; margin-top:20px">
-                  <br/>
-                  <h3>Biography</h3>
-                  <br/>
-                  <p style="margin-left:30px"><?=$info['user_bio']?></p>
-                </div>          
-            
-                <div id="user_sites" style="border-top:1px solid gray; margin-top:20px">
-                  <br/>
-                  <h3>Websites</h3>
-                  <ul class="user_websites">
-                    <br/>
-                    <a href="<?php echo $info['user_fb']?>" id="fb"><img src="" id="fb_img"/></a>
-                    <a href="<?php echo $info['user_google']?>" id="google"><img src="" id="google_img"/></a>
-                    <a href="<?php echo $info['user_twitter']?>" id="twitter"><img src="" id="twitter_img"/></a>
-                  </ul>
-                </div>
-              </div>
-            
-            
-            </div>
+            <?php echo $personal_info?>
           </div>
           <div class="tab-pane" id="uploaded" style="padding:3px">
-            <table class="feed_table">  
-              <?php foreach($rec->result() as $row): ?>
-              <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-                <td><a href="#"><img src="<?php echo base_url(); ?>assets/play.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
-                <td><a href="#"><img src="<?php echo base_url(); ?>assets/plus.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
-                <td><a href="#"><?=$row->audio_title;?></a></td>
-                <td style="width:10px; padding-right:20px">by</td>
-                <td ><a href="#"><?=$row->user_username;?></a></td>
-                <td ><?=$row->audio_date_added;?></td>
-                <td ><?=$row->audio_play_count;?></td>
-                <td><a href="#"><img src="<?php echo base_url(); ?>assets/share.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a> </td>
-                <td><a href="#"><img src="<?php echo base_url(); ?>assets/download.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
-              </tr>
-              <?php endforeach;?>
-            </table>
+            <?php echo $uploaded?>
           </div>
 
           <div class="tab-pane" id="playlists">

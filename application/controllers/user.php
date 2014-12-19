@@ -267,6 +267,8 @@ class User extends CI_Controller{
             $data['info'] = $this->user_model->get_info($uid);            
             $data['rec'] = $this->user_model->get_user_songs($uid);
             $data['title'] = 'Profile';  
+            $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
+            $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);                       
             $this->load->view('header_view_user',$data);
             return $data;
         }
