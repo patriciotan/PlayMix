@@ -8,10 +8,10 @@
                         <label for="user_email">Email</label>
                         <input type="text" id="user_email" name="user_email" value="" />
                         <label for="user_password">Password</label>
-                        <input type="text" id="user_password" name="user_password" value="" />
+                        <input type="password" id="user_password" name="user_password" value="" />
                     </div>
-                    <div style="margin-top:20px; width:30%; float:left; display:block">
+                    <div style="margin-top:20px; width:90%; float:left; display:block">
                       <input type="submit" class="btn btn_white"  value="Save" id="submit_edit" style="margin-right:10px"/>
-                      <input type="reset" class="btn btn_red"  value="Cancel" id="cancel_edit" />
+                      <input type="reset" class="btn btn_red"  value="Cancel" id="cancel_edit_account" />
                     </div>                    
                 </div>
