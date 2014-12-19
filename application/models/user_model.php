@@ -161,35 +161,30 @@ class User_model extends CI_Model {
         $this->db->update('user',$data);     
     }
     
-    public function fetch_data($id)
+    public function get_info($id)
     {
-        $query = $this->db->query("SELECT * FROM `user` WHERE `id`=$id");
+        $query = $this->db->query("SELECT * FROM `user` WHERE `user_id`=$id");
         
         
-        foreach($query->result('user') as $row)
+        foreach($query->result() as $row)
         {
             $newdata = array(
-            'user_id'       => $row->id,
-            'user_name'     => $row->username,
-            'user_fname'    => $row->firstname,
-            'user_lname'    => $row->lastname,
-            'user_password' => $row->password,
-            'user_role'     => 'User'
+            'user_email'    => $row->user_email,
+            'user_name'     => $row->user_username,
+            'user_fname'    => $row->user_fname,
+            'user_lname'    => $row->user_lname,
+            'user_city'     => $row->user_city,
+            'user_country'  => $row->user_country,
+            'user_bio'      => $row->user_bio,
+            'user_fb'       => $row->user_fb,
+            'user_google'   => $row->user_google,     
+            'user_twitter'  => $row->user_twitter,  
+            'user_photo'    => $row->user_photo,                                                   
             );
         }
         
         return $newdata;
         
-    }
-
-    public function get_photo($id)
-    {
-        $query = $this->db->query("SELECT * FROM `user` WHERE `id`=$id");
-
-        $newdata = array(
-        'user_photo' => $row->photo
-        );
-        return $newdata;
     }
 
 }

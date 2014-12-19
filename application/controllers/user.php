@@ -255,7 +255,7 @@ class User extends CI_Controller{
         }
     }
 
-    public function load_profile()
+    public function profile()
     {
         if (($this->session->userdata('logged_in')==FALSE)) 
         {
@@ -263,12 +263,12 @@ class User extends CI_Controller{
         }
         else
         {
-            $data['title'] = 'Profile';
-            $data['personal_info'] = $this->load->view('personal_info_tab','',true);
-            $data['uploaded'] = $this->load->view('uploaded_tab','',true);
-            $data['playlists'] = $this->load->view('playlists_tab','',true);
-            $data['account'] = $this->load->view('account_tab','',true); 
-            //$data['photo'] = $this->user_model->get_photo();         
+            $uid = $this->session->userdata('user_id');
+            $data['info'] = $this->user_model->get_info($uid); 
+            $data['persona_info'] = $this->load->view('ban_tab','',true);
+            $data['uploaded'] = $this->load->view('banned_tab','',true);
+            $data['playlists'] = $this->load->view('delete_tab','',true);
+            $data['title'] = 'Profile';  
             $this->load->view('header_view_user',$data);
             return $data;
         }
@@ -282,9 +282,8 @@ class User extends CI_Controller{
         }
         else
         {
-            
-            $data = $this->load_profile();
-            $this->load->view('navbar_user',$data);
+            $data = $this->profile();
+            $this->load->view('navbar_user');
             $this->load->view('profile_view', $data);
         }
     }
@@ -297,8 +296,8 @@ class User extends CI_Controller{
         }
         else
         {
-            $data = $this->load_profile();
-            $this->load->view('navbar_admin',$data);
+            $data = $this->profile();
+            $this->load->view('navbar_admin');
             $this->load->view('profile_view', $data);
         }
     }

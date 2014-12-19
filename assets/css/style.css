@@ -83,7 +83,6 @@ a {color:black;}
 .feed_table {width:800px; margin-left:auto; margin-right:auto;}
 .feed_table tr:hover {background-color: #e3e3e3;}
 
-<<<<<<< HEAD
 .error{ color: red; }
 
 .profile-circular-mask {
@@ -103,3 +102,6 @@ max-width: 100%;
 
 .error{ color: red; }
 
+.user_websites a {margin-right:20px; margin-top:20px;}
+
+#account h3 {margin-left:30px;margin-top:20px;}
