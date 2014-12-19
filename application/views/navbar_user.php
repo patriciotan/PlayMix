@@ -13,7 +13,7 @@
           </div>
           <div style="height: 0px;" class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="<?php echo base_url('index.php/user/profile_user'); ?>">Profile</a></li>
+              <li><a href="<?php echo base_url('index.php/user/profile'); ?>">Profile</a></li>
               <li><a href="#">Upload</a></li>
               <li><div class="input-group">
 

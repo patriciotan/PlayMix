@@ -122,25 +122,10 @@ class User_model extends CI_Model {
         $this->db->delete('user');
     }
 
-    public function row_update($user_id)
+    public function user_account_update($user_id, $data)
     {
-        $this->load->database();
-        
-        $data = array(
-        'username' =>$this->input->post('user_name'),
-        
-        'firstname'=>$this->input->post('user_fname'),
-        
-        'lastname' =>$this->input->post('user_lname'),
-        
-        'password' =>md5($this->input->post('user_password'))
-
-        
-        
-        );
-        
-        $this->db->where('id',$user_id);
-        
+        $this->load->database();      
+        $this->db->where('user_id',$user_id);       
         $this->db->update('user',$data);     
     }
     

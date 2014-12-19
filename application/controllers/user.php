@@ -274,35 +274,17 @@ class User extends CI_Controller{
             $data['edit_personal_info'] = $this->load->view('edit_personal_info_tab',$data,true);
             $data['edit_account'] = $this->load->view('edit_account_tab',$data,true);
             $this->load->view('header_view_user',$data);
+            if($this->session->userdata('user_type')=='Admin')
+                {
+                $navbar = 'navbar_admin';
+                }
+            else
+                {
+                $navbar = 'navbar_user';
+                }
+            $this->load->view($navbar,$data);
+            $this->load->view('profile_view', $data);
             return $data;
-        }
-    }
-
-    public function profile_user()
-    {
-        if (($this->session->userdata('logged_in')==FALSE)) 
-        {
-            $this->index();
-        }
-        else
-        {
-            $data = $this->profile();
-            $this->load->view('navbar_user');
-            $this->load->view('profile_view', $data);
-        }
-    }
-
-    public function profile_admin()
-    {
-        if (($this->session->userdata('logged_in')==FALSE)) 
-        {
-            $this->index();
-        }
-        else
-        {
-            $data = $this->profile();
-            $this->load->view('navbar_admin');
-            $this->load->view('profile_view', $data);
         }
     }
 
@@ -310,18 +292,16 @@ class User extends CI_Controller{
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('user_name', 'User name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
+        $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean|callback_check_username');
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_check_email');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');       
-        /*
-        if ($this->form_validation->run() == FALSE) {
-            $this->registration();
-        } else {
-            $this->user_model->add_user();
-            $this->index();
-            $this->load->view('registered_script');
-        }
-        */
+        $data = array(
+        'user_username' =>$this->input->post('user_username'),       
+        'user_email'=>$this->input->post('user_email'),       
+        'user_password' =>md5($this->input->post('user_password')),
+        );
+        $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
+        $this->profile();
     }
         
 

@@ -3,12 +3,12 @@
                 <?php echo form_open("user/edit_account_info"); ?>
                 <form>
                     <div style="float:left; margin-right:30px">
-                        <label for="user_name">User name</label>
-                        <input type="text" id="user_name" name="user_name" value="" />
+                        <label for="user_username">User name</label>
+                        <input type="text" id="user_username" name="user_username" value="" required/>
                         <label for="user_email">Email</label>
-                        <input type="text" id="user_email" name="user_email" value="" />
+                        <input type="text" id="user_email" name="user_email" value="" required/>
                         <label for="user_password">Password</label>
-                        <input type="password" id="user_password" name="user_password" value="" />
+                        <input type="password" id="user_password" name="user_password" value="" required/>
                     </div>
                     <div style="margin-top:20px; width:90%; float:left; display:block">
                       <input type="submit" class="btn btn_white"  value="Save" id="submit_edit" style="margin-right:10px"/>
