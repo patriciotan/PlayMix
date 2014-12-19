@@ -53,6 +53,7 @@ class User_model extends CI_Model {
         $this->db->join('audio', 'user.user_id = audio.user_id');
         $this->db->order_by('audio.audio_play_count','desc');
         $this->db->where('audio.audio_private','Public');
+        $this->db->where('audio.audio_status','Okay');
         $query = $this->db->get();
         if ($query->num_rows()>0) {
             return $query;
@@ -175,11 +176,14 @@ class User_model extends CI_Model {
     public function delete_list()
     {
         $query = $this->db->get('delete_list');
+        $data = array(
+        'audio_status' => "Removed"
+        ); 
         if ($query->num_rows()>0) {
             foreach($query->result() as $row)
             {
                 $this->db->where("audio_id",$row->audio_id);
-                $this->db->delete("audio");
+                $this->db->update("audio", $data);
             }
         }
     }

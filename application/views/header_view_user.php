@@ -12,11 +12,16 @@
     <link href="<?php echo base_url(); ?>assets/themes/default/css/general.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/themes/default/css/custom.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/DataTable/media/css/jquery.dataTables.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/DataTable/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <link rel="icon" href="<?php echo base_url(); ?>assets/forward.ico" type="image/x-icon"/>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.0.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.leanModal.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
     
 
 <link type="text/css" rel="stylesheet" href="assets/css/style.css" />
