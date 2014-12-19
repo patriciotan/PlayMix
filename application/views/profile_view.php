@@ -65,11 +65,28 @@
     $('#cancel_edit').click(function(){
       $("#edit_personal_info").hide(); 
       $("#personal_info_contents").show();
+      jQuery('#user_current_photo').attr("src", "<?php echo base_url();?><?php echo $info['user_photo']?>");
     });
     $('#edit_account_button').click(function(){
       //onclick, remove personal info contents, replace with forms
       $("#account_contents").hide();
       $("#edit_account").show();
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#user_current_photo').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#user_new_photo").change(function(){
+        readURL(this);
     });
   });
 

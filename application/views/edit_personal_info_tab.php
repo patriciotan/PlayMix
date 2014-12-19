@@ -22,7 +22,7 @@
                     <input type="text" id="user_twitter" name="user_twitter" value="" />   
 
                     <div style="margin-top:20px">
-                      <input type="submit" class="btn btn_white"  value="Submit" id="submit_edit" style="margin-right:10px"/>
+                      <input type="submit" class="btn btn_white"  value="Save" id="submit_edit" style="margin-right:10px"/>
                       <input type="reset" class="btn btn_red"  value="Cancel" id="cancel_edit" />
                     </div>                    
                   </div>
@@ -31,11 +31,11 @@
 
                   <div>
                     <div id="img_container" class="profile-circular-mask" style="float:left;">
-                      <img class="img_profile" src="<?php echo base_url();?><?php echo $info['user_photo']?>"/>
+                      <img class="img_profile" id="user_current_photo" src="<?php echo base_url();?><?php echo $info['user_photo']?>"/>
                     </div>                  
                     <!--<ul style="list-style:none"></ul>-->
                     <div style="float:left;width:50%; margin-top:20px">
-                      <input type="file" name="user_photo" accept="image/png, image/jpeg">
+                      <input type="file" name="user_photo" accept="image/png, image/jpeg" id="user_new_photo">
                     </div>
                   </div>
                   <div style="float:left; margin-top:40px">
