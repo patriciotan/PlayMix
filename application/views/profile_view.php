@@ -47,7 +47,7 @@
             
             </div>
           </div>
-          <div class="tab-pane" id="uploaded">
+          <div class="tab-pane" id="uploaded" style="padding:3px">
             <table class="feed_table">  
               <?php foreach($rec->result() as $row): ?>
               <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
@@ -62,10 +62,13 @@
                 <td><a href="#"><img src="<?php echo base_url(); ?>assets/download.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
               </tr>
               <?php endforeach;?>
+            </table>
           </div>
+
           <div class="tab-pane" id="playlists">
 
           </div>
+
           <div class="tab-pane" id="account">
             <h3><?=$info['user_name']?></h3>
             <h3><?=$info['user_email']?></h3>

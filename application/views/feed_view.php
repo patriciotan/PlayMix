@@ -21,6 +21,7 @@
       <td><a href="#"><img src="<?php echo base_url(); ?>assets/download.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
     </tr>
     <?php endforeach;?>
+  </table>
 
 </div>
 </div>

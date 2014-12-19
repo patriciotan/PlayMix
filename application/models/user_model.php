@@ -187,5 +187,22 @@ class User_model extends CI_Model {
         
     }
 
+    public function get_user_songs($id)
+    {
+        $this->db->select('audio.audio_title');
+        $this->db->select('user.user_username');
+        $this->db->select('audio.audio_date_added');
+        $this->db->select('audio.audio_play_count');
+        //$this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('audio', 'user.user_id = audio.user_id');
+        $this->db->order_by('audio.audio_play_count','desc');
+        $this->db->where('audio.user_id',$id);
+        $query = $this->db->get();
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
 }
 ?>

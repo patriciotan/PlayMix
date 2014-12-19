@@ -264,10 +264,8 @@ class User extends CI_Controller{
         else
         {
             $uid = $this->session->userdata('user_id');
-            $data['info'] = $this->user_model->get_info($uid); 
-            $data['persona_info'] = $this->load->view('ban_tab','',true);
-            $data['uploaded'] = $this->load->view('banned_tab','',true);
-            $data['playlists'] = $this->load->view('delete_tab','',true);
+            $data['info'] = $this->user_model->get_info($uid);            
+            $data['rec'] = $this->user_model->get_user_songs($uid);
             $data['title'] = 'Profile';  
             $this->load->view('header_view_user',$data);
             return $data;
@@ -301,8 +299,5 @@ class User extends CI_Controller{
             $this->load->view('profile_view', $data);
         }
     }
-
-
-
 }
 ?>
