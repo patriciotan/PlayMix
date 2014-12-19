@@ -9,7 +9,7 @@ class User extends CI_Controller{
     
     public function index()
     {      
-        if (($this->session->userdata('logged_in')==FALSE)) 
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $data['title']= 'Home'; 
         	$this->load->view('header_view_user',$data); 
@@ -32,14 +32,14 @@ class User extends CI_Controller{
         {
             $result=$this->user_model->login($email,$password);
         }
-        if($result == "banned")
+        if($result === "banned")
         {
             $this->index();
             $this->load->view("banned_login_script");
         }
         else
         {
-            if ($this->session->userdata('logged_in')==FALSE) 
+            if ($this->session->userdata('logged_in')===FALSE) 
             { 
                 $this->index();        
             } 
@@ -56,7 +56,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_emailpass');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required');
       
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() === FALSE) {
             return false;
         } else {
             return true;
@@ -134,7 +134,7 @@ class User extends CI_Controller{
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');      
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() === FALSE) {
             $this->forgot();
         } else {
             $this->send_email();
@@ -158,7 +158,7 @@ class User extends CI_Controller{
             $this->load->library('form_validation');
             $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
 
-            if ($this->form_validation->run() == FALSE)
+            if ($this->form_validation->run() === FALSE)
             {
                 $this->forgot();
             }
@@ -205,7 +205,7 @@ class User extends CI_Controller{
     }
     public function feed()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $this->index();
         }
@@ -214,7 +214,7 @@ class User extends CI_Controller{
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
 
-            if($this->session->userdata('user_type')=='Admin')
+            if($this->session->userdata('user_type')==='Admin')
             {
                 $this->load->view('navbar_admin',$data);
             }
@@ -228,7 +228,7 @@ class User extends CI_Controller{
     }
     public function display_feed()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $this->index();
         }
@@ -240,7 +240,7 @@ class User extends CI_Controller{
     }
     public function admin()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $this->index();
         }
@@ -324,7 +324,7 @@ class User extends CI_Controller{
 
     public function profile()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $this->index();
         }
@@ -373,7 +373,7 @@ class User extends CI_Controller{
         {
             $data = $this->profile();
 
-            if($this->session->userdata('user_type')=='Admin')
+            if($this->session->userdata('user_type')==='Admin')
             {
                 $this->load->view('navbar_admin',$data);
             }
@@ -394,7 +394,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() === FALSE) {
             return false;
         } else {
             return true;
@@ -474,7 +474,7 @@ class User extends CI_Controller{
         $data['title']='Upload';
         $this->load->view('header_view_user',$data);
 
-        if($this->session->userdata('user_type')=='Admin')
+        if($this->session->userdata('user_type')==='Admin')
         {
             $this->load->view('navbar_admin',$data);
         }
@@ -493,7 +493,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('audio_title', 'Song Title', 'trim|required|min_length[4]|xss_clean');
         $this->form_validation->set_rules('audio_genre', 'Audio Genre', 'trim|max_length[20]');
      
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() === FALSE) {
             $this->upload();
         } 
         else {
