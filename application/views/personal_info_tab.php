@@ -1,10 +1,11 @@
-            <div class="centered">
+            <div class="centered" id="personal_info_contents">
+              <a href="#" style="float:right" id="edit_personal_info_button"><img src="<?php echo base_url()?>assets/edit_ico.png" style="height:20px;width:20px;"/></a>
               <div id="image">
                 <div id="img_container" class="profile-circular-mask">
                   <img class="img_profile" src="<?php echo base_url();?><?php echo $info['user_photo']?>"/>
                 </div>
+
               </div>
-            
             
               <div id="info">
                 <div id="user_name">

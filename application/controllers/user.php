@@ -268,7 +268,11 @@ class User extends CI_Controller{
             $data['rec'] = $this->user_model->get_user_songs($uid);
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
-            $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);                       
+            $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
+            $data['playlists'] = $this->load->view('playlists_tab',$data,true); 
+            $data['account'] = $this->load->view('account_tab',$data,true);
+            $data['edit_personal_info'] = $this->load->view('edit_personal_info_tab',$data,true);
+            $data['edit_account'] = $this->load->view('edit_account_tab',$data,true);
             $this->load->view('header_view_user',$data);
             return $data;
         }
@@ -301,5 +305,8 @@ class User extends CI_Controller{
             $this->load->view('profile_view', $data);
         }
     }
+
+        
+
 }
 ?>

@@ -1,5 +1,5 @@
 <div id="wrapper">
-  <div class="container" > <!-- This is the div that contains the most-played songs according to the database -->
+  <div class="container" >
     <div class="centered" style="position:relative; top:150px; width:870px;">
       <div class="tabbable" id="profileTab">
         <ul class="nav nav-tabs">
@@ -11,18 +11,19 @@
         <div class="tab-content">
           <div class="tab-pane active" id="personal_info">
             <?php echo $personal_info?>
+            <?php echo $edit_personal_info?>
           </div>
           <div class="tab-pane" id="uploaded" style="padding:3px">
             <?php echo $uploaded?>
           </div>
 
           <div class="tab-pane" id="playlists">
-
+            <?php echo $playlists?>
           </div>
 
           <div class="tab-pane" id="account">
-            <h3><?=$info['user_name']?></h3>
-            <h3><?=$info['user_email']?></h3>
+            <?php echo $account?>
+            <?php echo $edit_account?>
           </div>          
         </div>
       </div>
@@ -33,6 +34,8 @@
 <script>
   $(document).ready(function(){
 
+    $("#edit_personal_info").hide();
+    $("#edit_account_info").hide();    
     $('li > a').click(function() {
       $('li').removeClass();
       $(this).parent().addClass('active');
@@ -53,6 +56,20 @@
     $('#accountTab').click(function(){
       $('.tab-pane').removeClass("active");
       $("#account").addClass("active");
+    });
+    $('#edit_personal_info_button').click(function(){
+      //onclick, remove personal info contents, replace with forms
+      $("#personal_info_contents").hide();
+      $("#edit_personal_info").show();
+    });
+    $('#cancel_edit').click(function(){
+      $("#edit_personal_info").hide(); 
+      $("#personal_info_contents").show();
+    });
+    $('#edit_account_button').click(function(){
+      //onclick, remove personal info contents, replace with forms
+      $("#account_contents").hide();
+      $("#edit_account").show();
     });
   });
 
