@@ -367,22 +367,12 @@ class User extends CI_Controller{
         {
             $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
             $this->profile();
-            echo "<script type='text/javascript'>alert('Success');</script>";
+            echo "<script type='text/javascript'>alert('Changes are saved.');</script>";
         }
         else
         {
-            $data = $this->profile();
-
-            if($this->session->userdata('user_type')==='Admin')
-            {
-                $this->load->view('navbar_admin',$data);
-            }
-            else
-            {
-                $this->load->view('navbar_user',$data);
-            }
-
-            $this->load->view('profile_view', $data);
+            $this->profile(); 
+            echo "<script type='text/javascript'>alert('Error. Changes are not saved. Please try again.');</script>";  
         }        
 
     }
@@ -394,7 +384,7 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
-        if ($this->form_validation->run() === FALSE) {
+        if ($this->form_validation->run() == FALSE) {
             return false;
         } else {
             return true;
