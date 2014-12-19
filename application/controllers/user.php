@@ -45,14 +45,7 @@ class User extends CI_Controller{
         } 
         else 
         {
-        	if($this->session->userdata('user_type')=='Admin')
-            {
-                $this->load->view('navbar_admin',$data);
-            }
-            else
-            {
-                $this->load->view('navbar_user',$data);
-            }
+        	$this->feed();
         }
     }
     public function log_validation()
