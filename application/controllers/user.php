@@ -19,13 +19,12 @@ class User extends CI_Controller{
         {
             if($this->session->userdata('user_type')=='Admin')
             {
-                $navbar = 'navbar_admin';
+                $this->load->view('navbar_admin',$data);
             }
             else
             {
-                $navbar = 'navbar_user';
+                $this->load->view('navbar_user',$data);
             }
-            $this->feed($navbar);
         }
     }
     public function login()
@@ -47,14 +46,13 @@ class User extends CI_Controller{
         else 
         {
         	if($this->session->userdata('user_type')=='Admin')
-        	{
-        		$navbar = 'navbar_admin';
-        	}
-        	else
-        	{
-        		$navbar = 'navbar_user';
-        	}
-            $this->feed($navbar);
+            {
+                $this->load->view('navbar_admin',$data);
+            }
+            else
+            {
+                $this->load->view('navbar_user',$data);
+            }
         }
     }
     public function log_validation()
@@ -211,7 +209,7 @@ class User extends CI_Controller{
         $this->session->sess_destroy();
         $this->index();
     }
-    public function feed($navbar)
+    public function feed()
     {
         if (($this->session->userdata('logged_in')==FALSE)) 
         {
@@ -221,7 +219,16 @@ class User extends CI_Controller{
         {
             $data['title']= 'Feed';
             $this->load->view('header_view_user',$data);
-            $this->load->view($navbar,$data);
+
+            if($this->session->userdata('user_type')=='Admin')
+            {
+                $this->load->view('navbar_admin',$data);
+            }
+            else
+            {
+                $this->load->view('navbar_user',$data);
+            }
+
             $this->display_feed();
         }
     }
@@ -353,7 +360,16 @@ class User extends CI_Controller{
         else
         {
             $data = $this->profile();
-            $this->load->view('navbar_user');
+
+            if($this->session->userdata('user_type')=='Admin')
+            {
+                $this->load->view('navbar_admin',$data);
+            }
+            else
+            {
+                $this->load->view('navbar_user',$data);
+            }
+
             $this->load->view('profile_view', $data);
         }
     }
@@ -374,5 +390,101 @@ class User extends CI_Controller{
 
         
 
+    function do_uploadaudio()
+    {   
+        $config['upload_path'] = './uploads/mp3';
+        $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
+        $config['max_size'] = '10000';
+        //$config['max_width']  = '1024';
+        //$config['max_height']  = '1050';
+        $this->input->is_ajax_request();
+        $this->load->library('upload', $config);
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name'];
+
+        if ( ! $this->upload->do_upload())
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $this->upload_error();
+      
+        }
+        else
+        {
+            
+            $data = array('upload_data' => $this->upload->data());
+           
+        }
+            $audio_title=$this->input->post('audio_title');
+            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+            $audio_file = $upload_data['file_name']; 
+            $audio_genre=$this->input->post('audio_genre');
+            $this->fetch_audio_id($audio_title, $audio_file, $audio_genre);    
+    }
+
+    public function fetch_audio_id($audio_title, $audio_file, $audio_genre)
+    {
+    $data['title']='Upload';
+    $data['audio_title']= $audio_title;
+    $data['audio_file']=$audio_file;
+    $data['audio_genre']=$audio_genre;
+    $this->load->view('header_view_user',$data);
+
+    if($this->session->userdata('user_type')=='Admin')
+    {
+        $this->load->view('navbar_admin',$data);
+    }
+    else
+    {
+        $this->load->view('navbar_user',$data);
+    }
+
+    $this->load->view('show_temp_audio_view', $data); 
+    }
+
+    public function upload()
+    {
+        $data['title']='Upload';
+        $this->load->view('header_view_user',$data);
+
+        if($this->session->userdata('user_type')=='Admin')
+        {
+            $this->load->view('navbar_admin',$data);
+        }
+        else
+        {
+            $this->load->view('navbar_user',$data);
+        }
+
+        $this->load->view('upload_view');
+
+    }
+    public function addAudio()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('audio_title', 'Song Title', 'trim|required|min_length[4]|xss_clean');
+        $this->form_validation->set_rules('audio_genre', 'Audio Genre', 'trim|max_length[20]');
+     
+        if ($this->form_validation->run() == FALSE) {
+            $this->upload();
+        } 
+        else {
+            $file_name = $this->input->post('$audio_file');             
+            $this->load->model('audio_model');
+            $this->audio_model->add_audio($file_name); 
+            echo "Song has been successfully added!!";
+            $this->output->set_header('refresh:3;url=user/feed');         
+        }
+    }  
+    public function upload_error()
+    {
+        $this->load->view('upload_error_view');
+    }
+    public function upload_success()
+    {
+        $this->load->view('upload_succes_view');
+        
+    }
+ 
 }
 ?>
