@@ -330,8 +330,8 @@ class User extends CI_Controller{
         else
         {
             $uid = $this->session->userdata('user_id');
+            $data['rec'] = $this->user_model->get_user_songs($uid);            
             $data['info'] = $this->user_model->get_info($uid);            
-            $data['rec'] = $this->user_model->get_user_songs($uid);
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
@@ -340,15 +340,33 @@ class User extends CI_Controller{
             $data['edit_personal_info'] = $this->load->view('edit_personal_info_tab',$data,true);
             $data['edit_account'] = $this->load->view('edit_account_tab',$data,true);
             $this->load->view('header_view_user',$data);
+            if($this->session->userdata('user_type')=='Admin')
+                {
+                $navbar = 'navbar_admin';
+                }
+            else
+                {
+                $navbar = 'navbar_user';
+                }
+            $this->load->view($navbar,$data);
+            $this->load->view('profile_view', $data);
             return $data;
         }
     }
 
-    public function profile_user()
+    public function edit_account_info()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
+      
+        $data = array(
+        'user_username' =>$this->input->post('user_username'),       
+        'user_email'=>$this->input->post('user_email'),       
+        'user_password' =>md5($this->input->post('user_password')),
+        );
+        if($this->edit_account_info_validation())
         {
-            $this->index();
+            $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
+            $this->profile();
+            echo "<script type='text/javascript'>alert('Success');</script>";
         }
         else
         {
@@ -364,24 +382,40 @@ class User extends CI_Controller{
             }
 
             $this->load->view('profile_view', $data);
-        }
+        }        
+
     }
 
-    public function profile_admin()
+    public function edit_account_info_validation()
     {
-        if (($this->session->userdata('logged_in')==FALSE)) 
-        {
-            $this->index();
-        }
-        else
-        {
-            $data = $this->profile();
-            $this->load->view('navbar_admin');
-            $this->load->view('profile_view', $data);
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
+        if ($this->form_validation->run() == FALSE) {
+            return false;
+        } else {
+            return true;
         }
     }
-
         
+    public function edit_personal_info()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        //$this->form_validation->set_rules('user_username', 'First name', 'trim|required|min_length[4]');
+        //$this->form_validation->set_rules('user_email', 'Last name', 'trim|required|min_length[4]');
+        //$this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');       
+        $data = array(
+        'user_username' =>$this->input->post('user_username'),       
+        'user_email'=>$this->input->post('user_email'),       
+        'user_password' =>md5($this->input->post('user_password')),
+        );
+        $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
+        $this->profile();
+    }
+
 
     function do_uploadaudio()
     {   

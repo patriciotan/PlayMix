@@ -1,5 +1,10 @@
             <table class="feed_table">  
-              <?php foreach($rec->result() as $row): ?>
+              <?php 
+              if($rec==''){
+                echo 'You don\'t have any songs here!';
+              }
+              else
+              foreach($rec->result() as $row): ?>
               <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
                 <td><a href="#"><img src="<?php echo base_url(); ?>assets/play.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
                 <td><a href="#"><img src="<?php echo base_url(); ?>assets/plus.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>

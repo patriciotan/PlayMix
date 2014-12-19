@@ -62,7 +62,7 @@
       $("#personal_info_contents").hide();
       $("#edit_personal_info").show();
     });
-    $('#cancel_edit').click(function(){
+    $('#cancel_edit_personal_info').click(function(){
       $("#edit_personal_info").hide(); 
       $("#personal_info_contents").show();
       jQuery('#user_current_photo').attr("src", "<?php echo base_url();?><?php echo $info['user_photo']?>");
@@ -70,7 +70,11 @@
     $('#edit_account_button').click(function(){
       //onclick, remove personal info contents, replace with forms
       $("#account_contents").hide();
-      $("#edit_account").show();
+      $("#edit_account_info").show();
+    });
+    $('#cancel_edit_account').click(function(){
+      $("#edit_account_info").hide(); 
+      $("#account_contents").show();
     });
 
     function readURL(input) {

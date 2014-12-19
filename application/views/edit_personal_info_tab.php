@@ -23,7 +23,7 @@
 
                     <div style="margin-top:20px">
                       <input type="submit" class="btn btn_white"  value="Save" id="submit_edit" style="margin-right:10px"/>
-                      <input type="reset" class="btn btn_red"  value="Cancel" id="cancel_edit" />
+                      <input type="reset" class="btn btn_red"  value="Cancel" id="cancel_edit_personal_info" />
                     </div>                    
                   </div>
 
@@ -46,5 +46,5 @@
                 </form>
                 <?php echo form_close();?>
               </div>
-            
+            <?php echo validation_errors('<p class="error">'); ?>
             </div>
