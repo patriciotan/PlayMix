@@ -17,14 +17,7 @@ class User extends CI_Controller{
         } 
         else 
         {
-            if($this->session->userdata('user_type')=='Admin')
-            {
-                $this->load->view('navbar_admin',$data);
-            }
-            else
-            {
-                $this->load->view('navbar_user',$data);
-            }
+            $this->feed();
         }
     }
     public function login()
@@ -39,13 +32,21 @@ class User extends CI_Controller{
         {
             $result=$this->user_model->login($email,$password);
         }
-        if (!$result && $this->session->userdata('logged_in')==FALSE) 
-        { 
-            $this->index();        
-        } 
-        else 
+        if($result == "banned")
         {
-        	$this->feed();
+            $this->index();
+            $this->load->view("banned_login_script");
+        }
+        else
+        {
+            if ($this->session->userdata('logged_in')==FALSE) 
+            { 
+                $this->index();        
+            } 
+            else 
+            {
+                $this->feed();
+            }
         }
     }
     public function log_validation()

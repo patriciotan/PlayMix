@@ -23,8 +23,12 @@ class User_model extends CI_Model {
                 'user_username'  => $rows->user_username,
                 'user_email' => $rows->user_email,
                 'user_type' => $rows->user_type,
+                'user_status' => $rows->user_status,
                 'logged_in'  => TRUE
                 );
+            }
+            if($rows->user_status == "Banned"){
+                return "banned";
             }
             $this->session->set_userdata($newdata);
             return true;
