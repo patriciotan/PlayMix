@@ -14,7 +14,7 @@
           <div style="height: 0px;" class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="#">Profile</a></li>
-              <li><a href="#">Upload</a></li>
+              <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
             &nbsp; 
               <li><div class="input-group">
 
