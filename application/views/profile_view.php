@@ -121,6 +121,6 @@
         jQuery('#twitter_img').click(function(){return false});
       }
       else
-        jQuery('#twitter_img').attr("src", "<?php echo base_url();?>assets/img/google.png");      
+        jQuery('#twitter_img').attr("src", "<?php echo base_url();?>assets/img/twitter.png");      
     });
 </script>

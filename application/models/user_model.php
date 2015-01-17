@@ -66,6 +66,7 @@ class User_model extends CI_Model {
 
     public function get_all_users()
     {
+        $this->db->where("user_status",'Okay');
         $query = $this->db->get("user");
         if ($query->num_rows()>0) {
             return $query;
@@ -74,6 +75,7 @@ class User_model extends CI_Model {
 
     public function get_all_songs()
     {
+        $this->db->where("audio_status",'Okay');
         $query = $this->db->get("audio");
         if ($query->num_rows()>0) {
             return $query;
@@ -174,6 +176,7 @@ class User_model extends CI_Model {
             {
                 $this->db->where("user_id",$row->user_id);
                 $this->db->update("user", $data);
+                $this->ban_reset();
             }
         }
     }
@@ -188,6 +191,7 @@ class User_model extends CI_Model {
             {
                 $this->db->where("audio_id",$row->audio_id);
                 $this->db->update("audio", $data);
+                $this->delete_reset();
             }
         }
     }
@@ -327,6 +331,27 @@ class User_model extends CI_Model {
         if ($query->num_rows()>0) {
             return $query;
         }
+    }
+
+    function update_personal_info($uid, $fname, $lname, $city, $cntry, $fb, $google, $twitter, $bio, $pic)
+    {
+
+        
+        $data = array(
+            'user_fname' => $fname,
+            'user_lname' => $lname,
+            'user_city' => $city,
+            'user_country' => $cntry,
+            'user_fb' => $fb,
+            'user_google' => $google,
+            'user_twitter' => $twitter,
+            'user_bio' => $bio,
+            'user_photo' => $pic,
+        );
+
+        $this->db->select('*', 'user');
+        $this->db->where('user_id', $uid);
+        $this->db->update('user', $data);
     }
 
 }

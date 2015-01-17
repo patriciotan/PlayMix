@@ -1,12 +1,10 @@
 <div id="wrapper">
 
 
-<div class="container feed_container span10" > <!-- This is the div that contains the most-played songs according to the database -->
-<br />
+<div class="container" style="padding-bottom: 80px; padding-top: 80px;"> <!-- This is the div that contains the most-played songs according to the database -->
 <div class="centered" style="position:relative; width:870px;">
 
 <ul style="width:500px;"><h1>FEED</h1></ul>
-<br /><br />
   <table class="display" id="feed">  
     <thead>
       <th>Play</th>
