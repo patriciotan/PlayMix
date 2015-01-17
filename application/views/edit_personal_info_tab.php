@@ -1,6 +1,6 @@
             <div class="centered" id="edit_personal_info">
               <div>
-                <?php echo form_open("user/edit_personal_info"); ?>
+                <?php echo form_open("user/update_personal_info"); ?>
                 <form>
                   <div style="float:right; margin-right:30px">
                     <label for="user_fname">First name</label>

@@ -5,6 +5,9 @@ class User extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
     }
     
     public function index()
@@ -236,6 +239,7 @@ class User extends CI_Controller{
         {
             $data['rec'] = $this->user_model->get_songs();
             $this->load->view('feed_view', $data);
+            $this->load->view('player');
         }
     }
     public function admin()
@@ -390,29 +394,13 @@ class User extends CI_Controller{
             return true;
         }
     }
-        
-    public function edit_personal_info()
-    {
-        $this->load->library('form_validation');
-        // field name, error message, validation rules
-        //$this->form_validation->set_rules('user_username', 'First name', 'trim|required|min_length[4]');
-        //$this->form_validation->set_rules('user_email', 'Last name', 'trim|required|min_length[4]');
-        //$this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');       
-        $data = array(
-        'user_username' =>$this->input->post('user_username'),       
-        'user_email'=>$this->input->post('user_email'),       
-        'user_password' =>md5($this->input->post('user_password')),
-        );
-        $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
-        $this->profile();
-    }
 
 
     function do_uploadaudio()
     {   
         $config['upload_path'] = './uploads/mp3';
         $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
-        $config['max_size'] = '10000';
+        $config['max_size'] = '40000';
         //$config['max_width']  = '1024';
         //$config['max_height']  = '1050';
         $this->input->is_ajax_request();
@@ -485,13 +473,14 @@ class User extends CI_Controller{
      
         if ($this->form_validation->run() === FALSE) {
             $this->upload();
+            echo "<script type='text/javascript'>alert('Upload failed. Please try again.');</script>";
         } 
         else {
             $file_name = $this->input->post('$audio_file');             
             $this->load->model('audio_model');
             $this->audio_model->add_audio($file_name); 
-            echo "Song has been successfully added!!";
-            $this->output->set_header('refresh:3;url=user/feed');         
+            echo "<script type='text/javascript'>alert('Song is successfully uploaded.');</script>";
+            $this->output->set_header('refresh:1;url=user/feed');         
         }
     }  
     public function upload_error()
@@ -502,6 +491,93 @@ class User extends CI_Controller{
     {
         $this->load->view('upload_succes_view');
         
+    }
+
+    public function update_personal_info() {
+
+        $id = $this->session->userdata('user_id');
+        $getdata = $this->user_model->get_info($id);
+
+        $fname = $this->input->post('user_fname');
+
+        if($fname == '') {
+            $fname = $getdata['user_fname'];
+        }            
+
+        $lname = $this->input->post('user_lname');
+
+        if($lname == '') {
+            $lname = $getdata['user_lname'];
+        }
+
+        $city = $this->input->post('user_city');
+        
+        if($city == '') {
+            $city = $getdata['user_city'];
+        }
+
+        $country = $this->input->post('user_country');
+
+        if($country == '') {
+            $country = $getdata['user_country'];
+        }        
+
+        $fb = $this->input->post('user_fb');
+        if($fb == '') {
+            $fb = $getdata['user_fb'];
+        }        
+
+        $google = $this->input->post('user_google');
+        if($google == '') {
+            $google = $getdata['user_google'];
+        }        
+        $twitter = $this->input->post('user_twitter');
+        if($twitter == '') {
+            $twitter = $getdata['user_twitter'];
+        }
+
+        $bio = $this->input->post('user_bio');
+
+        if($bio == '') {
+            $bio = $getdata['user_bio'];
+        }
+        $pic = $this->input->post('user_photo');
+        if($pic == '') {
+            $pic = $getdata['user_photo'];
+        }
+
+        $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $pic);
+
+        $this->profile();
+    }
+
+    function do_uploadphoto()
+    {   
+        $config['upload_path'] = './uploads';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = '4000';
+        //$config['max_width']  = '1024';
+        //$config['max_height']  = '1050';
+        $this->input->is_ajax_request();
+        $this->load->library('upload', $config);
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name'];
+
+        if ( ! $this->upload->do_upload())
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $this->upload_error();
+      
+        }
+        else
+        {
+            
+            $data = array('upload_data' => $this->upload->data());
+           
+        }
+            $photo=$this->input->post('audio_title');
+            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+            $photo_file = $upload_data['file_name'];     
     }
  
 }
