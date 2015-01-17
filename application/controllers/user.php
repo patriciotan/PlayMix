@@ -382,7 +382,7 @@ class User extends CI_Controller{
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
-        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_check_email');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
         if ($this->form_validation->run() == FALSE) {
             return false;
