@@ -19,6 +19,7 @@
     <tbody>
     <?php foreach($rec->result() as $row): ?>
       <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+        <td style="display:none"><?=$row->user_id;?></td>
         <td><a href="#"><?=$row->audio_title;?></a></td>
         <td align="left"><a href="#"><?=$row->user_username;?></a></td>
         <td align="center"><?=$row->audio_date_added;?></td>

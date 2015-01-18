@@ -50,6 +50,7 @@ class User_model extends CI_Model {
     {
         $this->db->select('audio.audio_title');
         $this->db->select('user.user_username');
+        $this->db->select('user.user_id');
         $this->db->select('audio.audio_date_added');
         $this->db->select('audio.audio_play_count');
         //$this->db->select('*');

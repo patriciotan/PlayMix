@@ -1,4 +1,4 @@
-            <div class="centered" id="edit_personal_info">
+            <div class="centered" id="edit_personal_info" style="overflow:auto;">
               <div>
                 <?php echo form_open_multipart("user/update_personal_info"); ?>
                 <form method="post" action="some_action" enctype="multipart/form-data">
