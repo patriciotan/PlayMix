@@ -333,7 +333,7 @@ class User_model extends CI_Model {
         }
     }
 
-    function update_personal_info($uid, $fname, $lname, $city, $cntry, $fb, $google, $twitter, $bio, $pic)
+    function update_personal_info($uid, $fname, $lname, $city, $cntry, $fb, $google, $twitter, $bio, $photo)
     {
 
         
@@ -346,7 +346,7 @@ class User_model extends CI_Model {
             'user_google' => $google,
             'user_twitter' => $twitter,
             'user_bio' => $bio,
-            'user_photo' => $pic,
+            'user_photo'    => $photo,
         );
 
         $this->db->select('*', 'user');
