@@ -493,7 +493,8 @@ class User extends CI_Controller{
         
     }
 
-    public function update_personal_info() {
+    public function update_personal_info() 
+    {
 
         $id = $this->session->userdata('user_id');
         $getdata = $this->user_model->get_info($id);
@@ -541,44 +542,80 @@ class User extends CI_Controller{
         if($bio == '') {
             $bio = $getdata['user_bio'];
         }
-        $pic = $this->input->post('user_photo');
-        if($pic == '') {
-            $pic = $getdata['user_photo'];
+
+
+        $this->load->helper('string');
+        $data = $this->do_uploadphoto();
+        $filename = $data['upload_data']['file_name'];
+        $picpath = "/uploads/pp/".$filename;
+
+        if($picpath == "/uploads/pp/") {
+            $picpath = $getdata['user_photo'];
         }
 
-        $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $pic);
+
+        $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $picpath);
 
         $this->profile();
     }
 
-    function do_uploadphoto()
+    public function do_uploadphoto()
     {   
-        $config['upload_path'] = './uploads';
+        $config['upload_path'] = './uploads/pp/';
         $config['allowed_types'] = 'jpg|png';
-        $config['max_size'] = '4000';
+        $config['max_size'] = '3000';
+        $config['file_name'] = 'pp';
         //$config['max_width']  = '1024';
         //$config['max_height']  = '1050';
-        $this->input->is_ajax_request();
-        $this->load->library('upload', $config);
-        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-        $file_name = $upload_data['file_name'];
 
-        if ( ! $this->upload->do_upload())
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload("user_new_photo"))
         {
             $error = array('error' => $this->upload->display_errors());
-            $this->upload_error();
+            $this->load->view("testerror", $error);
       
         }
         else
         {
             
             $data = array('upload_data' => $this->upload->data());
-           
+            return $data;           
         }
-            $photo=$this->input->post('audio_title');
-            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-            $photo_file = $upload_data['file_name'];     
+        
+        //$data = $this->upload->data();
+        //$picpath = $data['full_path'];
+        //echo "<script type='text/javascript'>alert('$picpath');</script>";
     }
  
+    public function send_collab()
+    {
+        $from = 'mictest12345678910@gmail.com';
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => $from, // change it to yours
+            'smtp_pass' => '123456789Ten', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1'
+        );
+            $email = $this->input->post('user_email');
+            $newpass = random_string('alnum','8'); //new password
+
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
+
+
+                $this->load->library('email', $config);
+                $this->email->set_newline("\r\n");
+                $this->email->from($from); // change it to yours
+                $this->email->to($email); // change it to yours
+                $this->email->subject('PlayMix Collaboration from:');
+                $this->email->message('This is your new password: '. $newpass . '. You may change it in your profile page.');
+
+                $this->email->send();
+    }
+
 }
 ?>

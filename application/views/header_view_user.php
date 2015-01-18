@@ -15,7 +15,7 @@
     <link href="<?php echo base_url(); ?>assets/DataTable/media/css/jquery.dataTables.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/DataTable/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <link rel="icon" href="<?php echo base_url(); ?>assets/forward.ico" type="image/x-icon"/>
+    <link rel="icon" href="<?php echo base_url(); ?>assets/playmix_logo_icon.ico" type="image/x-icon"/>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.0.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.leanModal.min.js" type="text/javascript"></script>

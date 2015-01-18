@@ -106,3 +106,72 @@ max-width: 100%;
 .user_websites a {margin-right:20px; margin-top:20px;}
 
 #account h3 {margin-left:30px;margin-top:20px;}
+
+#notification_count 
+{
+padding: 0px 6px 0px 6px;
+background: #F90000;
+color: #ffffff;
+font-weight: bold;
+margin-left: 32px;
+border-radius: 9px;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+position: absolute;
+margin-top: -3px;
+font-size: 10px;
+}
+
+.notifpopup {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:1;
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in;
+    pointer-events: auto;
+}
+
+.notifpopupdialog {
+    z-index:999999;
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 3px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #B3B3B3);
+    background: -webkit-linear-gradient(#fff, #B3B3B3);
+    background: -o-linear-gradient(#fff, #B3B3B3);
+}
+
+.closeCol:hover { background: #00d9ff; }
+
+#close {
+  display: none; 
+}
+
+.upload-img-button {    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+background-color: rgb(237, 99, 71);
+border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+color:#FFF;
+}
+
+.upload-img-button:hover{
+    background-color: rgb(234, 84, 53);
+}
+
+input[type="file"] {
+    display: none;
+}

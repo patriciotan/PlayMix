@@ -1,6 +1,9 @@
 <div id="wrapper">
   <div class="container" >
     <div class="centered" style="position:relative; top:150px; width:870px;">
+      <div>
+        <button class="btn btn_red" style="float:right">Collaborate!</button>
+      </div>
       <div class="tabbable" id="profileTab">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>
@@ -83,6 +86,7 @@
 
             reader.onload = function (e) {
                 $('#user_current_photo').attr('src', e.target.result);
+                $('#user_photo').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -92,6 +96,23 @@
     $("#user_new_photo").change(function(){
         readURL(this);
     });
+
+
+    $('#popup_pp').hide();
+
+    $('#select_pp').click(function(){
+      $("#popup_pp").fadeIn("fast");
+    });
+
+    $("#popup_bg").click(function(){
+      $("#popup_pp").fadeOut("fast");
+    });
+
+    $("#cancel_choose").click(function(){
+      $("#popup_pp").fadeOut("fast");
+      $("#popup_pp").hide();
+    });
+
   });
 
     $(document).ready(function(){
@@ -122,5 +143,5 @@
       }
       else
         jQuery('#twitter_img').attr("src", "<?php echo base_url();?>assets/img/twitter.png");      
-    });
+    });    
 </script>

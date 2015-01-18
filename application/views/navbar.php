@@ -17,10 +17,9 @@
               <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
             &nbsp; 
               <li><div class="input-group">
-
-  <input type="text" class="form-control" placeholder="Search..." style="position: relative; left: 50px; top:5px;">
-</li>
-          <li><a style="position: relative; left: 800px; top: -18px;" href="<?php echo base_url('index.php/user/logout'); ?>">Log out</a></li>
+                <input type="text" class="form-control" placeholder="Search..." style="position: relative; left: 50px; top:5px;">
+              </li>
+              <li><a style="position: relative; left: 800px; top: -18px;" href="<?php echo base_url('index.php/user/logout'); ?>">Log out</a></li>
             </ul>
             </div>
           </div><!--/.nav-collapse -->
