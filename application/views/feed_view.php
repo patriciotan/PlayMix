@@ -20,6 +20,7 @@
     <tbody>
     <?php foreach($rec->result() as $row): ?>
       <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+        <td style="display:none"><?=$row->user_id;?></td>
         <td><a href="#"><img src="<?php echo base_url(); ?>assets/play.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
         <td><a href="#"><img src="<?php echo base_url(); ?>assets/plus.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
         <td><a href="#"><?=$row->audio_title;?></a></td>
