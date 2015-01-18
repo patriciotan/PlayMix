@@ -11,15 +11,18 @@
 		<form>
 			<div class="span3"><br/>
 				<h3>Banned Users</h3><br/>
-				<div class="admin_container">
-					<table class="feed_table" style="width:250px;">
+				<div>
+					<!-- <table class="feed_table" style="width:250px;"> -->
+					<select name="users[]" style="width:270px; height:292px;" multiple>
 						<?php if(!is_null($bannedlist)) { if(is_array($bannedlist->result())) { foreach($bannedlist->result() as $row): ?>
-							<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+							<option value="<?=$row->user_id;?>"><?=$row->user_username;?></option>
+							<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
 								<td><input name="users[]" type="checkbox" value="<?=$row->user_id;?>" /><?=$row->user_username;?></td>
-							</tr>
+							</tr> -->
 						<?php endforeach; } } ?>
-					</table>
-				</div><br/>
+					</select>
+					<!-- </table> -->
+				</div>
 				<div class="btn-group">
 					<button type="submit" class="btn" style="width:135px;">Unban</button>
 				</div>
