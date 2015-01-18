@@ -34,15 +34,18 @@
 	<form>
 		<div class="offset1 span3">
 			<h3>PlayMix Songs</h3><br/>
-			<div class="admin_container">
-				<table class="feed_table" style="width:250px;">
+			<div>
+				<!-- <table class="feed_table" style="width:250px;"> -->
+					<select name="songs[]" style="width:270px; height:292px;" multiple>
 					<?php foreach($songs->result() as $row): ?>
-						<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+						<option value="<?=$row->audio_id;?>"><?=$row->audio_title;?></option>
+						<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
 							<td><input name="songs[]" type="checkbox" value="<?=$row->audio_id;?>" /><?=$row->audio_title;?></td>
-						</tr>
+						</tr> -->
 					<?php endforeach;?>
-				</table>
-			</div><br/>
+					</select>
+				<!-- </table> -->
+			</div>
 			<div class="btn-group">
 				<button type="submit" class="btn" style="width:135px;">Add</button>
 			</div>

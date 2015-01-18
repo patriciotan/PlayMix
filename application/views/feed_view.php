@@ -7,29 +7,27 @@
 <ul style="width:500px;"><h1>FEED</h1></ul>
   <table class="display" id="feed">  
     <thead>
-      <th>Play</th>
-      <th>Add to playlist</th>
-      <th>Title</th>
-      <th>by</th>
-      <th>Artist</th>
-      <th>Date uploaded</th>
-      <th>No. of plays</th>
-      <th>Share</th>
-      <th>Download</th>
+      <th>TITLE</th>
+      <th>ARTIST</th>
+      <th width="50px">ADDED</th>
+      <th width="50px">PLAYS</th>
+      <th width="5px"></th>
+      <th width="5px"></th>
+      <th width="5px"></th>
+      <th width="5px"></th>
     </thead>
     <tbody>
     <?php foreach($rec->result() as $row): ?>
       <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
         <td style="display:none"><?=$row->user_id;?></td>
-        <td><a href="#"><img src="<?php echo base_url(); ?>assets/play.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
-        <td><a href="#"><img src="<?php echo base_url(); ?>assets/plus.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
         <td><a href="#"><?=$row->audio_title;?></a></td>
-        <td style="width:10px; padding-right:20px">by</td>
-        <td ><a href="#"><?=$row->user_username;?></a></td>
-        <td ><?=$row->audio_date_added;?></td>
-        <td ><?=$row->audio_play_count;?></td>
-        <td><a href="#"><img src="<?php echo base_url(); ?>assets/share.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a> </td>
-        <td><a href="#"><img src="<?php echo base_url(); ?>assets/download.ico" style="float:left;margin-top:5px;z-index:5" alt="logo"/></a></td>
+        <td align="left"><a href="#"><?=$row->user_username;?></a></td>
+        <td align="center"><?=$row->audio_date_added;?></td>
+        <td align="left"><?=$row->audio_play_count;?></td>
+        <td align="center"><a href="#"><img src="<?php echo base_url(); ?>assets/play.ico" style="float:center;margin-top:5px;z-index:5" alt="logo"/></a></td>
+        <td align="center"><a href="#"><img src="<?php echo base_url(); ?>assets/plus.ico" style="float:center;margin-top:5px;z-index:5" alt="logo"/></a></td>
+        <td align="center"><a href="#"><img src="<?php echo base_url(); ?>assets/share.ico" style="float:center;margin-top:5px;z-index:5" alt="logo"/></a> </td>
+        <td align="center"><a href="#"><img src="<?php echo base_url(); ?>assets/download.ico" style="float:center;margin-top:5px;z-index:5" alt="logo"/></a></td>
       </tr>
     <?php endforeach;?>
     </tbody>

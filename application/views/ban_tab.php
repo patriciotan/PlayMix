@@ -34,16 +34,19 @@
 	<form>
 		<div class="offset1 span3">
 			<h3>PlayMix Users</h3><br/>
-			<div class="admin_container">
-				<table class="feed_table" style="width:250px;">
+			<div>
+				<!-- <table class="feed_table" style="width:250px;"> -->
+					<select name="users[]" style="width:270px; height:292px;" multiple>
 					<?php foreach($users->result() as $row): ?>
-						<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-							<td><input name="users[]" type="checkbox" value="<?=$row->user_id;?>" /><?=$row->user_username;?></td>
-						</tr>
+						<option value="<?=$row->user_id;?>"><?=$row->user_username;?></option>
+						<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+							<td><input name="users[]" type="option" value="<?=$row->user_id;?>" /><?=$row->user_username;?></td>
+						</tr> -->
 					<?php endforeach;?>
-				</table>
-			</div><br/>
-			<div class="btn-group">
+					</select>
+				<!-- </table> -->
+			</div>
+			<div class="btn-group" style="margin-top:10px;">
 				<button type="submit" class="btn" style="width:135px;">Add</button>
 			</div>
 		</div>
