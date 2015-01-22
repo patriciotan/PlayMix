@@ -49,6 +49,7 @@ class User_model extends CI_Model {
     public function get_songs()
     {
         $this->db->select('audio.audio_title');
+        $this->db->select('audio.audio_file');
         $this->db->select('user.user_username');
         $this->db->select('user.user_id');
         $this->db->select('audio.audio_date_added');

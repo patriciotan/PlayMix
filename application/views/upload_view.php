@@ -28,10 +28,11 @@
             <option>Alternative</option>
             <option>Classical</option>
             <option>Country</option>
-			<option>EDM</option>
-			<option>Jazz</option>
-			<option>Pop</option>
-			<option>Rock</option>
+      			<option>EDM</option>
+      			<option>Jazz</option>
+      			<option>Pop</option>
+      			<option>Rock</option>
+            <option>Soul</option>
           </select>
        	<tr>
       	<td style="width: 120px">Upload Audio</td>

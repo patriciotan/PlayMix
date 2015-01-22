@@ -1,16 +1,29 @@
-<div class="navbar navbar-fixed-bottom">
+<div class="navbar navbar-fixed-bottom" style="width:750px; left:50%; margin-left:-375px;">
   <div class="navbar-inner" style="background-color:#363636;">
-    <div style="margin-left:30px;">
-      <audio id="audio" controls preload="none" style="width:1000px; margin-top:5px; margin-left:145px;">
-      	<source src="<?php echo base_url(); ?>uploads/mp3/01_Meghan_Trainor_-_All_About_That_Bass.mp3" type="audio/mp3">
+    <div id="audioDiv">
+      <audio id="audio" controls preload="none" style="width:750px; margin-top:7px;">
+      	<source id="audioSrc" src="" type="audio/mp3">
       	<code>Your browser does not support the audio element!</code>
       </audio>
     </div>
   </div>
 </div>
 
-<script>
-	var audio = document.getElementById("audio");
+</body>
 
+<script type="text/javascript">
+
+	function playSong(node)
+	{
+		var audio = document.getElementById("audio");
+		var source = "<?php echo base_url(); ?>uploads/mp3/";
+		var file = node.parentNode.parentNode.cells[0].textContent;
+		source = source.concat(file);
+		audioSrc.src = source.concat(".mp3");
+		audio.load();
+		audio.play();
+	}
 
 </script>
+
+</html>
