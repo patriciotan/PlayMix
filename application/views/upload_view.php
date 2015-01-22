@@ -31,17 +31,16 @@
           </select>
        	<tr>
       	 <td>Upload Audio</td>
-                <label class="upload-img-button" style="display:block; float:left; margin-top:20px">
-                  <input type="file" name="user_new_photo" accept="audio/mp3, image/jpeg, image/jpg" id="user_new_photo">
+                <br/>
+                <label class="upload-img-button" style="display:block; float:left; margin-top:10px">
+                  <input type="file" name="user_new_photo" accept="audio/mp3, audio/wav" id="audio_file">
                   Select audio file
                 </label>         
     	  </tr>        
-        <tr> 
-          <div style="position:relative;top:40px;height:200px;width:200px">   
-            <div class="centered">
-              <input name="submit" class="btn btn-default" style="width: 120px" type="submit" value="Submit" /></td>
-            </div>
-          </div>     
+        <tr>    
+            <div class="" style="position:relative; margin-top:20px; margin-bottom:50px">
+              <input name="submit" class="btn btn-default" style="width: 120px" type="submit" value="Submit" />
+            </div>   
         </tr>
       </table>
       </form>
