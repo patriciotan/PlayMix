@@ -405,10 +405,8 @@ class User extends CI_Controller{
         $config['max_size'] = '40000';
         //$config['max_width']  = '1024';
         //$config['max_height']  = '1050';
-        $this->input->is_ajax_request();
         $this->load->library('upload', $config);
-        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-        $file_name = $upload_data['file_name'];
+
 
         if ( ! $this->upload->do_upload())
         {
@@ -420,13 +418,13 @@ class User extends CI_Controller{
         {
             
             $data = array('upload_data' => $this->upload->data());
+            $audio_title=$this->input->post('audio_title');
+            $audio_file = $data['file_name']; 
+            $audio_genre=$this->input->post('audio_genre');
+            $this->fetch_audio_id($audio_title, $audio_file, $audio_genre);  
            
         }
-            $audio_title=$this->input->post('audio_title');
-            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-            $audio_file = $upload_data['file_name']; 
-            $audio_genre=$this->input->post('audio_genre');
-            $this->fetch_audio_id($audio_title, $audio_file, $audio_genre);    
+  
     }
 
     public function fetch_audio_id($audio_title, $audio_file, $audio_genre)
