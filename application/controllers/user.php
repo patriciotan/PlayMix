@@ -238,8 +238,9 @@ class User extends CI_Controller{
         else
         {
             $data['rec'] = $this->user_model->get_songs();
+            $this->load->view('playlist');
             $this->load->view('feed_view', $data);
-            $this->load->view('player');
+            //$this->load->view('player');
         }
     }
     public function admin()
