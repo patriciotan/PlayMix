@@ -8,6 +8,7 @@
   <table class="display" id="feed">  
     <thead>
       <th style="display:none"></th>
+      <th style="display:none"></th>
       <th width="5px"></th>
       <th width="5px"></th>
       <th style="display:none"></th>
@@ -20,7 +21,8 @@
     <?php foreach($rec->result() as $row): ?>
       <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
         <td style="display:none"><?=$row->audio_file;?></td>
-        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td style="display:none"><?=$row->audio_photo;?></td>
+        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td align="center"><input type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
         <td align="left"><?=$row->audio_title;?></td>

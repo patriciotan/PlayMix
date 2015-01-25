@@ -29,6 +29,12 @@
 <meta content="en-us" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
+<style type="text/css">
+    #download
+    {
+        background: url(http://localhost/playmix/assets/controls/share.png) no-repeat;
+    }
+</style>
 
 </head>
 <body background="<?php echo base_url(); ?>assets/white.jpg" style="background: 100% no-repeat scroll center; ">
