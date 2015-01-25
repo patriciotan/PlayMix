@@ -482,7 +482,7 @@ class User extends CI_Controller{
             $filename = $data['upload_data']['file_name'];
             //$audiopath = "/uploads/mp3/".$filename;     
             $private = $this->input->post('audio_private');
-            if($private = false)
+            if($private == false)
                 { $private = 0;}
             else
                 { $private = 1;}
