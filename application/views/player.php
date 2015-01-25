@@ -1,10 +1,20 @@
 <div class="navbar navbar-fixed-bottom" style="width:750px; left:50%; margin-left:-375px;">
-  <div class="navbar-inner" style="background-color:#363636;">
-    <div id="audioDiv">
-      <audio id="audio" controls preload="none" style="width:750px; margin-top:7px;">
-      	<source id="audioSrc" src="" type="audio/mp3">
-      	<code>Your browser does not support the audio element!</code>
-      </audio>
+  <div class="navbar-inner" style="background-color:#363636; height:100px;">
+  	<div class="row-fluid">
+
+	  	<div id="imageDiv" class="span3">
+	  		
+	  	</div>
+	    
+	    <div id="controlsDiv" class="span9">
+		    <div id="audioDiv" class="pull-right" style="width:650px; top50%; margin-top:40px;">
+		      <audio id="audio" controls preload="none" style="width:650px;">
+		      	<source id="audioSrc" src="" type="audio/mp3">
+		      	<code>Your browser does not support the audio element!</code>
+		      </audio>
+		    </div>
+	    </div>
+
     </div>
   </div>
 </div>
