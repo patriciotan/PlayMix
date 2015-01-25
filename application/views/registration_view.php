@@ -32,13 +32,13 @@
          
 
           <div class="action_btns">
-            <input type="submit" class="btn btn_white" value="Sign Up">
-            <input type="reset" class="btn btn_red"  value="Reset" />
+            <input type="submit" style="width:106px;" class="btn btn_white" value="Sign Up">
+            <input type="reset" style="width:106px;" class="btn btn_red pull-right"  value="Reset" />
           </div>
         </form>
         <?php echo form_close(); ?>
         <div>
-          <a href="#" class="social_box fb">
+          <a href="#" id="loginFb" class="social_box fb">
             <span class="icon"><i class="fa fa-facebook"></i></span>
             <span class="icon_title">Sign up with Facebook</span>
           </a>
@@ -51,3 +51,14 @@
     </div>
 </div>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('#loginFb').click(function(){
+      alert('This functionality will be coming soon!');
+    });
+
+  });
+</script>

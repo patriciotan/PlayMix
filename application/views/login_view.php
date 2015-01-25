@@ -18,8 +18,8 @@
         <a href="<?php echo base_url('index.php/user/forgot'); ?>" id="forgot_password">Forgot password?</a>
         <p></p>
           <div class="action_btns">
-            <input type="submit" class="btn btn_white"  value="Login" />
-            <input type="reset" class="btn btn_red"  value="Reset" />
+            <input type="submit" style="width:106px;" class="btn btn_white"  value="Login" />
+            <input type="reset" style="width:106px;" class="btn btn_red pull-right"  value="Reset" />
           </div>   
         </form>
         <?php echo form_close();?>
