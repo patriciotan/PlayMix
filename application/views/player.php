@@ -29,7 +29,7 @@
 		var source = "<?php echo base_url(); ?>uploads/mp3/";
 		var file = node.parentNode.parentNode.cells[0].textContent;
 		source = source.concat(file);
-		audioSrc.src = source.concat(".mp3");
+		audioSrc.src = source;
 		audio.load();
 		audio.play();
 	}

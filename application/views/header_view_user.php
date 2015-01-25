@@ -22,6 +22,7 @@
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/dropzone.js" type="text/javascript"></script>
     
 
 <link type="text/css" rel="stylesheet" href="assets/css/style.css" />

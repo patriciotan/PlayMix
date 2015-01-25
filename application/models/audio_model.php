@@ -27,15 +27,8 @@ class audio_model extends CI_Model {
 
     }
 
-    public function add_audio($file_name)
+    public function add_audio($data)
     {
-        $data=array(
-        'user_id'           =>$this->session->userdata('user_id'),
-        'audio_title'       =>$this->input->post('audio_title'),
-        'audio_genre'       =>$this->input->post('audio_genre'),  
-        'audio_date_added'  =>date("Y/m/d"),      
-        'audio_file'        =>$file_name
-        );
         //$this->db->from('audio');
         //$this->db->join('user', 'audio.user_id = user.user_id');
         $this->db->insert('audio',$data);
