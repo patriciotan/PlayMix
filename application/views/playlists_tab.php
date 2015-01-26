@@ -52,4 +52,5 @@
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js/addplaylistpopup.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.confirm.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/script.js"></script>

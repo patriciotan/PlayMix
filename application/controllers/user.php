@@ -303,25 +303,15 @@ class User extends CI_Controller{
     public function add2playlist(){
        $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
-                'playlist_name'    =>$this->input->post('playlist_name'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-       if($this->playlist_model->add2playlist($data)){
-       echo "<script type='text/javascript'>alert('Song has been successfully added to data['playlist_name'] .');</script>";
-       redirect('/user/feed', 'refresh');    
-       } 
-       else{
-        echo "<script type='text/javascript'>alert('Something went wrong when adding it to the playlist... ');</script>";
-       redirect('/user/feed', 'refresh');     
-       }
+       $playlist_name    =$this->input->post('playlist_name');
+       $this->playlist_model->add2sequence($data);  
+       $this->playlist_model->add2playlist($data);
+       echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
+       redirect('/user/feed', 'refresh');
     }
 
-    public function delete()
-    {
-        $this->user_model->delete_list();
-        $this->admin();
-        $this->load->view('deleted_script');
-    }
     public function unban()
     {
         $users = $this->input->post('users');
@@ -674,6 +664,20 @@ class User extends CI_Controller{
         $this->index();
         $this->load->view('playlistdelete_script');
     }
+    /*
+    public function show_update_playlist()
+    {
+        $data['playlist_id']=$this->input->post('playlist_id');
+        
+        $data['playlist_name']=$this->input->post('playlist_name');
+
+        $playlist_id=$data['playlist_id'];
+
+        $data['rec']=$this->playlist_model->fetch_playlist_songs($playlist_id);
+        
+        $this->load->view('playlist_edit_view', $data);
+        
+    }
     public function show_update_rec()
     {
         $data['id']=$this->input->post('id');
@@ -686,12 +690,7 @@ class User extends CI_Controller{
         
     }
     
-
-    public function update_rec($user_id)
-    {
-        $this->user_model->row_update($user_id);
-        redirect('/user/index', 'refresh');  
-    }
+*/
     
 
     public function artistProfile()
