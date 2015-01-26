@@ -1,7 +1,6 @@
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/styles_dialog.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.confirm.css" />
-<link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'>
+<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/styles_dialog.css" />-->
+
 <button id="createplaylist" class="btn btn_primary" style="float:left"><input id="add2playlist" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/>Create New Playlist</button>
 
 <div id="createOverlay">
@@ -23,9 +22,6 @@
     </div>
 </div>
 
- <thead>
-
-        </thead>
         <tbody>
         <br><br>
         <?php foreach($playlists->result() as $row): ?>
@@ -52,5 +48,3 @@
         </tbody>
       </table>
 
-<script src="<?php echo base_url(); ?>assets/js/addplaylistpopup.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/script.js"></script>

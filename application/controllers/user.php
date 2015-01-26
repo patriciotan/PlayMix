@@ -238,16 +238,11 @@ class User extends CI_Controller{
         else
         {
             $data['rec'] = $this->user_model->get_songs();
-<<<<<<< HEAD
+
             $data['rec1'] = $this->playlist_model->get_playlists();
             $this->load->view('feed_view', $data);
-            $this->load->view('playlist', $data);
-           // $this->load->view('player');
-=======
-            $this->load->view('playlist');
-            $this->load->view('feed_view', $data);
-            //$this->load->view('player');
->>>>>>> fe80e44cabf03ac2d9768df0092c3703cfb8a7ca
+            $this->load->view('playlist_add_song', $data);
+            $this->load->view('player');
         }
     }
     public function admin()

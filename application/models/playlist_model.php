@@ -11,6 +11,7 @@ class playlist_model extends CI_Model {
     public function add_playlist()
     {
         $data=array(
+        'user_id'              =>$this->session->userdata('user_id'),
         'playlist_name'        =>$this->input->post('playlist_name'),
         'playlist_date_added'  =>date("Y/m/d"), 
         'playlist_audio_count' => 0
@@ -20,12 +21,14 @@ class playlist_model extends CI_Model {
 
     public function get_playlists()
     {
+        $user_id= $this->session->userdata('user_id');
         $this->db->select('*');
         $this->db->from('playlist');
+        $this->db->where('user_id',$user_id);
         $query = $this->db->get();
-        if ($query->num_rows()>0) {
+      
             return $query;
-        }
+     
     }
     public function row_delete($id)
     {

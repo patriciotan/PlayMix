@@ -1,12 +1,5 @@
 
-<html>
 
-    <head>
-      
-        <script src="/js/libs/modernizr-2.6.2.min.js"></script>
-    </head>
-    <body>
-       
             <div id="content" role="main">
                 <div id="cwrap">
 
@@ -124,5 +117,3 @@
                 });
             });
         </script>
-    </body>
-</html>
