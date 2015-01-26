@@ -1,3 +1,10 @@
+<!--<link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'>-->
+<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/styles_dialog.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.confirm.css" />-->
+
+
+
+
 <div id="wrapper">
 
 
@@ -25,7 +32,7 @@
         <td style="display:none"><?=$row->audio_photo;?></td>
         <td style="display:none"><?=$row->audio_id;?></td>
         <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
-        <td align="center"><input type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
         <td class="spotify" align="left"><?=$row->audio_title;?></td>
         <td align="left"><?=$row->user_username;?></a></td>
@@ -40,10 +47,33 @@
 </div>
 </div>
 
+
+
 <script type="text/javascript">
 
   $(document).ready(function(){
     $('#feed').DataTable();
   });
 
+  function popUp(node){
+    // $("#notificationContainer").fadeToggle(300);
+    // $("#notification_count").fadeOut("slow");
+    var id = node.parentNode.parentNode.cells[2].textContent;
+    $("#confirmOverlay").fadeIn("fast");
+    $("#confirmOverlay").show();
+    $("#audio_id").attr("value",id);
+    //$("#popup-dialog").fadeIn("fast");
+  }     
+
 </script>
+<!--
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.confirm.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/script.js"></script>-->
+
+
+
+
+
+   
+        

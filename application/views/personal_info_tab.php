@@ -1,4 +1,4 @@
-            <div class="centered" id="personal_info_contents">
+            <div class="centered" id="personal_info_contents" style="margin-bottom:250px">
               <a href="#" style="float:right" id="edit_personal_info_button"><img src="<?php echo base_url()?>assets/edit_ico.png" style="height:20px;width:20px;"/></a>
               <div id="image">
                 <div id="img_container" class="profile-circular-mask">

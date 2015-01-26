@@ -1,5 +1,3 @@
-<html>
-
 <head>
 <!-- Generic page styles -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style1.css">
@@ -8,7 +6,7 @@
 </head>
 
 <div class="wrapper" style="height:500px">
-  <div class="container centered" style="top:20%; transform:translateY(-50%); min-width:800px">
+  <div class="container centered" style="top:14%; transform:translateY(-50%); min-width:800px">
     <!-- Upload Form -->
     <div class="centered" style="width:240px; top: 300px;">
       <div class="signup_wrap centered">   

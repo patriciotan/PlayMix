@@ -238,7 +238,10 @@ class User extends CI_Controller{
         else
         {
             $data['rec'] = $this->user_model->get_songs();
+
+            $data['rec1'] = $this->playlist_model->get_playlists();
             $this->load->view('feed_view', $data);
+            $this->load->view('playlist_add_song', $data);
             $this->load->view('player');
         }
     }
@@ -297,6 +300,22 @@ class User extends CI_Controller{
         $this->admin();
         $this->load->view('banned_script');
     }
+    public function add2playlist(){
+       $data=array(
+                'playlist_id'     =>$this->input->post('playlist_id'),
+                'playlist_name'    =>$this->input->post('playlist_name'),
+                'audio_id'        =>$this->input->post('audio_id')
+                 );
+       if($this->playlist_model->add2playlist($data)){
+       echo "<script type='text/javascript'>alert('Song has been successfully added to data['playlist_name'] .');</script>";
+       redirect('/user/feed', 'refresh');    
+       } 
+       else{
+        echo "<script type='text/javascript'>alert('Something went wrong when adding it to the playlist... ');</script>";
+       redirect('/user/feed', 'refresh');     
+       }
+    }
+
     public function delete()
     {
         $this->user_model->delete_list();
@@ -337,7 +356,8 @@ class User extends CI_Controller{
         {
             $uid = $this->session->userdata('user_id');
             $data['rec'] = $this->user_model->get_user_songs($uid);            
-            $data['info'] = $this->user_model->get_info($uid);            
+            $data['info'] = $this->user_model->get_info($uid);
+            $data['playlists']=$this->playlist_model->get_playlists();
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
@@ -641,6 +661,38 @@ class User extends CI_Controller{
 
                 $this->email->send();
     }
+    public function add_playlist()
+    {
+        $this->playlist_model->add_playlist();
+        $this->index();
+        $this->load->view('playlistadd_script');
+    }
+    public function delete_playlist()
+    {
+        $id=$this->input->post('id');
+        $this->playlist_model->row_delete($id);
+        $this->index();
+        $this->load->view('playlistdelete_script');
+    }
+    public function show_update_rec()
+    {
+        $data['id']=$this->input->post('id');
+        
+        $id=$data['id'];
+        
+        $data=$this->user_model->fetch_data($id);
+        
+        $this->load->view('update_view', $data);
+        
+    }
+    
+
+    public function update_rec($user_id)
+    {
+        $this->user_model->row_update($user_id);
+        redirect('/user/index', 'refresh');  
+    }
+    
 
     public function artistProfile()
     {
@@ -678,7 +730,6 @@ class User extends CI_Controller{
         $this->load->helper('download');
         force_download($name, $data);
     }
-
 
 }
 ?>
