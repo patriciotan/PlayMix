@@ -396,7 +396,7 @@ class User extends CI_Controller{
         }
     }
 
-    function do_uploadaudio()
+    function do_uploadaudio($audio_title, $audio_genre)
     {   
         $config['upload_path'] = './uploads/mp3';
         $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
@@ -438,7 +438,7 @@ class User extends CI_Controller{
     }
 
     $this->load->view('upload_view', $data); 
-    $this->load->view('upload_error');
+    $this->load->view('upload_error_view');
     $this->load->view('player');
     }
 
@@ -468,16 +468,19 @@ class User extends CI_Controller{
     {
         $this->load->library('form_validation');
         // field name, error message, validation rules
-        $this->form_validation->set_rules('audio_title', 'Song Title', 'trim|required|min_length[4]|xss_clean');
+        $this->form_validation->set_rules('audio_title', 'Song Title', 'trim|required|xss_clean');
         $this->form_validation->set_rules('audio_genre', 'Audio Genre', 'trim|max_length[20]');
-     
+        //$this->form_validation->set_rules('audio_file', 'Audio File', 'required');     
         if ($this->form_validation->run() === FALSE) {
-            echo "<script type='text/javascript'>alert('Upload failed. Please check your inputs and try again.');</script>";  
+            echo "<script type='text/javascript'>alert('Upload failed. Please check your inputs and try again.');</script>";
+            redirect('/user/upload', 'refresh');  
         } 
         else {
 
+            $audio_title = $this->input->post('audio_title');
+            $audio_genre = $this->input->post('audio_genre');
 
-            $data = $this->do_uploadaudio();
+            $data = $this->do_uploadaudio($audio_title, $audio_genre);
 
             $filename = $data['upload_data']['file_name'];
             //$audiopath = "/uploads/mp3/".$filename;     
@@ -490,8 +493,8 @@ class User extends CI_Controller{
 
             $data=array(
                 'user_id'           =>$this->session->userdata('user_id'),
-                'audio_title'       =>$this->input->post('audio_title'),
-                'audio_genre'       =>$this->input->post('audio_genre'),
+                'audio_title'       =>$audio_title,
+                'audio_genre'       =>$audio_genre,
                 'audio_private'     =>$private,
                 'audio_date_added'  =>date("Y/m/d"),      
                 'audio_file'        =>$filename
