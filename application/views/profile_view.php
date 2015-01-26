@@ -37,6 +37,7 @@
 <script>
   $(document).ready(function(){
 
+
     $("#edit_personal_info").hide();
     $("#edit_account_info").hide();    
     $('li > a').click(function() {
@@ -80,6 +81,8 @@
       $("#account_contents").show();
     });
 
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -112,7 +115,7 @@
       $("#popup_pp").fadeOut("fast");
       $("#popup_pp").hide();
     });
-
+    
   });
 
     $(document).ready(function(){
@@ -144,4 +147,8 @@
       else
         jQuery('#twitter_img').attr("src", "<?php echo base_url();?>assets/img/twitter.png");      
     });    
+
+    $(document).ready(function(){
+        $('#songs').DataTable();
+    });
 </script>

@@ -18,10 +18,6 @@
           <div class="tab-pane" id="uploaded" style="padding:3px">
             <?php echo $uploaded?>
           </div>
-
-          <div class="tab-pane" id="playlists">
-            <?php echo $playlists?>
-          </div>         
         </div>
       </div>
     </div>

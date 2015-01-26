@@ -35,7 +35,7 @@
         <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
         <td class="spotify" align="left"><?=$row->audio_title;?></td>
-        <td align="left"><?=$row->user_username;?></a></td>
+        <td align="left"><a href="#" onclick="viewProf(this)"><?=$row->user_username;?></a></td>
         <td align="center"><?=$row->audio_date_added;?></td>
         <td align="right"><?=$row->audio_play_count;?></td>
       </tr>
@@ -47,7 +47,11 @@
 </div>
 </div>
 
-
+<?php echo form_open("user/artist_profile"); ?>
+<form>
+<input type="hidden" for="user_id" name="user_id" id="user_id" value=""/>
+</form>
+<?php echo form_close();?>  
 
 <script type="text/javascript">
 
@@ -65,11 +69,19 @@
     //$("#popup-dialog").fadeIn("fast");
   }     
 
+  function viewProf(node){
+
+    var id = node.parentNode.parentNode.cells[5].textContent;
+    $("#user_id").attr("value",id);
+    alert("Value: "+$("#user_id").val());
+    location.href = '<?php echo base_url(); ?>index.php/user/artist_profile'
+  }
 </script>
 <!--
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.confirm.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/script.js"></script>-->
+<script src="<?php echo base_url(); ?>assets/js/script.js"></script>
+<?php echo base_url('index.php/user/artist_profile')?>-->
 
 
 

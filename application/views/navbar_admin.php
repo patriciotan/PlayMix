@@ -16,10 +16,10 @@
                 <li><a href="<?php echo base_url('index.php/user/profile'); ?>">Profile</a></li>
                 <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
                 <li><a href="<?php echo base_url('index.php/user/admin'); ?>">Admin</a></li> 
-                <li id="notification_li">
+                  <!--<li id="notification_li">
                   <span id="notification_count">3</span>
                   <a href="#" id="notificationLink" style="position: relative; float:right; margin-top:7px; margin-left:13px; background: url(<?php echo base_url();?>assets/notif.png) no-repeat; background-position: 1px; background-size:20px;"></a>                                    
-                </li>     
+                </li>  -->    
               </ul>                        
             </div>
             <div>
@@ -31,13 +31,13 @@
         </div>
       </div>
     </div>
-
+<!--
 <div id="popup" class="notifpopup">
   <div id="popup-dialog" class="notifpopupdialog">
-    <p><!--<?php echo $number?>-->artists want to collaborate with you. You may check your e-mail for their contact information!</p>
+    <p><?php echo $number?>artists want to collaborate with you. You may check your e-mail for their contact information!</p>
     <a href="#" id="gotthat" class="btn btn-white" style="position:relative; width:15%; margin:0 auto">Got that!</a>
   </div>
-</div>
+</div>-->
 
 <script type="text/javascript">
   $(document).ready(function(){

@@ -702,7 +702,7 @@ class User extends CI_Controller{
         $this->load->view('playlist_view', $data);
     }
 
-    public function artistProfile()
+    public function artist_profile()
     {
         if (($this->session->userdata('logged_in')===FALSE)) 
         {
@@ -710,14 +710,13 @@ class User extends CI_Controller{
         }
         else
         {
-            $uid = $this->session->userdata('user_id');
+            $uid = $this->input->post('user_id');
+            //echo "<script type='text/javascript'>alert($uid);</script>";
             $data['rec'] = $this->user_model->get_user_songs($uid);            
             $data['info'] = $this->user_model->get_info($uid);            
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
-            $data['playlists'] = $this->load->view('playlists_tab',$data,true); 
-            $data['account'] = $this->load->view('account_tab',$data,true);
             $this->load->view('header_view_user',$data);
             if($this->session->userdata('user_type')=='Admin')
                 {
@@ -728,7 +727,8 @@ class User extends CI_Controller{
                 $navbar = 'navbar_user';
                 }
             $this->load->view($navbar,$data);
-            $this->load->view('profile_view', $data);
+            $this->load->view('artist_profile_view', $data);
+            $this->load->view('player');
             return $data;
         }
     }
