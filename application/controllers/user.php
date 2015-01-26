@@ -238,6 +238,7 @@ class User extends CI_Controller{
         else
         {
             $data['rec'] = $this->user_model->get_songs();
+            $data['rec1'] = $this->playlist_model->get_playlists();
             $this->load->view('feed_view', $data);
             $this->load->view('playlist', $data);
            // $this->load->view('player');
@@ -338,7 +339,8 @@ class User extends CI_Controller{
         {
             $uid = $this->session->userdata('user_id');
             $data['rec'] = $this->user_model->get_user_songs($uid);            
-            $data['info'] = $this->user_model->get_info($uid);            
+            $data['info'] = $this->user_model->get_info($uid);
+            $data['playlists']=$this->playlist_model->get_playlists();
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
@@ -620,6 +622,37 @@ class User extends CI_Controller{
 
                 $this->email->send();
     }
+    public function add_playlist()
+    {
+        $this->playlist_model->add_playlist();
+        $this->index();
+        $this->load->view('playlistadd_script');
+    }
+    public function delete_playlist()
+    {
+        $id=$this->input->post('id');
+        $this->playlist_model->row_delete($id);
+        $this->index();
+        $this->load->view('playlistdelete_script');
+    }
+    public function show_update_rec()
+    {
+        $data['id']=$this->input->post('id');
+        
+        $id=$data['id'];
+        
+        $data=$this->user_model->fetch_data($id);
+        
+        $this->load->view('update_view', $data);
+        
+    }
+    
 
+    public function update_rec($user_id)
+    {
+        $this->user_model->row_update($user_id);
+        $this->welcome();  
+    }
+    
 }
 ?>
