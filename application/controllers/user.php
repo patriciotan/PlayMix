@@ -724,11 +724,5 @@ class User extends CI_Controller{
         }
     }
 
-    public function downloadSong($data, $name)
-    {
-        $this->load->helper('download');
-        force_download($name, $data);
-    }
-
 }
 ?>
