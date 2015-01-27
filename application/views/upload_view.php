@@ -59,32 +59,4 @@
 </div>
 
 <?php echo form_close(); ?>
-<script type="text/javascript">
-  
-  $("input[name='userfile']").each(function() {
-    var fileName = $(this).val().split('/').pop().split('\\').pop();
-    console.log(fileName);
-});
-
-
-Dropzone.options.audio_file = {
-  paramName: "audio_file", // The name that will be used to transfer the file
-  maxFilesize: 50, // MB
-  accept: function(file, done) {
-    if (file.name == "justinbieber.jpg") {
-      done("Naha, you don't.");
-    }
-    else { done(); } //just for the lols
-  }
-};
-
-  $(function(){
-
-    var dropzone = new Dropzone("#audio_file");
-    dropzone.on("addedfile", function(file)){  
-
-    });
-  })
-
-</script>
 

@@ -16,7 +16,7 @@
 				</div>
 				<div id="right1" class="pull-right" style="margin-top:2px;">
 					<input id="share" type="image" src="<?php echo base_url(); ?>assets/controls/share.png" style="height:25px; width:25px;" alt="share"/>&nbsp;&nbsp;
-					<a id="download" href="" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="22px;" width="22px;"></a>
+					<a id="download" href="" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="21px;" width="21px;"></a>
 				</div>
     		</div>
 
@@ -29,13 +29,14 @@
 
 		    <div id="contDiv" style="margin-left:-22px; margin-right:15px;">
 		    	<div id="left2" class="pull-left">
-					<input id="previous" onclick="prevSong()" type="image" src="<?php echo base_url(); ?>assets/controls/previous.png" style="height:22px; width:22px;" alt="previous"/>&nbsp;&nbsp;
-					<input id="stop" onclick="stopSong()" type="image" src="<?php echo base_url(); ?>assets/controls/stop.png" style="height:22px; width:22px;" alt="stop"/>&nbsp;&nbsp;
-					<input id="next" onclick="nextSong()" type="image" src="<?php echo base_url(); ?>assets/controls/next.png" style="height:22px; width:22px;" alt="next"/>
+					<input id="previous" onclick="prevSong()" type="image" src="<?php echo base_url(); ?>assets/controls/previous.png" style="height:21px; width:21px;" alt="previous"/>&nbsp;&nbsp;
+					<input id="stop" onclick="stopSong()" type="image" src="<?php echo base_url(); ?>assets/controls/stop.png" style="height:21px; width:21px;" alt="stop"/>&nbsp;&nbsp;
+					<input id="next" onclick="nextSong()" type="image" src="<?php echo base_url(); ?>assets/controls/next.png" style="height:21px; width:21px;" alt="next"/>
 		    	</div>
 		    	<div id="right2" class="pull-right">
-					<input id="shuffle" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle.png" style="height:24px; width:24px;" alt="shuffle"/>&nbsp;&nbsp;
-					<input id="repeat" type="image" src="<?php echo base_url(); ?>assets/controls/repeat.png" style="height:24px; width:24px;" alt="repeat"/>
+					<input id="shuffle" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle.png" style="height:25px; width:25px;" alt="shuffle"/>&nbsp;&nbsp;
+					<input id="repeat" onclick="oneRepeat()" type="image" src="<?php echo base_url(); ?>assets/controls/repeat.png" style="height:25px; width:25px;" alt="repeat"/>
+		    		<h1 id="repeatOne" hidden>false</h1>
 		    	</div>
 		    </div>
 	    </div>
@@ -48,6 +49,19 @@
 
 <script type="text/javascript">
 
+	var audio = document.getElementById("audio");
+	var repeatOne = document.getElementById("repeatOne");
+	audio.onended = function() {
+	    if(repeatOne.innerHTML === "true")
+	    {
+	    	audio.play();
+	    }
+	    else
+	    {
+	    	nextSong();
+	    }
+	};
+
 	function playSong(node)
 	{
 		var audio = document.getElementById("audio");
@@ -58,6 +72,7 @@
 		var audioSrc = document.getElementById("audioSrc");
 		var audioPic = document.getElementById("audioPic");
 		var download = document.getElementById("download");
+		var repeatOne = document.getElementById("repeatOne");
 
 		var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
@@ -151,7 +166,14 @@
 	function stopSong()
 	{
 		var audio = document.getElementById("audio");
-		audio.load();
+		audio.pause();
+		$("#audio").prop("currentTime",0);
+	}
+
+	function oneRepeat()
+	{
+		var repeatOne = document.getElementById("repeatOne");
+		repeatOne.innerHTML = "true";
 	}
 
 	function downloadSong()
