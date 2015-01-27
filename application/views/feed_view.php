@@ -16,6 +16,7 @@
     <thead>
       <th style="display:none"></th>
       <th style="display:none"></th>
+      <th style="display:none"></th>
       <th width="5px"></th>
       <th width="5px"></th>
       <th style="display:none"></th>
@@ -24,19 +25,19 @@
       <th width="50px">ADDED</th>
       <th width="50px">PLAYS</th>
     </thead>
-    <tbody>
+    <tbody id="feedBody">
     <?php foreach($rec->result() as $row): ?>
-      <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
-        <td style="display:none"><?php echo $row->audio_file;?></td>
+      <tr id="<?=$row->audio_id;?>" class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
+        <td style="display:none" value="<?=$row->audio_file;?>"><?=$row->audio_file;?></td>
         <td style="display:none"><?=$row->audio_photo;?></td>
-        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
-        <input id="audio_id" for="audio_id" type="hidden" value="<?php echo $row->audio_id;?>" /></td>
-        <td align="center"><input onclick="popUp()" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
-        <td style="display:none"><?php echo $row->user_id;?></td>
-        <td align="left"><?php echo $row->audio_title;?></td>
-        <td align="left"><?php echo $row->user_username;?></a></td>
-        <td align="center"><?php echo $row->audio_date_added;?></td>
-        <td align="right"><?php echo $row->audio_play_count;?></td>
+        <td style="display:none"><?=$row->audio_id;?></td>
+        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td style="display:none"><?=$row->user_id;?></td>
+        <td class="spotify" align="left"><?=$row->audio_title;?></td>
+        <td align="left"><?=$row->user_username;?></a></td>
+        <td align="center"><?=$row->audio_date_added;?></td>
+        <td align="right"><?=$row->audio_play_count;?></td>
       </tr>
     <?php endforeach;?>
     </tbody>
@@ -54,11 +55,13 @@
     $('#feed').DataTable();
   });
 
-  function popUp(){
+  function popUp(node){
     // $("#notificationContainer").fadeToggle(300);
     // $("#notification_count").fadeOut("slow");
+    var id = node.parentNode.parentNode.cells[2].textContent;
     $("#confirmOverlay").fadeIn("fast");
     $("#confirmOverlay").show();
+    $("#audio_id").attr("value",id);
     //$("#popup-dialog").fadeIn("fast");
   }     
 

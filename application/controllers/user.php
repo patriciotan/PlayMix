@@ -303,9 +303,17 @@ class User extends CI_Controller{
     public function add2playlist(){
        $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
+                'playlist_name'    =>$this->input->post('playlist_name'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-       $this->playlist_model->add2playlist($data);
+       if($this->playlist_model->add2playlist($data)){
+       echo "<script type='text/javascript'>alert('Song has been successfully added to data['playlist_name'] .');</script>";
+       redirect('/user/feed', 'refresh');    
+       } 
+       else{
+        echo "<script type='text/javascript'>alert('Something went wrong when adding it to the playlist... ');</script>";
+       redirect('/user/feed', 'refresh');     
+       }
     }
 
     public function delete()

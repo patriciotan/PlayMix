@@ -15,7 +15,8 @@
                <form>
               <td align="left"><h3><input type="submit"><a><?php echo $row->playlist_name;?></a></h3></td>
               <input type="hidden" id="playlist_id" for="playlist_id" name="playlist_id" value="<?php echo $row->playlist_id; ?>">
-              <input type="hidden" id="audio_id" for="audio_id" name="audio_id" value="<?php echo $row->audio_id; ?>">
+              <input type="hidden" id="audio_id" for="audio_id" name="audio_id" value="">
+              <input type="hidden" id="playlist_name" for="playlist_name" name="playlist_name" value="<?php echo $row->playlist_name; ?>">
               </form>
               </form>
              <?php echo form_close(); ?>

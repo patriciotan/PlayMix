@@ -19,7 +19,15 @@ class playlist_model extends CI_Model {
         $this->db->insert('playlist',$data);
     }
 
-    public function add2playlist(){
+    public function add2playlist($data){
+        $this->db->select('playlist_audio_count');
+        $this->db->from('playlist');
+      
+       $user_id          =$this->session->userdata('user_id');
+          $data=array(
+        'playlist_audio_count' => 'playlist_audio_count'+1
+        );
+        $this->db->insert('playlist',$data, $user_id);
         $this->db->insert('sequence',$data);
     }
     public function get_playlists()

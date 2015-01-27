@@ -51,6 +51,7 @@ class User_model extends CI_Model {
         $this->db->select('audio.audio_title');
         $this->db->select('audio.audio_id');
         $this->db->select('audio.audio_file');
+        $this->db->select('audio.audio_id');
         $this->db->select('audio.audio_photo');
         $this->db->select('user.user_username');
         $this->db->select('user.user_id');
