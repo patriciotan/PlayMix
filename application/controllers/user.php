@@ -300,14 +300,23 @@ class User extends CI_Controller{
         $this->admin();
         $this->load->view('banned_script');
     }
-    public function add2playlist(){
-       $data=array(
+    public function add2playlist()
+    {
+        $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-       $playlist_name    =$this->input->post('playlist_name');
-       $this->playlist_model->add2sequence($data);  
-       $this->playlist_model->add2playlist($data);
+        $this->playlist_model->add2sequence($data); 
+        $data=array(
+                'playlist_id'     =>$this->input->post('playlist_id'),
+                'playlist_audio_count' => $this->playlist_model->get_count($this->input->post('playlist_id')),
+                'playlist_name'    =>$this->input->post('playlist_name'),
+                'audio_id'        =>$this->input->post('audio_id')
+                 );
+        error_reporting(0);
+       (int)$test=(int)$data['playlist_audio_count'];
+                
+       $this->playlist_model->add2playlist($data, $test);
        echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
        redirect('/user/feed', 'refresh');
     }
@@ -699,7 +708,19 @@ class User extends CI_Controller{
 
         $data['rec']=$this->playlist_model->fetch_playlist_seq($playlist_id);
         
-        $this->load->view('playlist_view', $data);
+        $data['title']= 'Feed';
+            $this->load->view('header_view_user',$data);
+
+            if($this->session->userdata('user_type')==='Admin')
+            {
+                $this->load->view('navbar_admin',$data);
+            }
+            else
+            {
+                $this->load->view('navbar_user',$data);
+            }
+            $this->load->view('playlist_view', $data);
+            $this->load->view('player');
     }
 
     public function artist_profile()
@@ -729,6 +750,7 @@ class User extends CI_Controller{
             $this->load->view($navbar,$data);
             $this->load->view('artist_profile_view', $data);
             $this->load->view('player');
+
             return $data;
         }
     }
