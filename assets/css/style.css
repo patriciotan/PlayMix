@@ -184,3 +184,8 @@ color:#FFF;
 input[type="file"] {
     display: none;
 }
+
+input[list]
+{
+    height:13px;
+}

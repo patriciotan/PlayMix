@@ -22,6 +22,8 @@
     </div>
 </div>
 
+<div>      
+      <table>
         <tbody>
         <br><br>
         <?php foreach($playlists->result() as $row): ?>
@@ -47,4 +49,7 @@
         <?php endforeach;?>
         </tbody>
       </table>
+</div>
 
+<script src="<?php echo base_url(); ?>assets/js/addplaylistpopup.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/script.js"></script>

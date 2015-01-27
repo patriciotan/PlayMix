@@ -1,4 +1,4 @@
-<link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'>
+<!--<link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'>-->
 <!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/styles_dialog.css" />-->
 <!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.confirm.css" />-->
 
@@ -15,6 +15,7 @@
   <table class="display" id="feed">  
     <thead>
       <th style="display:none"></th>
+      <th style="display:none"></th>
       <th width="5px"></th>
       <th width="5px"></th>
       <th style="display:none"></th>
@@ -27,8 +28,10 @@
     <?php foreach($rec->result() as $row): ?>
       <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
         <td style="display:none"><?php echo $row->audio_file;?></td>
+        <td style="display:none"><?=$row->audio_photo;?></td>
         <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
-        <td align="center"><input id="add2playlist" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <input id="audio_id" for="audio_id" type="hidden" value="<?php echo $row->audio_id;?>" /></td>
+        <td align="center"><input onclick="popUp()" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?php echo $row->user_id;?></td>
         <td align="left"><?php echo $row->audio_title;?></td>
         <td align="left"><?php echo $row->user_username;?></a></td>
@@ -45,15 +48,21 @@
 
 
 
-
 <script type="text/javascript">
 
   $(document).ready(function(){
     $('#feed').DataTable();
   });
 
-</script>
+  function popUp(){
+    // $("#notificationContainer").fadeToggle(300);
+    // $("#notification_count").fadeOut("slow");
+    $("#confirmOverlay").fadeIn("fast");
+    $("#confirmOverlay").show();
+    //$("#popup-dialog").fadeIn("fast");
+  }     
 
+</script>
 <!--
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.confirm.js"></script>

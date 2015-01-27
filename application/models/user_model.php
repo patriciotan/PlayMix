@@ -49,7 +49,9 @@ class User_model extends CI_Model {
     public function get_songs()
     {
         $this->db->select('audio.audio_title');
+        $this->db->select('audio.audio_id');
         $this->db->select('audio.audio_file');
+        $this->db->select('audio.audio_photo');
         $this->db->select('user.user_username');
         $this->db->select('user.user_id');
         $this->db->select('audio.audio_date_added');
@@ -58,7 +60,7 @@ class User_model extends CI_Model {
         $this->db->from('user');
         $this->db->join('audio', 'user.user_id = audio.user_id');
         $this->db->order_by('audio.audio_play_count','desc');
-        $this->db->where('audio.audio_private','Public');
+        $this->db->where('audio.audio_private', 0);
         $this->db->where('audio.audio_status','Okay');
         $query = $this->db->get();
         if ($query->num_rows()>0) {
@@ -274,6 +276,25 @@ class User_model extends CI_Model {
 
     }
 
+    public function check_password($uid, $pass)
+    {
+
+        $query = $this->db->query("SELECT `user_password` FROM `user` WHERE `user_id`=$uid");
+        foreach($query->result() as $row){
+            $cur_pass = $row->user_password;
+        }
+        
+        if($pass === $cur_pass)
+            {
+            return true;
+            }
+        else
+            {
+            return false;
+            }
+
+    }
+
     public function get_records()
     {
         return $this->db->get("user");
@@ -285,11 +306,41 @@ class User_model extends CI_Model {
         $this->db->delete('user');
     }
 
-    public function user_account_update($user_id, $data)
+    public function user_account_update($user_id, $user_username, $user_email)
     {
         $this->load->database();      
-        $this->db->where('user_id',$user_id);       
-        $this->db->update('user',$data);     
+
+        $query = $this->db->query("SELECT `user_username`,`user_email` FROM `user` WHERE `user_id`=$user_id");
+        foreach($query->result() as $row){
+            $cur_username = $row->user_username;
+            $cur_user_email = $row->user_email;
+        }       
+
+        if($user_username !== $cur_username)
+                {
+                
+                $data = array(
+                    'user_username' => $user_username,
+                );
+
+                $this->db->where('user_id',$user_id);
+                $this->db->update('user', $data);    
+                }
+
+        if($user_email !== $cur_user_email)
+                {
+                
+                $data = array(
+                    'user_email' => $user_email,
+                );
+
+                $this->db->where('user_id',$user_id);
+                $this->db->update('user',$data);    
+                }    
+
+
+//       $this->db->where('user_id',$user_id);       
+//       $this->db->update('user',$data);     
     }
     
     public function get_info($id)
@@ -318,12 +369,31 @@ class User_model extends CI_Model {
         
     }
 
+    public function get_account_info($id)
+    {
+        $query = $this->db->query("SELECT * FROM `user` WHERE `user_id`=$id");
+        
+        
+        foreach($query->result() as $row)
+        {
+            $newdata = array(
+            'user_email'    => $row->user_email,
+            'user_name'     => $row->user_username,                                                  
+            );
+        }
+        
+        return $newdata;
+        
+    }
+
+
     public function get_user_songs($id)
     {
         $this->db->select('audio.audio_title');
         $this->db->select('user.user_username');
         $this->db->select('audio.audio_date_added');
         $this->db->select('audio.audio_play_count');
+        $this->db->select('audio.audio_file');
         //$this->db->select('*');
         $this->db->from('user');
         $this->db->join('audio', 'user.user_id = audio.user_id');

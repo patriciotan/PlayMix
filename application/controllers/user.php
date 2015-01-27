@@ -300,6 +300,14 @@ class User extends CI_Controller{
         $this->admin();
         $this->load->view('banned_script');
     }
+    public function add2playlist(){
+       $data=array(
+                'playlist_id'     =>$this->input->post('playlist_id'),
+                'audio_id'        =>$this->input->post('audio_id')
+                 );
+       $this->playlist_model->add2playlist($data);
+    }
+
     public function delete()
     {
         $this->user_model->delete_list();
@@ -367,15 +375,14 @@ class User extends CI_Controller{
 
     public function edit_account_info()
     {
-      
-        $data = array(
-        'user_username' =>$this->input->post('user_username'),       
-        'user_email'=>$this->input->post('user_email'),       
-        'user_password' =>md5($this->input->post('user_password')),
-        );
-        if($this->edit_account_info_validation())
+        $uid = $this->session->userdata('user_id');
+        $user_username = $this->input->post('user_username');       
+        $user_email = $this->input->post('user_email');       
+        $user_password = md5($this->input->post('user_password'));
+        
+        if($this->edit_account_info_validation() && $this->user_model->check_password($uid, $user_password))
         {
-            $this->user_model->user_account_update($this->session->userdata('user_id'),$data);
+            $this->user_model->user_account_update($uid, $user_username, $user_email);
             $this->profile();
             echo "<script type='text/javascript'>alert('Changes are saved.');</script>";
         }
@@ -392,52 +399,44 @@ class User extends CI_Controller{
         $this->load->library('form_validation');
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
-        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_check_email');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
         if ($this->form_validation->run() == FALSE) {
             return false;
-        } else {
+        } else {           
             return true;
         }
     }
-
 
     function do_uploadaudio()
     {   
         $config['upload_path'] = './uploads/mp3';
         $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
-        $config['max_size'] = '40000';
+        $config['max_size'] = '50000';
+        $config['file_name'] = 'audio';
         //$config['max_width']  = '1024';
         //$config['max_height']  = '1050';
-        $this->input->is_ajax_request();
         $this->load->library('upload', $config);
-        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-        $file_name = $upload_data['file_name'];
 
-        if ( ! $this->upload->do_upload())
+
+        if ( ! $this->upload->do_upload("audio_file"))
         {
             $error = array('error' => $this->upload->display_errors());
-            $this->upload_error();
+            $this->upload_error($audio_title, $audio_genre); 
       
         }
         else
         {
-            
-            $data = array('upload_data' => $this->upload->data());
-           
+            $data = array('upload_data' => $this->upload->data());          
+            return $data;
         }
-            $audio_title=$this->input->post('audio_title');
-            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-            $audio_file = $upload_data['file_name']; 
-            $audio_genre=$this->input->post('audio_genre');
-            $this->fetch_audio_id($audio_title, $audio_file, $audio_genre);    
+  
     }
 
-    public function fetch_audio_id($audio_title, $audio_file, $audio_genre)
+    public function upload_error($audio_title, $audio_genre)
     {
     $data['title']='Upload';
     $data['audio_title']= $audio_title;
-    $data['audio_file']=$audio_file;
     $data['audio_genre']=$audio_genre;
     $this->load->view('header_view_user',$data);
 
@@ -450,12 +449,18 @@ class User extends CI_Controller{
         $this->load->view('navbar_user',$data);
     }
 
-    $this->load->view('show_temp_audio_view', $data); 
+    $this->load->view('upload_view', $data); 
+    $this->load->view('upload_error');
+    $this->load->view('player');
     }
 
     public function upload()
     {
         $data['title']='Upload';
+        $data['audio_title']= '';
+        $data['audio_file']='';
+        $data['audio_genre']='';        
+
         $this->load->view('header_view_user',$data);
 
         if($this->session->userdata('user_type')==='Admin')
@@ -479,32 +484,55 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('audio_genre', 'Audio Genre', 'trim|max_length[20]');
      
         if ($this->form_validation->run() === FALSE) {
-            $this->upload();
-            echo "<script type='text/javascript'>alert('Upload failed. Please try again.');</script>";
+            echo "<script type='text/javascript'>alert('Upload failed. Please check your inputs and try again.');</script>";  
         } 
         else {
-            $file_name = $this->input->post('$audio_file');             
+
+
+            $data = $this->do_uploadaudio();
+
+            $filename = $data['upload_data']['file_name'];
+            //$audiopath = "/uploads/mp3/".$filename;     
+            $private = $this->input->post('audio_private');
+            if($private == false)
+                { $private = 0;}
+            else
+                { $private = 1;}
+
+
+            $data=array(
+                'user_id'           =>$this->session->userdata('user_id'),
+                'audio_title'       =>$this->input->post('audio_title'),
+                'audio_genre'       =>$this->input->post('audio_genre'),
+                'audio_private'     =>$private,
+                'audio_date_added'  =>date("Y/m/d"),      
+                'audio_file'        =>$filename
+            );
+
+
+          
             $this->load->model('audio_model');
-            $this->audio_model->add_audio($file_name); 
+            $this->audio_model->add_audio($data); 
             echo "<script type='text/javascript'>alert('Song is successfully uploaded.');</script>";
-            $this->output->set_header('refresh:1;url=user/feed');         
+            redirect('/user/feed', 'refresh');     
         }
     }  
-    public function upload_error()
-    {
-        $this->load->view('upload_error_view');
-    }
-    public function upload_success()
-    {
-        $this->load->view('upload_succes_view');
-        
-    }
+    //public function upload_error()
+    //{
+    //    $this->load->view('upload_error_view');
+    //}
+    //public function upload_success()
+    //{
+    //    $this->load->view('upload_succes_view');
+    //    
+    //}
 
     public function update_personal_info() 
     {
-
+        $this->load->helper('url');
         $id = $this->session->userdata('user_id');
         $getdata = $this->user_model->get_info($id);
+
 
         $fname = $this->input->post('user_fname');
 
@@ -550,20 +578,19 @@ class User extends CI_Controller{
             $bio = $getdata['user_bio'];
         }
 
-
-        $this->load->helper('string');
         $data = $this->do_uploadphoto();
         $filename = $data['upload_data']['file_name'];
         $picpath = "/uploads/pp/".$filename;
 
         if($picpath == "/uploads/pp/") {
             $picpath = $getdata['user_photo'];
-        }
 
+        }
 
         $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $picpath);
 
-        $this->profile();
+        redirect('/user/profile/', 'refresh');
+
     }
 
     public function do_uploadphoto()
@@ -652,8 +679,46 @@ class User extends CI_Controller{
     public function update_rec($user_id)
     {
         $this->user_model->row_update($user_id);
-        $this->welcome();  
+        redirect('/user/index', 'refresh');  
     }
     
+
+    public function artistProfile()
+    {
+        if (($this->session->userdata('logged_in')===FALSE)) 
+        {
+            $this->index();
+        }
+        else
+        {
+            $uid = $this->session->userdata('user_id');
+            $data['rec'] = $this->user_model->get_user_songs($uid);            
+            $data['info'] = $this->user_model->get_info($uid);            
+            $data['title'] = 'Profile';  
+            $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
+            $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
+            $data['playlists'] = $this->load->view('playlists_tab',$data,true); 
+            $data['account'] = $this->load->view('account_tab',$data,true);
+            $this->load->view('header_view_user',$data);
+            if($this->session->userdata('user_type')=='Admin')
+                {
+                $navbar = 'navbar_admin';
+                }
+            else
+                {
+                $navbar = 'navbar_user';
+                }
+            $this->load->view($navbar,$data);
+            $this->load->view('profile_view', $data);
+            return $data;
+        }
+    }
+
+    public function downloadSong($data, $name)
+    {
+        $this->load->helper('download');
+        force_download($name, $data);
+    }
+
 }
 ?>

@@ -19,6 +19,9 @@ class playlist_model extends CI_Model {
         $this->db->insert('playlist',$data);
     }
 
+    public function add2playlist(){
+        $this->db->insert('sequence',$data);
+    }
     public function get_playlists()
     {
         $user_id= $this->session->userdata('user_id');
