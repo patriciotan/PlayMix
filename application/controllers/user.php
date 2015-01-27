@@ -688,7 +688,16 @@ class User extends CI_Controller{
     }
     
 */
-    
+    public function playlist()
+    {
+        $playlist_id=$this->input->post('playlist_id');
+        
+        $data['playlist_name']=$this->input->post('playlist_name');
+
+        $data['rec']=$this->playlist_model->fetch_playlist_seq($playlist_id);
+        
+        $this->load->view('playlist_view', $data);
+    }
 
     public function artistProfile()
     {

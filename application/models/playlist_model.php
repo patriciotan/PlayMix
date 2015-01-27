@@ -36,13 +36,17 @@ class playlist_model extends CI_Model {
     public function add2sequence($data){
         $this->db->insert('sequence', $data);
     }
-    public function fetch_playlist_songs($playlist_id){
-        $this->db->select('*');
-        $this->db->from('sequence');
-        $this->db->where('playlist_id',$playlist_id);
-        $query = $this->db->get();
+    public function fetch_playlist_seq($playlist_id){
+       // $this->db->from('user');
+        //$this->db->select('user.user_username');
+        //$this->db->join('audio', 'user.user_id = audio.user_id');
+        $query = $this->db->query("SELECT * FROM `sequence` WHERE `playlist_id`= $playlist_id");
       
-            return $query;
+            foreach($query->result() as $row){
+                $query = $this->db->query("SELECT * FROM `audio` WHERE `audio_id`= $row->audio_id");
+            }
+
+        return $query;
 
     }
 
