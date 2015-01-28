@@ -673,33 +673,6 @@ class User extends CI_Controller{
         $this->index();
         $this->load->view('playlistdelete_script');
     }
-    /*
-    public function show_update_playlist()
-    {
-        $data['playlist_id']=$this->input->post('playlist_id');
-        
-        $data['playlist_name']=$this->input->post('playlist_name');
-
-        $playlist_id=$data['playlist_id'];
-
-        $data['rec']=$this->playlist_model->fetch_playlist_songs($playlist_id);
-        
-        $this->load->view('playlist_edit_view', $data);
-        
-    }
-    public function show_update_rec()
-    {
-        $data['id']=$this->input->post('id');
-        
-        $id=$data['id'];
-        
-        $data=$this->user_model->fetch_data($id);
-        
-        $this->load->view('update_view', $data);
-        
-    }
-    
-*/
     public function playlist()
     {
         $playlist_id=$this->input->post('playlist_id');
@@ -728,16 +701,19 @@ class User extends CI_Controller{
 
     public function artist_profile()
     {
+        $user_id=$this->input->post('uid');
+        echo "<script type='text/javascript'>alert($user_id);</script>";
+
         if (($this->session->userdata('logged_in')===FALSE)) 
         {
             $this->index();
         }
         else
         {
-            $uid = $this->input->post('user_id');
-            //echo "<script type='text/javascript'>alert($uid);</script>";
-            $data['rec'] = $this->user_model->get_user_songs($uid);            
-            $data['info'] = $this->user_model->get_info($uid);            
+            
+           
+            $data['rec'] = $this->user_model->get_user_songs($user_id);            
+            $data['info'] = $this->user_model->get_info($user_id);            
             $data['title'] = 'Profile';  
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      

@@ -43,15 +43,18 @@
     </tbody>
   </table>
 
+  <?php echo form_open("user/artist_profile"); ?>
+    <form id="idddd">
+      <input type="text" name="uid" id="uid" value="" style="display:none"/>
+      <input type="submit" style="display:none">
+    </form>
+  <?php echo form_close();?>  
+
 </div>
 </div>
 </div>
 
-<?php echo form_open("user/artist_profile"); ?>
-<form>
-<input type="hidden" for="user_id" name="user_id" id="user_id" value=""/>
-</form>
-<?php echo form_close();?>  
+
 
 <script type="text/javascript">
 
@@ -72,9 +75,14 @@
   function viewProf(node){
 
     var id = node.parentNode.parentNode.cells[5].textContent;
-    $("#user_id").attr("value",id);
-    alert("Value: "+$("#user_id").val());
-    location.href = '<?php echo base_url(); ?>index.php/user/artist_profile'
+    $("#uid").attr("value",id);
+    //alert("Value: "+$("#uid").val());
+    $("#idddd").submit();
+    //executeViewProf();
+  }
+
+  function executeViewProf(){
+      location.href = '<?php echo base_url(); ?>index.php/user/artist_profile';
   }
 </script>
 <!--
