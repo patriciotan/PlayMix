@@ -1,9 +1,9 @@
 <div id="wrapper">
   <div class="container" >
     <div class="centered" style="position:relative; top:150px; width:870px;">
-      <div>
+      <!--<div>
         <button class="btn btn_red" style="float:right">Collaborate!</button>
-      </div>
+      </div>-->
       <div class="tabbable" id="profileTab">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>

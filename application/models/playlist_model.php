@@ -65,6 +65,17 @@ class playlist_model extends CI_Model {
 
     }
 
+    public function get_playlist_owner($playlist_id)
+    {
+        $this->db->select('user.user_username');
+        $this->db->from('user');
+        $this->db->join('playlist', 'user.user_id = playlist.user_id');
+        $query = $this->db->get();
+        
+        return $query->row()->user_username;
+    }
+
+
     public function get_playlists()
     {
         $user_id= $this->session->userdata('user_id');

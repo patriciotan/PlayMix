@@ -28,7 +28,7 @@
         <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
         <td class="spotify" align="left"><?=$row->audio_title;?></td>
-        <td align="left"><?=$row->user_username;?></a></td>
+        <td align="left"><?php echo $owner; ?></a></td>
         <td align="center"><?=$row->audio_date_added;?></td>
         <td align="right"><?=$row->audio_play_count;?></td>
       </tr>
@@ -39,3 +39,11 @@
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#playlist').DataTable();
+  });
+
+</script>

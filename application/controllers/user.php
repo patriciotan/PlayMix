@@ -707,8 +707,11 @@ class User extends CI_Controller{
         $data['playlist_name']=$this->input->post('playlist_name');
 
         $data['rec']=$this->playlist_model->fetch_playlist_seq($playlist_id);
-        
+        $data['owner']=$this->playlist_model->get_playlist_owner($playlist_id);
+
+
         $data['title']= 'Feed';
+
             $this->load->view('header_view_user',$data);
 
             if($this->session->userdata('user_type')==='Admin')
