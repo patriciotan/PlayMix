@@ -214,7 +214,9 @@ class User extends CI_Controller{
         }
         else
         {
+            $uid = $this->session->userdata('user_id');
             $data['title']= 'Feed';
+            $data['notif']  = $this->user_model->get_notification_count($uid);
             $this->load->view('header_view_user',$data);
 
             if($this->session->userdata('user_type')==='Admin')
@@ -237,9 +239,11 @@ class User extends CI_Controller{
         }
         else
         {
+
             $data['rec'] = $this->user_model->get_songs();
 
             $data['rec1'] = $this->playlist_model->get_playlists();
+
             $this->load->view('feed_view', $data);
             $this->load->view('playlist_add_song', $data);
             $this->load->view('player');
@@ -258,8 +262,9 @@ class User extends CI_Controller{
             $data['banlist'] = $this->user_model->get_ban_list();
             $data['bannedlist'] = $this->user_model->get_banned_list();
             $data['deletelist'] = $this->user_model->get_delete_list();
-
+            $uid = $this->session->userdata('user_id');
             $data['title'] = 'Admin';
+            $data['notif']  = $this->user_model->get_notification_count($uid);
             $data['ban'] = $this->load->view('ban_tab',$data,true);
             $data['banned'] = $this->load->view('banned_tab',$data,true);
             $data['delete'] = $this->load->view('delete_tab',$data,true);
@@ -357,7 +362,8 @@ class User extends CI_Controller{
             $data['rec'] = $this->user_model->get_user_songs($uid);            
             $data['info'] = $this->user_model->get_info($uid);
             $data['playlists']=$this->playlist_model->get_playlists();
-            $data['title'] = 'Profile';  
+            $data['title'] = 'Profile';
+            $data['notif']  = $this->user_model->get_notification_count($uid);
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
             $data['playlists'] = $this->load->view('playlists_tab',$data,true); 
@@ -442,9 +448,11 @@ class User extends CI_Controller{
 
     public function upload_error($audio_title, $audio_genre)
     {
+    $uid = $this->session->userdata('user_id');
     $data['title']='Upload';
     $data['audio_title']= $audio_title;
     $data['audio_genre']=$audio_genre;
+    $data['notif']  = $this->user_model->get_notification_count($uid);
     $this->load->view('header_view_user',$data);
 
     if($this->session->userdata('user_type')=='Admin')
@@ -463,10 +471,12 @@ class User extends CI_Controller{
 
     public function upload()
     {
+        $uid = $this->session->userdata('user_id');
         $data['title']='Upload';
         $data['audio_title']= '';
         $data['audio_file']='';
-        $data['audio_genre']='';        
+        $data['audio_genre']=''; 
+        $data['notif']  = $this->user_model->get_notification_count($uid);       
 
         $this->load->view('header_view_user',$data);
 
@@ -632,34 +642,7 @@ class User extends CI_Controller{
         //echo "<script type='text/javascript'>alert('$picpath');</script>";
     }
  
-    public function send_collab()
-    {
-        $from = 'mictest12345678910@gmail.com';
-        $config = Array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => $from, // change it to yours
-            'smtp_pass' => '123456789Ten', // change it to yours
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        );
-            $email = $this->input->post('user_email');
-            $newpass = random_string('alnum','8'); //new password
 
-            $this->load->library('form_validation');
-            $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_email');
-
-
-                $this->load->library('email', $config);
-                $this->email->set_newline("\r\n");
-                $this->email->from($from); // change it to yours
-                $this->email->to($email); // change it to yours
-                $this->email->subject('PlayMix Collaboration from:');
-                $this->email->message('This is your new password: '. $newpass . '. You may change it in your profile page.');
-
-                $this->email->send();
-    }
     public function add_playlist()
     {
         $this->playlist_model->add_playlist();
@@ -676,9 +659,9 @@ class User extends CI_Controller{
     public function playlist()
     {
         $playlist_id=$this->input->post('playlist_id');
-        
+        $uid = $this->session->userdata('user_id');
         $data['playlist_name']=$this->input->post('playlist_name');
-
+        $data['notif']  = $this->user_model->get_notification_count($uid);
         $data['rec']=$this->playlist_model->fetch_playlist_seq($playlist_id);
         $data['owner']=$this->playlist_model->get_playlist_owner($playlist_id);
 
@@ -701,8 +684,8 @@ class User extends CI_Controller{
 
     public function artist_profile()
     {
-        $user_id=$this->input->post('uid');
-        echo "<script type='text/javascript'>alert($user_id);</script>";
+        
+        //echo "<script type='text/javascript'>alert($user_id);</script>";
 
         if (($this->session->userdata('logged_in')===FALSE)) 
         {
@@ -710,12 +693,14 @@ class User extends CI_Controller{
         }
         else
         {
-            
-           
+            $user_id=$this->input->post('uid');
+            $my_id = $this->session->userdata('user_id');
             $data['rec'] = $this->user_model->get_user_songs($user_id);            
-            $data['info'] = $this->user_model->get_info($user_id);            
-            $data['title'] = 'Profile';  
-            $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
+            $data['info'] = $this->user_model->get_info($user_id);
+            $artistname = $data['info']['user_name'];           
+            $data['title'] = $artistname.'\'s Profile' ;  
+            $data['notif']  = $this->user_model->get_notification_count($my_id);
+            $data['personal_info'] = $this->load->view('artist_personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
             $this->load->view('header_view_user',$data);
             if($this->session->userdata('user_type')=='Admin')
@@ -727,12 +712,88 @@ class User extends CI_Controller{
                 $navbar = 'navbar_user';
                 }
             $this->load->view($navbar,$data);
-            $this->load->view('artist_profile_view', $data);
-            $this->load->view('player');
+            if($user_id!=$my_id)
+                {
+                $this->load->view("artist_profile_view", $data);                
+                $this->load->view('player');   
+                }
+            else{
+                redirect('/user/profile/', 'refresh');
+                }
 
-            return $data;
+
+            //return $data;
         }
     }
 
+    public function send_collab()
+    {
+        if($_POST):
+
+    
+        /*config email*/    
+        $from = 'mictest12345678910@gmail.com';
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => $from, // change it to yours
+            'smtp_pass' => '123456789Ten', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1'
+        );
+            
+            /*Recepient info*/
+            $email = $this->input->post('user_email');
+            //echo "<script type='text/javascript'>alert('$email');</script>";;
+
+            /*Sender info*/
+            $user_email = $this->session->userdata('user_email');
+            $user_id = $this->session->userdata('user_id');
+            $user_name = $this->session->userdata('user_username');
+            
+            $data['info'] = $this->user_model->get_info($user_id);             
+            $user_fb = $data['info']['user_fb'];
+            $user_google = $data['info']['user_google'];
+            $user_twitter = $data['info']['user_twitter'];
+
+
+            /*Construct Message*/
+            $subject = 'PlayMix Collaboration from: '.$user_name;
+            $message = 'Artist '.$user_name.' thinks you\'re awesome and wants to collaborate with you! You may reach him here: <br><br>
+            E-mail address: <br>'.$user_email.'<br> <br>Websites: <br>'.$user_fb.'<br>'.$user_google.'<br>'.$user_twitter;
+
+            //echo $message;
+                
+            /*Prepare email*/
+            $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
+            $this->email->from($from); // change it to yours
+            $this->email->to($email); // change it to yours
+            $this->email->subject($subject);
+            $this->email->message($message);
+    
+                if($this->email->send())
+              
+                {
+                    //echo 'sent to email!';
+                    $getid = $this->user_model->get_user_id($email);
+                    $uid = $getid['user_id'];
+                    $this->user_model->add_notification($uid);
+
+                    return true;
+                }          
+                else
+                {
+                    echo "<script type='text/javascript'>alert('Woops! E-mail failed to send. Please try again!');</script>";
+                    return false;
+                }
+            
+
+
+        endif;
+
+
+    }
 }
 ?>

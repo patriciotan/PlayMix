@@ -2,7 +2,7 @@
               
               <?php 
               if($rec==''){
-                echo 'You don\'t have any songs here!';
+                echo 'No songs here!';
               }
               else
               foreach($rec->result() as $row): ?>
@@ -23,7 +23,4 @@
 
 
 <script type="text/javascript">
-
-
-
 </script>            
