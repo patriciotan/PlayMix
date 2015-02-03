@@ -77,12 +77,13 @@
     var id = node.parentNode.parentNode.cells[5].textContent;
     $("#uid").attr("value",id);
     //alert("Value: "+$("#uid").val());
-    $("#idddd").submit();
-    //executeViewProf();
+    
+    executeViewProf();
   }
 
   function executeViewProf(){
-      location.href = '<?php echo base_url(); ?>index.php/user/artist_profile';
+      //location.href = '<?php echo base_url(); ?>index.php/user/artist_profile';
+      $("#idddd").submit();
   }
 </script>
 <!--
