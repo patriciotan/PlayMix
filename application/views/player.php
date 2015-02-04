@@ -15,7 +15,6 @@
 					<h3 id="artist" style="display:inline"></h3>
 				</div>
 				<div id="right1" class="pull-right" style="margin-top:2px;">
-					<input id="share" type="image" src="<?php echo base_url(); ?>assets/controls/share.png" style="height:25px; width:25px;" alt="share"/>&nbsp;&nbsp;
 					<a id="download" href="" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="21px;" width="21px;"></a>
 				</div>
     		</div>
@@ -111,19 +110,23 @@
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
 		var curId = sId.innerHTML;
 
-		var file = $("#"+curId).prev().children().eq(0).text();
-		var pic = $("#"+curId).prev().children().eq(1).text();
-		var id = $("#"+curId).prev().children().eq(2).text();
-		title.innerHTML = $("#"+curId).prev().children().eq(6).text();
-		artist.innerHTML = $("#"+curId).prev().children().eq(7).text();
+		var songTitle = $("#"+curId).prev().children().eq(6).text();
+		if(songTitle != "")
+		{
+			var file = $("#"+curId).prev().children().eq(0).text();
+			var pic = $("#"+curId).prev().children().eq(1).text();
+			var id = $("#"+curId).prev().children().eq(2).text();
+			title.innerHTML = songTitle;
+			artist.innerHTML = $("#"+curId).prev().children().eq(7).text();
 
-		var bullet="";
-		bullet += "&#9679;";
-		divider.innerHTML = bullet;
-		songId.innerHTML = id;
-		audioSrc.src = fileSrc.concat(file);
-		audioPic.src = picSrc.concat(pic);
-		download.href = fileSrc.concat(file);
+			var bullet="";
+			bullet += "&#9679;";
+			divider.innerHTML = bullet;
+			songId.innerHTML = id;
+			audioSrc.src = fileSrc.concat(file);
+			audioPic.src = picSrc.concat(pic);
+			download.href = fileSrc.concat(file);
+		}
 
 		audio.load();
 		audio.play();
@@ -145,19 +148,23 @@
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
 		var curId = sId.innerHTML;
 
-		var file = $("#"+curId).next().children().eq(0).text();
-		var pic = $("#"+curId).next().children().eq(1).text();
-		var id = $("#"+curId).next().children().eq(2).text();
-		title.innerHTML = $("#"+curId).next().children().eq(6).text();
-		artist.innerHTML = $("#"+curId).next().children().eq(7).text();
+		var songTitle = $("#"+curId).next().children().eq(6).text();
+		if(songTitle != "")
+		{
+			var file = $("#"+curId).next().children().eq(0).text();
+			var pic = $("#"+curId).next().children().eq(1).text();
+			var id = $("#"+curId).next().children().eq(2).text();
+			title.innerHTML = $("#"+curId).next().children().eq(6).text();
+			artist.innerHTML = $("#"+curId).next().children().eq(7).text();
 
-		var bullet="";
-		bullet += "&#9679;";
-		divider.innerHTML = bullet;
-		songId.innerHTML = id;
-		audioSrc.src = fileSrc.concat(file);
-		audioPic.src = picSrc.concat(pic);
-		download.href = fileSrc.concat(file);
+			var bullet="";
+			bullet += "&#9679;";
+			divider.innerHTML = bullet;
+			songId.innerHTML = id;
+			audioSrc.src = fileSrc.concat(file);
+			audioPic.src = picSrc.concat(pic);
+			download.href = fileSrc.concat(file);
+		}
 
 		audio.load();
 		audio.play();
