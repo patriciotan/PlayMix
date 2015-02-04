@@ -795,5 +795,10 @@ class User extends CI_Controller{
 
 
     }
+
+    public function reset_notif()
+    {
+        $this->user_model->reset_notif($this->session->userdata('user_id'));
+    }
 }
 ?>

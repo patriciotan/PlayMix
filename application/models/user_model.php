@@ -507,6 +507,17 @@ class User_model extends CI_Model {
         return $newdata;        
     }
 
+    public function reset_notif($uid)
+    {
+    	$newdata = array(
+            'notif_count'    => 0
+        );
+
+    	$this->db->select('*', 'notification');
+        $this->db->where('user_id', $uid);
+        $this->db->update('notification', $newdata); 
+    }
+
 
 }
 ?>
