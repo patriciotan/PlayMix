@@ -49,6 +49,11 @@
       $(this).parent().addClass('active');
     });
 
+    if($("#notification_count").html()=="0")
+    {
+      $("#notification_count").hide();
+    }
+
     $("#popup").click(function(){
       $("#popup").fadeOut("fast");
       $("#popup").hide();
@@ -92,5 +97,7 @@
     $("#notificationContainer").click(function(){
       return false;
     });
+
+    
   });
 </script>
