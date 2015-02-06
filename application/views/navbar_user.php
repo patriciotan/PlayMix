@@ -70,16 +70,16 @@
 
     $("#gotthat").click(function(){
     	$.ajax({
-			url: '<?php echo base_url('index.php/user/reset_notif')?>',
-			type:'Get',
-			data:{'id':$(this).children(".resId").val()},
-			success:function(){
-			   $("#notification_count").html("0");
-			},  
-			    error : function(e) {  
-			    alert('Error: ' + e);   
-			}
-		});
+  			url: '<?php echo base_url('index.php/user/reset_notif')?>',
+  			type:'Get',
+  			data:{},
+  			success:function(){
+  			   $("#notification_count").html("0");
+  			},  
+  			    error : function(e) {  
+  			    alert('Error: ' + e);   
+  			}
+		  });
     });
 
     //Document Click hiding the popup 

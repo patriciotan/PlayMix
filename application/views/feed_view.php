@@ -12,7 +12,7 @@
 <div class="centered" style="position:relative; width:870px;">
 
 <ul style="width:500px;"><h1>FEED</h1></ul>
-  <table class="display" id="feed">  
+  <table class="display" id="mytable">  
     <thead>
       <th style="display:none"></th>
       <th style="display:none"></th>
@@ -59,7 +59,9 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-    $('#feed').DataTable();
+    $('#mytable').DataTable({
+      "order": [[9, "desc"]]
+    });
   });
 
   function popUp(node){

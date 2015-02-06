@@ -5,7 +5,7 @@
 <div class="centered" style="position:relative; width:870px;">
 
 <ul style="width:500px;"><h1><?php echo $playlist_name; ?></h1></ul>
-  <table class="display" id="playlist">  
+  <table class="display" id="mytable">  
     <thead>
       <th style="display:none"></th>
       <th style="display:none"></th>
@@ -43,7 +43,7 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-    $('#playlist').DataTable();
+    $('#mytable').DataTable();
   });
 
 </script>

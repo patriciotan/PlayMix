@@ -800,5 +800,21 @@ class User extends CI_Controller{
     {
         $this->user_model->reset_notif($this->session->userdata('user_id'));
     }
+
+    public function shuffle_songs()
+    {
+        $count = $this->input->post('count');
+        $count -= 2;
+        $songs = range(0,$count);
+        shuffle($songs);
+        $shuffled = "";
+        foreach($songs as $num)
+        {
+            $shuffled = $shuffled.$num;
+            $shuffled = $shuffled."%";
+        }
+        echo $shuffled;
+        return $shuffled;
+    }
 }
 ?>
