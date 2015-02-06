@@ -19,17 +19,19 @@ class playlist_model extends CI_Model {
         $this->db->insert('playlist',$data);
     }
 
-    public function add2playlist($data,$test){
+    public function add2playlist($data){
         $playlist_id=$data['playlist_id'];
-        (int)$playlist_audio_count=(int)$test;
+        // (int)$playlist_audio_count=(int)$test;
+        $playlist_count=$data['playlist_audio_count'];
+        $playlist_count += 1;
         $this->db->select('*');
         $this->db->from('playlist');
-        $i=(int)$i;
-        $i=(int)1;
+        // $i=(int)$i;
+        // $i=(int)1;
         $this->db->where('playlist_id', $playlist_id);
         $data=array(
         'user_id'              =>$this->session->userdata('user_id'),
-        'playlist_audio_count' =>(int)$playlist_audio_count + (int)$i
+        'playlist_audio_count' =>$playlist_audio_count
         );
         
         $this->db->update('playlist',$data);  
@@ -51,18 +53,16 @@ class playlist_model extends CI_Model {
     public function add2sequence($data){
         $this->db->insert('sequence', $data);
     }
+    
     public function fetch_playlist_seq($playlist_id){
-       // $this->db->from('user');
-        //$this->db->select('user.user_username');
-        //$this->db->join('audio', 'user.user_id = audio.user_id');
-        $query = $this->db->query("SELECT * FROM `sequence` WHERE `playlist_id`= $playlist_id");
-      
-            foreach($query->result() as $row){
-                $query = $this->db->query("SELECT * FROM `audio` WHERE `audio_id`= $row->audio_id");
-            }
-
-        return $query;
-
+        
+        $this->db->where('playlist_id', $playlist_id)->from('sequence');
+        $this->db->join('audio', 'audio.audio_id = sequence.audio_id');
+        $query = $this->db->get();
+        if($query->num_rows() > 0)
+            return $query->result();
+        else
+            return false;
     }
 
     public function get_playlist_owner($playlist_id)

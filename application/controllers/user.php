@@ -318,10 +318,10 @@ class User extends CI_Controller{
                 'playlist_name'    =>$this->input->post('playlist_name'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-        error_reporting(0);
-       (int)$test=(int)$data['playlist_audio_count'];
+       //  error_reporting(0);
+       // (int)$test=(int)$data['playlist_audio_count'];
                 
-       $this->playlist_model->add2playlist($data, $test);
+       $this->playlist_model->add2playlist($data);
        echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
        redirect('/user/feed', 'refresh');
     }
