@@ -44,9 +44,9 @@
   </table>
 
   <?php echo form_open("user/artist_profile"); ?>
-    <form id="idddd">
-      <input type="text" name="uid" id="uid" value="" style="display:none"/>
-      <input type="submit" style="display:none">
+    <form>
+      <input type="hidden" name="uid" id="uid" value="" style="display:none"/>
+      <input type="submit" id="view_profile" style="display:none"/>
     </form>
   <?php echo form_close();?>  
 
@@ -69,6 +69,7 @@
     $("#confirmOverlay").fadeIn("fast");
     $("#confirmOverlay").show();
     $("#audio_id").attr("value",id);
+  
     //$("#popup-dialog").fadeIn("fast");
   }     
 
@@ -77,14 +78,9 @@
     var id = node.parentNode.parentNode.cells[5].textContent;
     $("#uid").attr("value",id);
     //alert("Value: "+$("#uid").val());
-    
-    executeViewProf();
+    $("#view_profile").click();
   }
 
-  function executeViewProf(){
-      //location.href = '<?php echo base_url(); ?>index.php/user/artist_profile';
-      $("#idddd").submit();
-  }
 </script>
 <!--
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>

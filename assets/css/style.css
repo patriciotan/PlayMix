@@ -189,3 +189,7 @@ input[list]
 {
     height:13px;
 }
+
+.account-pane{
+    overflow:hidden;
+}

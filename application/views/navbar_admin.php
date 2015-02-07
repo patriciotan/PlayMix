@@ -16,10 +16,10 @@
                 <li><a href="<?php echo base_url('index.php/user/profile'); ?>">Profile</a></li>
                 <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
                 <li><a href="<?php echo base_url('index.php/user/admin'); ?>">Admin</a></li> 
-                  <!--<li id="notification_li">
-                  <span id="notification_count">3</span>
+                <li id="notification_li">
+                  <span id="notification_count"><?=$notif['notif_count']?></span>
                   <a href="#" id="notificationLink" style="position: relative; float:right; margin-top:7px; margin-left:13px; background: url(<?php echo base_url();?>assets/notif.png) no-repeat; background-position: 1px; background-size:20px;"></a>                                    
-                </li>  -->    
+                </li>    
               </ul>                        
             </div>
             <div>
@@ -31,13 +31,13 @@
         </div>
       </div>
     </div>
-<!--
+
 <div id="popup" class="notifpopup">
   <div id="popup-dialog" class="notifpopupdialog">
-    <p><?php echo $number?>artists want to collaborate with you. You may check your e-mail for their contact information!</p>
+    <p><strong><?php echo $notif['notif_count']?></strong>&nbsp;artists want to collaborate with you. You may check your <br>e-mail for their contact information!</p>
     <a href="#" id="gotthat" class="btn btn-white" style="position:relative; width:15%; margin:0 auto">Got that!</a>
   </div>
-</div>-->
+</div>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -48,6 +48,11 @@
       $('li').removeClass();
       $(this).parent().addClass('active');
     });
+
+    if($("#notification_count").html()=="0")
+    {
+      $("#notification_count").hide();
+    }
 
     $("#popup").click(function(){
       $("#popup").fadeOut("fast");
@@ -69,6 +74,20 @@
       $("#popup-dialog").fadeIn("fast");
     });
 
+    $("#gotthat").click(function(){
+    	$.ajax({
+			url: '<?php echo base_url('index.php/user/reset_notif')?>',
+			type:'Get',
+			data:{'id':$(this).children(".resId").val()},
+			success:function(){
+			   $("#notification_count").html("0");
+			},  
+			    error : function(e) {  
+			    alert('Error: ' + e);   
+			}
+		});
+    });
+
     //Document Click hiding the popup 
     $(document).click(function(){
       $("#notificationContainer").hide();
@@ -78,5 +97,7 @@
     $("#notificationContainer").click(function(){
       return false;
     });
+
+    
   });
 </script>

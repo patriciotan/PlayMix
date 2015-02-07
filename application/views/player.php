@@ -1,3 +1,11 @@
+
+
+<div style="display:none">
+	<table id="shuffleTable">
+		<tr id="shuffleRow"></tr>
+	</table>
+</div>
+
 <div class="navbar navbar-fixed-bottom" style="width:740px; left:50%; margin-left:-375px;">
   <div class="navbar-inner" style="background-color:#363636; height:100px;">
   	<div class="row-fluid">
@@ -15,7 +23,6 @@
 					<h3 id="artist" style="display:inline"></h3>
 				</div>
 				<div id="right1" class="pull-right" style="margin-top:2px;">
-					<input id="share" type="image" src="<?php echo base_url(); ?>assets/controls/share.png" style="height:25px; width:25px;" alt="share"/>&nbsp;&nbsp;
 					<a id="download" href="" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="21px;" width="21px;"></a>
 				</div>
     		</div>
@@ -34,9 +41,9 @@
 					<input id="next" onclick="nextSong()" type="image" src="<?php echo base_url(); ?>assets/controls/next.png" style="height:21px; width:21px;" alt="next"/>
 		    	</div>
 		    	<div id="right2" class="pull-right">
-					<input id="shuffle" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle.png" style="height:25px; width:25px;" alt="shuffle"/>&nbsp;&nbsp;
-					<input id="repeat" onclick="oneRepeat()" type="image" src="<?php echo base_url(); ?>assets/controls/repeat.png" style="height:25px; width:25px;" alt="repeat"/>
-		    		<h1 id="repeatOne" hidden>false</h1>
+					<input id="shuffle" onclick="shuffle()" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle.png" style="height:25px; width:25px;" alt="shuffle"/>&nbsp;&nbsp;
+					<input id="repeat" onclick="switchRepeat()" type="image" src="<?php echo base_url(); ?>assets/controls/repeat.png" style="height:25px; width:25px;" alt="repeat"/>
+		    		<h1 id="repeatSwitch" hidden>off</h1><h1 id="shuffleSwitch" hidden>off</h1>
 		    	</div>
 		    </div>
 	    </div>
@@ -50,15 +57,19 @@
 <script type="text/javascript">
 
 	var audio = document.getElementById("audio");
-	var repeatOne = document.getElementById("repeatOne");
+	var repeatSwitch = document.getElementById("repeatSwitch");
+	var shuffleSwitch = document.getElementById("shuffleSwitch");
 	audio.onended = function() {
-	    if(repeatOne.innerHTML === "true")
+	    if(repeatSwitch.innerHTML === "one")
 	    {
 	    	audio.play();
 	    }
 	    else
 	    {
-	    	nextSong();
+	    	if(shuffleSwitch.innerHTML === "on")
+	    		nextShuffleSong();
+	    	else
+	    		nextSong();
 	    }
 	};
 
@@ -72,7 +83,6 @@
 		var audioSrc = document.getElementById("audioSrc");
 		var audioPic = document.getElementById("audioPic");
 		var download = document.getElementById("download");
-		var repeatOne = document.getElementById("repeatOne");
 
 		var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
@@ -97,6 +107,51 @@
 
 	function prevSong()
 	{
+		var shuffleSwitch = document.getElementById("shuffleSwitch");
+		if(shuffleSwitch.innerHTML === "on")
+			prevShuffleSong();
+		else
+		{
+			var audio = document.getElementById("audio");
+			var title = document.getElementById("title");
+			var songId = document.getElementById("songId");
+			var divider = document.getElementById("divider");
+			var artist = document.getElementById("artist");
+			var audioSrc = document.getElementById("audioSrc");
+			var audioPic = document.getElementById("audioPic");
+			var sId = document.getElementById("songId");
+			var download = document.getElementById("download");
+
+			var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
+			var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
+			var curId = sId.innerHTML;
+
+			var prevv = $("#"+curId).prev().children();
+			var songTitle = prevv.eq(6).text();
+			if(songTitle != "")
+			{
+				var file = prevv.eq(0).text();
+				var pic = prevv.eq(1).text();
+				var id = prevv.eq(2).text();
+				title.innerHTML = songTitle;
+				artist.innerHTML = prevv.eq(7).text();
+
+				var bullet="";
+				bullet += "&#9679;";
+				divider.innerHTML = bullet;
+				songId.innerHTML = id;
+				audioSrc.src = fileSrc.concat(file);
+				audioPic.src = picSrc.concat(pic);
+				download.href = fileSrc.concat(file);
+			}
+
+			audio.load();
+			audio.play();
+		}
+	}
+
+	function prevShuffleSong()
+	{
 		var audio = document.getElementById("audio");
 		var title = document.getElementById("title");
 		var songId = document.getElementById("songId");
@@ -106,16 +161,31 @@
 		var audioPic = document.getElementById("audioPic");
 		var sId = document.getElementById("songId");
 		var download = document.getElementById("download");
+		var shuffleRow = document.getElementById("shuffleRow");
 
 		var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
 		var curId = sId.innerHTML;
 
-		var file = $("#"+curId).prev().children().eq(0).text();
-		var pic = $("#"+curId).prev().children().eq(1).text();
-		var id = $("#"+curId).prev().children().eq(2).text();
-		title.innerHTML = $("#"+curId).prev().children().eq(6).text();
-		artist.innerHTML = $("#"+curId).prev().children().eq(7).text();
+		var row = $("#"+curId).index();
+		var curOrder = $("#"+row).text();
+		var first = $("#"+row).parent().children().first().text();
+		if(curOrder === first)
+			var prevOrder = $("#"+row).parent().children().last().text();
+		else
+			var prevOrder = $("#"+row).prev().text();
+		// alert(prevOrder);
+		var prevRow = $("#"+curId).parent().children();
+		var prevv = prevRow.eq(prevOrder).children();
+		var songTitle = prevv.eq(6).text();
+		// alert(songTitle);
+
+		var file = prevv.eq(0).text();
+		var pic = prevv.eq(1).text();
+		var id = prevv.eq(2).text();
+		title.innerHTML = songTitle;
+		// alert(title.innerHTML);
+		artist.innerHTML = prevv.eq(7).text();
 
 		var bullet="";
 		bullet += "&#9679;";
@@ -127,9 +197,81 @@
 
 		audio.load();
 		audio.play();
+
 	}
 
 	function nextSong()
+	{
+		var repeatSwitch = document.getElementById("repeatSwitch");
+		var shuffleSwitch = document.getElementById("shuffleSwitch");
+		if(repeatSwitch.innerHTML != "one" && shuffleSwitch.innerHTML === "on")
+			nextShuffleSong();
+		else
+		{
+			var audio = document.getElementById("audio");
+			var title = document.getElementById("title");
+			var songId = document.getElementById("songId");
+			var divider = document.getElementById("divider");
+			var artist = document.getElementById("artist");
+			var audioSrc = document.getElementById("audioSrc");
+			var audioPic = document.getElementById("audioPic");
+			var sId = document.getElementById("songId");
+			var download = document.getElementById("download");
+
+			var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
+			var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
+			var curId = sId.innerHTML;
+
+			var nextt = $("#"+curId).next().children();
+			var songTitle = nextt.eq(6).text();
+
+			if(songTitle === "")
+			{
+				if(repeatSwitch.innerHTML === "all")
+				{
+					nextt = $("#"+curId).parent().children().eq(0).children();
+				
+					var file = nextt.eq(0).text();
+					var pic = nextt.eq(1).text();
+					var id = nextt.eq(2).text();
+					title.innerHTML = nextt.eq(6).text();
+					artist.innerHTML = nextt.eq(7).text();
+
+					var bullet="";
+					bullet += "&#9679;";
+					divider.innerHTML = bullet;
+					songId.innerHTML = id;
+					audioSrc.src = fileSrc.concat(file);
+					audioPic.src = picSrc.concat(pic);
+					download.href = fileSrc.concat(file);
+				}
+			}	
+			else
+			{
+				if(repeatSwitch.innerHTML != "one")
+				{
+					var file = nextt.eq(0).text();
+					var pic = nextt.eq(1).text();
+					var id = nextt.eq(2).text();
+					title.innerHTML = nextt.eq(6).text();
+					artist.innerHTML = nextt.eq(7).text();
+
+					var bullet="";
+					bullet += "&#9679;";
+					divider.innerHTML = bullet;
+					songId.innerHTML = id;
+					audioSrc.src = fileSrc.concat(file);
+					audioPic.src = picSrc.concat(pic);
+					download.href = fileSrc.concat(file);
+				}
+			}
+
+			audio.load();
+			audio.play();
+		}
+	}
+
+	function nextShuffleSong()
 	{
 		var audio = document.getElementById("audio");
 		var title = document.getElementById("title");
@@ -140,16 +282,31 @@
 		var audioPic = document.getElementById("audioPic");
 		var sId = document.getElementById("songId");
 		var download = document.getElementById("download");
+		var shuffleRow = document.getElementById("shuffleRow");
 
 		var fileSrc = "<?php echo base_url(); ?>uploads/mp3/";
 		var picSrc = "<?php echo base_url(); ?>uploads/audio_pics/";
 		var curId = sId.innerHTML;
 
-		var file = $("#"+curId).next().children().eq(0).text();
-		var pic = $("#"+curId).next().children().eq(1).text();
-		var id = $("#"+curId).next().children().eq(2).text();
-		title.innerHTML = $("#"+curId).next().children().eq(6).text();
-		artist.innerHTML = $("#"+curId).next().children().eq(7).text();
+		var row = $("#"+curId).index();
+		var curOrder = $("#"+row).text();
+		var last = $("#"+row).parent().children().last().text();
+		if(curOrder === last)
+			var nextOrder = $("#"+row).parent().children().last().text();
+		else
+			var nextOrder = $("#"+row).prev().text();
+		// alert(nextOrder);
+		var nextRow = $("#"+curId).parent().children();
+		var nextt = nextRow.eq(nextOrder).children();
+		var songTitle = nextt.eq(6).text();
+		// alert(songTitle);
+
+		var file = nextt.eq(0).text();
+		var pic = nextt.eq(1).text();
+		var id = nextt.eq(2).text();
+		title.innerHTML = songTitle;
+		// alert(title.innerHTML);
+		artist.innerHTML = nextt.eq(7).text();
 
 		var bullet="";
 		bullet += "&#9679;";
@@ -170,23 +327,61 @@
 		$("#audio").prop("currentTime",0);
 	}
 
-	function oneRepeat()
+	function switchRepeat()
 	{
-		var repeatOne = document.getElementById("repeatOne");
-		repeatOne.innerHTML = "true";
+		var repeatSwitch = document.getElementById("repeatSwitch");
+		
+		if(repeatSwitch.innerHTML === "off"){
+			repeatSwitch.innerHTML = "one";
+			alert("repeat "+repeatSwitch.innerHTML);
+		}
+		else if(repeatSwitch.innerHTML === "one"){
+			repeatSwitch.innerHTML = "all";
+			alert("repeat "+repeatSwitch.innerHTML);
+		}
+		else{
+			repeatSwitch.innerHTML = "off";
+			alert("repeat "+repeatSwitch.innerHTML);
+		}
 	}
 
-	function downloadSong()
+	function shuffle()
 	{
-		var audioSrc = document.getElementById("audioSrc");
-		var title = document.getElementById("title");
+		var shuffleSwitch = document.getElementById("shuffleSwitch");
 
-		var data = audioSrc.src;
-		var name = title.innerHTML;
+		if(shuffleSwitch.innerHTML === "off"){
+			shuffleSwitch.innerHTML = "on";
+			alert("shuffle "+shuffleSwitch.innerHTML);
+		}
+		else{
+			shuffleSwitch.innerHTML = "off";
+			alert("shuffle "+shuffleSwitch.innerHTML);
+		}
 
-		alert("You cannot download "+name+" from "+data+"! Never!");
-
-		//pass data and name to downloadSong() in user controller
+		var table = document.getElementById("mytable");
+		var count = table.rows.length;
+		// alert(count);
+		$.ajax({
+			url: '<?php echo base_url('index.php/user/shuffle_songs')?>',
+			type: 'POST',
+			data: {'count':count},
+			success:function(data){
+				var x = data.toString();
+				// alert(x);
+				var order = x.split("%");
+				if(data!="")
+				{
+					for(var i=0;i<count; i++)
+					{
+						$("#shuffleRow").append("<td id="+order[i]+">"+order[i]+"</td>");
+					}
+				}
+			   	
+			},  
+			    error : function(e) {  
+			    alert('Error: ' + e);   
+			}
+		});
 	}
 
 </script>

@@ -408,7 +408,7 @@ class User_model extends CI_Model {
         }
     }
 
-    function update_personal_info($uid, $fname, $lname, $city, $cntry, $fb, $google, $twitter, $bio, $photo)
+    public function update_personal_info($uid, $fname, $lname, $city, $cntry, $fb, $google, $twitter, $bio, $photo)
     {
 
         
@@ -428,6 +428,96 @@ class User_model extends CI_Model {
         $this->db->where('user_id', $uid);
         $this->db->update('user', $data);
     }
+
+    public function check_notif_id($username)
+    {
+        $this->db->where("user_id",$username);
+
+        $query=$this->db->get("notification");
+        if ($query->num_rows()>0) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    public function get_user_id($email){
+        $this->db->select('user.user_id');
+        $this->db->from('user');
+        $this->db->where('user.user_email',$email);
+        $query = $this->db->get();
+        foreach($query->result() as $row)
+        {
+            $newdata = array(
+                'user_id'    => $row->user_id,                                                 
+            );
+        }
+        
+        return $newdata;
+
+    }
+
+    public function add_notification($uid){
+
+        if($this->check_notif_id($uid)){
+            $thing['count'] = $this->get_notification_count($uid);
+            //$test = $thing['notif_count'];
+            //echo "<script type='text/javascript'>alert('$test');</script>";
+            $count = $thing['count']['notif_count'];
+            $count = $count+1;
+            //echo "<script type='text/javascript'>alert('$count');</script>";
+            $data = array(
+                'user_id'     => $uid,
+                'notif_count' => $count
+
+            );
+        
+            $this->db->select('*', 'notification');
+            $this->db->where('user_id', $uid);
+            $this->db->update('notification', $data);          
+        }
+
+        else{
+            $count = 1;
+            $data = array(
+                'user_id'     => $uid,
+                'notif_count' => $count
+
+            );
+            $this->db->insert('notification',$data); 
+        }            
+
+    }
+
+    public function get_notification_count($uid){
+
+        $query = $this->db->query("SELECT * FROM `notification` WHERE `user_id`=$uid");
+
+        foreach($query->result() as $row)
+        {
+            $newdata = array(
+                'notif_id'       => $row->notif_id,
+                'notif_count'    => $row->notif_count,                                                 
+            );
+        }
+        
+        return $newdata;        
+    }
+
+    public function reset_notif($uid)
+    {
+    	$newdata = array(
+            'notif_count'    => 0
+        );
+
+    	$this->db->select('*', 'notification');
+        $this->db->where('user_id', $uid);
+        $this->db->update('notification', $newdata); 
+    }
+
 
 }
 ?>
