@@ -13,10 +13,18 @@ class playlist_model extends CI_Model {
         $data=array(
         'user_id'              =>$this->session->userdata('user_id'),
         'playlist_name'        =>$this->input->post('playlist_name'),
-        'playlist_date_added'  =>date("Y/m/d"), 
-        'playlist_audio_count' => 0
+        'playlist_date_added'  =>date("Y/m/d")
         );
         $this->db->insert('playlist',$data);
+    }
+
+    public function rename_playlist()
+    {
+        $data=array(
+        'playlist_name'        =>$this->input->post('rename')
+        );
+        $this->db->where('playlist_id',$this->input->post('rename_id'));
+        $this->db->update('playlist',$data);
     }
 
     public function add2playlist($data){

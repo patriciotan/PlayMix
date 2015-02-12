@@ -311,7 +311,6 @@ class User extends CI_Controller{
                 'playlist_id'     =>$this->input->post('playlist_id'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-        print_r($data);
         $this->playlist_model->add2sequence($data); 
         $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
@@ -643,19 +642,23 @@ class User extends CI_Controller{
         //$picpath = $data['full_path'];
         //echo "<script type='text/javascript'>alert('$picpath');</script>";
     }
- 
-
+    public function rename_playlist()
+    {
+        $this->playlist_model->rename_playlist();
+        $this->profile();
+        $this->load->view('playlistrename_script');
+    }
     public function add_playlist()
     {
         $this->playlist_model->add_playlist();
-        $this->index();
+        $this->profile();
         $this->load->view('playlistadd_script');
     }
     public function delete_playlist()
     {
-        $id=$this->input->post('id');
+        $id=$this->input->post('delete');
         $this->playlist_model->row_delete($id);
-        $this->index();
+        $this->profile();
         $this->load->view('playlistdelete_script');
     }
     public function playlist()

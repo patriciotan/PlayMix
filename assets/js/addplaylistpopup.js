@@ -10,7 +10,7 @@
 	$("#cancel").click(function(){
     $("#createOverlay").fadeOut("fast");
     $("#createOverlay").hide();
-    });
+  });
 	
 	
 })(jQuery);

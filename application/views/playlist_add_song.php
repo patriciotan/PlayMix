@@ -31,11 +31,11 @@
       </table>
         <div id="confirmButtons">
             <button type="submit" class="button blue">Add</button>
-            <button id="cancel" class="button gray" href="#">Cancel</button>
-        </div>
-          
           </form>
         <?php echo form_close(); ?>
+            <button id="cancel" class="button gray">Cancel</button>
+        </div>
+          
     </div>
 </div>
 
@@ -44,18 +44,17 @@
 
   $(document).ready(function(){
     $('#feed').DataTable();
-    $("#confirmOverlay").hide()
-    $("#cancel").click(function(){
-      $("#confirmOverlay").fadeOut("fast");
-      $("#confirmOverlay").hide();
-    });   
-
-     
+    $("#confirmOverlay").hide();
   });
 
 </script>
 
 <script>
+
+  $("#cancel").click(function(){
+    $("#confirmOverlay").fadeOut("fast");
+    $("#confirmOverlay").hide();
+  });
 
   $(".addtoplaylist").click(function()
     {
