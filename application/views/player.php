@@ -59,8 +59,37 @@
 	var audio = document.getElementById("audio");
 	var repeatSwitch = document.getElementById("repeatSwitch");
 	var shuffleSwitch = document.getElementById("shuffleSwitch");
+	
 	audio.onended = function() {
-	    if(repeatSwitch.innerHTML === "one")
+		var sId = $("#songId").text();
+		alert(sId);
+		increment_play(sId);
+		auto_next();
+	    
+	};
+
+	function increment_play(sId)
+	{
+		alert("sample "+sId);
+		$.ajax({
+			url: '<?php echo base_url('index.php/user/increment_play')?>',
+			type:'POST',
+			data:{'sId':sId},
+			success:function(){
+			},  
+				error : function(e) {  
+				alert('Error: ' + e);   
+			}
+		});
+	}
+
+	function auto_next()
+	{
+		var audio = document.getElementById("audio");
+		var repeatSwitch = document.getElementById("repeatSwitch");
+		var shuffleSwitch = document.getElementById("shuffleSwitch");
+
+		if(repeatSwitch.innerHTML === "one")
 	    {
 	    	audio.play();
 	    }
@@ -71,7 +100,7 @@
 	    	else
 	    		nextSong();
 	    }
-	};
+	}
 
 	function playSong(node)
 	{
@@ -367,10 +396,11 @@
 			data: {'count':count},
 			success:function(data){
 				var x = data.toString();
-				// alert(x);
+				// alert("asdsd");
 				var order = x.split("%");
 				if(data!="")
 				{
+					// alert("not empty!");
 					for(var i=0;i<count; i++)
 					{
 						$("#shuffleRow").append("<td id="+order[i]+">"+order[i]+"</td>");
@@ -379,6 +409,7 @@
 			   	
 			},  
 			    error : function(e) {  
+			    	alert("asdf");
 			    alert('Error: ' + e);   
 			}
 		});

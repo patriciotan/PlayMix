@@ -22,8 +22,9 @@ class playlist_model extends CI_Model {
     public function add2playlist($data){
         $playlist_id=$data['playlist_id'];
         // (int)$playlist_audio_count=(int)$test;
-        $playlist_count=$data['playlist_audio_count'];
-        $playlist_count += 1;
+        // $playlist_count = 0;
+        // $playlist_count = $playlist_count + (int)$data['playlist_audio_count'];
+        // $playlist_count = $playlist_count + 1;
         $this->db->select('*');
         $this->db->from('playlist');
         // $i=(int)$i;
@@ -31,7 +32,7 @@ class playlist_model extends CI_Model {
         $this->db->where('playlist_id', $playlist_id);
         $data=array(
         'user_id'              =>$this->session->userdata('user_id'),
-        'playlist_audio_count' =>$playlist_audio_count
+        // 'playlist_audio_count' =>$playlist_audio_count
         );
         
         $this->db->update('playlist',$data);  
@@ -56,13 +57,11 @@ class playlist_model extends CI_Model {
     
     public function fetch_playlist_seq($playlist_id){
         
-        $this->db->where('playlist_id', $playlist_id)->from('sequence');
+        $this->db->where('playlist_id', $playlist_id);
         $this->db->join('audio', 'audio.audio_id = sequence.audio_id');
-        $query = $this->db->get();
+        $query = $this->db->get('sequence');
         if($query->num_rows() > 0)
             return $query->result();
-        else
-            return false;
     }
 
     public function get_playlist_owner($playlist_id)

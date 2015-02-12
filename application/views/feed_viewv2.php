@@ -8,7 +8,7 @@
 <div id="wrapper">
 
 
-<div class="container" style="padding-bottom: 100px; padding-top: 80px;"> <!-- This is the div that contains the most-played songs according to the database -->
+<div class="container" style="padding-bottom: 80px; padding-top: 80px;"> <!-- This is the div that contains the most-played songs according to the database -->
 <div class="centered" style="position:relative; width:870px;">
 
 <ul style="width:500px;"><h1>FEED</h1></ul>
@@ -32,7 +32,7 @@
         <td style="display:none"><?=$row->audio_photo;?></td>
         <td style="display:none"><?=$row->audio_id;?></td>
         <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
-        <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td align="center"><input type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
         <td class="spotify" align="left"><?=$row->audio_title;?></td>
         <td align="left"><a href="#" onclick="viewProf(this)"><?=$row->user_username;?></a></td>
@@ -70,7 +70,6 @@
     var id = node.parentNode.parentNode.cells[2].textContent;
     $("#confirmOverlay").fadeIn("fast");
     $("#confirmOverlay").show();
-    // alert(id);
     $("#audio_id").attr("value",id);
   
     //$("#popup-dialog").fadeIn("fast");

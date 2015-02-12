@@ -19,7 +19,10 @@
       <th width="50px">PLAYS</th>
     </thead>
     <tbody id="feedBody">
-    <?php foreach($rec as $row): ?>
+    <?php 
+      if(!empty($rec))
+        foreach($rec as $row): 
+    ?>
       <tr id="<?=$row->audio_id;?>" class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
         <td style="display:none" value="<?=$row->audio_file;?>"><?=$row->audio_file;?></td>
         <td style="display:none"><?=$row->audio_photo;?></td>
@@ -31,6 +34,7 @@
         <td align="left"><?php echo $owner; ?></a></td>
         <td align="center"><?=$row->audio_date_added;?></td>
         <td align="right"><?=$row->audio_play_count;?></td>
+        
       </tr>
     <?php endforeach;?>
     </tbody>
@@ -43,7 +47,9 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-    $('#mytable').DataTable();
+    $('#mytable').DataTable({
+      "order": [[ 9, "desc" ]]
+    });
   });
 
 </script>

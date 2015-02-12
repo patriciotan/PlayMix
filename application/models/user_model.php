@@ -518,6 +518,23 @@ class User_model extends CI_Model {
         $this->db->update('notification', $newdata); 
     }
 
+    public function increment_play($id)
+    {
+        $this->db->where('audio_id',$id);
+        $num = $this->db->get('audio');
+        $nume=$num->row();
+        if(!empty($num))
+            $numM = $nume->audio_play_count + 1;
+
+        $data = array(
+            'audio_play_count'    => $numM
+        );
+
+        // $this->db->select('*', 'audio');
+        $this->db->where('audio_id', $id);
+        $this->db->update('audio', $data);
+    }
+
 
 }
 ?>

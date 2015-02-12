@@ -311,10 +311,11 @@ class User extends CI_Controller{
                 'playlist_id'     =>$this->input->post('playlist_id'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
+        print_r($data);
         $this->playlist_model->add2sequence($data); 
         $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
-                'playlist_audio_count' => $this->playlist_model->get_count($this->input->post('playlist_id')),
+                // 'playlist_audio_count' => $this->playlist_model->get_count($this->input->post('playlist_id')),
                 'playlist_name'    =>$this->input->post('playlist_name'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
@@ -322,6 +323,7 @@ class User extends CI_Controller{
        // (int)$test=(int)$data['playlist_audio_count'];
                 
        $this->playlist_model->add2playlist($data);
+       $playlist_name=$this->input->post('playlist_name');
        echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
        redirect('/user/feed', 'refresh');
     }
@@ -666,7 +668,7 @@ class User extends CI_Controller{
         $data['owner']=$this->playlist_model->get_playlist_owner($playlist_id);
 
 
-        $data['title']= 'Feed';
+        $data['title']= 'Playlist';
 
             $this->load->view('header_view_user',$data);
 
@@ -813,8 +815,15 @@ class User extends CI_Controller{
             $shuffled = $shuffled.$num;
             $shuffled = $shuffled."%";
         }
-        echo $shuffled;
-        return $shuffled;
+
+        print $shuffled;
+    }
+
+    public function increment_play()
+    {
+    	$id = $this->input->post('sId');
+    	
+    	$this->user_model->increment_play($id);
     }
 }
 ?>
