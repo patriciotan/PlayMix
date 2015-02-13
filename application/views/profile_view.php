@@ -35,6 +35,7 @@
 </div>
 
 <script>
+
   $(document).ready(function(){
 
 
@@ -149,6 +150,28 @@
     });    
 
     $(document).ready(function(){
-        $('#songs').DataTable();
+      var uploaded = $('#songs_table').DataTable({
+      "order": [[ 9, "desc" ]],
+      "scrollCollapse": true,
+      "paging":         false,
+      "bInfo":          false,     
+      "aoColumnDefs": [{
+        'bSortable': false, 
+        'aTargets': [-6,-7]
+        }]
+      });
+
+      var playlists = $('#playlists_table').DataTable({
+      "scrollCollapse": true,
+      "paging":         false,
+      "bInfo":          false,
+      "bFilter":        false,
+      "aoColumnDefs": [{
+        'bSortable': false, 
+        'aTargets': [-1,-4]
+        }]
+      });
+
     });
+
 </script>

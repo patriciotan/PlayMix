@@ -12,7 +12,7 @@
 <div class="centered" style="position:relative; width:870px;">
 
 <ul style="width:500px;"><h1>FEED</h1></ul>
-  <table class="display" id="mytable">  
+  <table class="hover" id="mytable">  
     <thead>
       <th style="display:none"></th>
       <th style="display:none"></th>
@@ -60,7 +60,15 @@
 
   $(document).ready(function(){
     $('#mytable').DataTable({
-      "order": [[ 9, "desc" ]]
+      "order": [[ 9, "desc" ]],
+      "scrollCollapse": true,
+      "paging":         false,
+      "bInfo":          false,
+      "scrollY":        "500px",
+      "aoColumnDefs": [{
+        'bSortable': false, 
+        'aTargets': [-6,-7]
+        }]
     });
   });
 

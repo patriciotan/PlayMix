@@ -307,7 +307,7 @@ table.dataTable td {
 }
 
 .dataTables_length label, .dataTables_filter label, #searchTable_info{
-  color:white;
+  color:black;
 }
 
 .dataTables_wrapper .dataTables_filter {

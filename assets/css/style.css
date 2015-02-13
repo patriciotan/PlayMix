@@ -89,8 +89,9 @@ a {color:black;}
 
 .centered {position: relative; width:90%; margin-left:auto; margin-right:auto;}
 
-.feed_table {width:800px; margin-left:auto; margin-right:auto;}
-.feed_table tr:hover {background-color: #e3e3e3;}
+table.feed_table {width:800px; margin-left:auto; margin-right:auto;}
+table.feed_table tr:hover {background-color: #e3e3e3;}
+table.feed_table thead tr:hover {background-color: none;}
 
 .error{ color: red; }
 
@@ -192,4 +193,8 @@ input[list]
 
 .account-pane{
     overflow:hidden;
+}
+
+table.dataTable thead .sorting{
+    background:none;
 }

@@ -1,89 +1,102 @@
-<!--<link rel="stylesheet" type="text/css" href="<?php
-   echo base_url();
-   ?>assets/css/styles_dialog.css" />-->
-<button id="createplaylist" class="btn btn_primary" style="float:left"><input id="add2playlist" type="image" src="<?php
-   echo base_url();
-   ?>assets/controls/plus.ico" style="float:center;margin-top:-1px;z-index:5;width:16px;height:10px;width:10px;" alt="logo"/> New Playlist</button>
-<div id="createOverlay">
-   <div id="confirmBox">
-      <h1><img src="<?php
-         echo base_url();
-         ?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/> New Playlist</h1>
-      <br> &nbsp;&nbsp;
-      <?php
-         echo form_open("user/add_playlist");
-         ?> 
+
+
+<div class="centered">
+   <button id="createplaylist" class="btn btn_primary" ><img src="<?php echo base_url();?>assets/controls/plus.ico" style="float:center;margin-top:-1px;z-index:5;width:16px;height:10px;width:10px;" alt="logo"/> New Playlist</button>
+
+   <table class="hover" id="playlists_table" style="margin-top:30px">
+      <thead>
+         <th style="display:none"></th>
+         <th>TITLE</th>
+         <th width="50px">ADDED</th>
+         <th width="50px"></th>         
+      </thead>
+      <tbody>
+      <?php foreach ($playlists->result() as $row): ?>
+         <tr class="<?php echo alternator('background:#cfc', 'background:#ffc');?>">           
+            <td style="display:none"><?=$row->playlist_id;?></td>
+            <td align="left"><a href="#" onclick="viewPlaylist(this)"><?= $row->playlist_name; ?></a></td>           
+            <td style="padding-bottom:10px;" align="left"><?= $row->playlist_date_added; ?></td>  
+            <td><input onclick="delPlaylist(this)" type="image" src="<?php echo base_url();?>assets/img/delete_icon.ico" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>                     
+         </tr>
+      <?php endforeach; ?>
+      </tbody>
+   </table>
+</div>
+
+<div id="createOverlay" class="notifpopup">
+   <div id="confirmBox" class="centered">
+      <h1 style="font-color:white; text-shadow:0 0"><img src="<?php echo base_url();?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>&nbsp;New Playlist</h1>
+
+      <?php echo form_open("user/add_playlist");?> 
       <form>
          <label for="playlist_name">
             <h3 style="margin-left:80px"> Playlist name</h3>
          </label>
-         <input style="margin-left:80px" id="playlist_name" name="playlist_name" type="text" placeholder="Input playlist name..." value="<?php
-            echo set_value('playlist_name');
-            ?>" required>
+         
+         <input style="margin-left:80px" id="playlist_name" name="playlist_name" type="text" placeholder="Input playlist name..." value="<?php echo set_value('playlist_name');?>" required>
+
          <div id="confirmButtons">
-            <button id="submit" type="submit" class="button blue">Create playlist</button>
-            <button id="cancel" class="button gray" href="#">Cancel</button>
+            <input type="submit" value="Create playlist" class="btn btn_red"/>
+            <button id="cancel" class="btn" href="#">Cancel</button>
+         </div>
       </form>
-      <?php
-         echo form_close();
-         ?>
-      </div>
+      <?php echo form_close();?>         
    </div>
 </div>
-<div>
-   <table>
-      <tbody>
-         <?php foreach ($playlists->result() as $row): ?>
-         <tr class="<?php
-            echo alternator('background:#cfc', 'background:#ffc');
-            ?>">
-            <br/>
-            <td align="left">
-              <?php echo form_open("user/playlist"); ?>
-              <form id="viewplaylistform">
-                    <input id="playlist_id" for="playlist_id" name="playlist_id" type="hidden" value= "<?php
-                     echo $row->playlist_id;
-                     ?> " />
-                       <input id="playlist_name" for="playlist_name" name="playlist_name" type="hidden"  value= "<?php
-                     echo $row->playlist_name;
-                     ?> " />
-                     <h3><button type="submit" class="btn btn-default"><?= $row->playlist_name; ?></button></h3>
-                     </td>
-               </form>
-            <?php
-              echo form_close();
-              ?>
-             <?php  echo form_open("user/delete_playlist");
-               ?>
-            <form>
-               <td>
-                  <button style="margin-top:-10px" type="submit" onclick="return confirm('Are you sure you want to delete this playlist?') "><img src="<?php
-                     echo base_url();
-                     ?>assets/img/delete_icon.ico" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/></a></button>
-                  <input id="id" for="id" name="id" type="hidden" name="delete" value= "<?php
-                     echo $row->playlist_id;
-                     ?> " />
-               </td>
-            </form>
-         <?php
-            echo form_close();
-            ?>
-         </tr>
-         <tr>
-            <td style="padding-bottom:10px;" align="left"><a> Date Added: <?= $row->playlist_date_added; ?></a></td>
-            <!-- <td align="left"> &nbsp; <a>&#8226; <?= $row->playlist_audio_count; ?> TRACKS</a></td> -->
-         </tr>
-         <br/>
-         <?php endforeach; ?>
-      </tbody>
-   </table>
-</div>
-<script src="<?php
-   echo base_url();
-   ?>assets/js/addplaylistpopup.js"></script>
-<script src="<?php
-   echo base_url();
-   ?>assets/js/jquery.confirm.js"></script>
-<script src="<?php
-   echo base_url();
-   ?>assets/js/script.js"></script>
+
+   <?php echo form_open("user/playlist"); ?>         
+      <form id="viewplaylistform">
+         <input id="playlist_id" for="playlist_id" name="playlist_id" type="hidden" value= "<?php echo $row->playlist_id;?> " />
+         <input id="playlist_name" for="playlist_name" name="playlist_name" type="hidden"  value= "<?php echo $row->playlist_name;?> " />
+         <input type="submit" id="view_playlist" style="display:none"/>
+      </form>
+   <?php echo form_close();?>
+
+   <?php  echo form_open("user/delete_playlist");?>
+      <form>
+         <input id="pid" for="pid" name="id" type="hidden" value= "<?php echo $row->playlist_id;?> " />
+         <input type="submit" id="delete_playlist" style="display:none"/>
+      </form>
+   <?php echo form_close();?>
+
+
+
+
+<script src="<?php echo base_url();?>assets/js/script.js"></script>
+<script>
+$(document).ready(function(){
+
+   $("#createOverlay").hide();
+
+   $("#createplaylist").click(function(){
+      $("#createOverlay").fadeIn("fast");
+      $("#createOverlay").show();
+   });
+
+   $("#cancel").click(function(){
+    $("#createOverlay").fadeOut("fast");
+    $("#createOverlay").hide();
+    });
+
+
+    $("#confirmOverlay").hide();
+});
+   
+
+
+  function viewPlaylist(node){
+
+    var id = node.parentNode.parentNode.cells[0].textContent;
+    var pname = node.parentNode.parentNode.cells[1].textContent;
+    $("#playlist_id").attr("value",id);
+    $("#playlist_name").attr("value",pname);
+    $("#view_playlist").click();
+  }
+
+  function delPlaylist(node){
+
+    var id = node.parentNode.parentNode.cells[0].textContent;
+    $("#pid").attr("value",id);
+    $("#delete_playlist").click();
+  }
+</script>

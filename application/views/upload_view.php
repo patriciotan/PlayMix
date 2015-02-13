@@ -2,7 +2,6 @@
 <!-- Generic page styles -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style1.css">
 <!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
 </head>
 
 <div class="wrapper" style="height:500px">
