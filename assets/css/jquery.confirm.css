@@ -12,12 +12,12 @@
 
 #confirmBox{
 	background:url('../img/header_black_bg.jpg') repeat-x  #e5e5e5;
-	width:460px;
+	width:450px;
 	position:fixed;
 	left:50%;
-	top:50%;
+	top:35%;
 	margin:-130px 0 0 -230px;
-	border: 1px solid rgba(33, 33, 33, 0.6);
+/*	border: 1px solid rgba(33, 33, 33, 0.6);*/
 	
 	-moz-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
 	-webkit-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
@@ -27,15 +27,14 @@
 #confirmBox h1,
 #confirmBox p{
 	font:26px/1 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-	background:url('../img/header_black_bg.jpg') repeat-x left bottom #f5f5f5;
 	padding: 18px 25px;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+	/*text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);*/
 	color:#666;
 }
 
 #confirmBox h1{
 	letter-spacing:0.3px;
-	color:#888;
+	color:white;
 }
 
 #confirmBox p{

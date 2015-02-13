@@ -1,6 +1,8 @@
+
         <div class="centered">
           <table class="hover" id="songs_table">  
             <thead>
+
                 <th style="display:none"></th>
                 <th style="display:none"></th>
                 <th style="display:none"></th>
@@ -11,14 +13,10 @@
                 <th>ARTIST</th>
                 <th width="50px">ADDED</th>
                 <th width="50px">PLAYS</th>
+
             </thead>
             <tbody id="feedBody">
-              <?php 
-              if($rec==''){
-                echo 'No songs here!';
-              }
-              else
-              foreach($rec->result() as $row): ?>
+              <?php foreach($rec->result() as $row): ?>
                 <tr id="<?=$row->audio_id;?>" class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
                   <td style="display:none" value="<?=$row->audio_file;?>"><?=$row->audio_file;?></td>
                   <td style="display:none"><?=$row->audio_photo;?></td>
@@ -37,4 +35,15 @@
         </div>
 
 <script type="text/javascript">
+
+  function popUp(node){
+
+    var id = node.parentNode.parentNode.cells[2].textContent;
+    $("#confirmOverlay").fadeIn("fast");
+    $("#confirmOverlay").show();
+    $("#audio_id").attr("value",id);
+    $("#added_from").attr("value","profile");
+  
+  }   
+
 </script>            

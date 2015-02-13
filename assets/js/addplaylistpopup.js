@@ -10,6 +10,12 @@
 	$("#cancel").click(function(){
     $("#createOverlay").fadeOut("fast");
     $("#createOverlay").hide();
+  });
+  
+
+    $("#cancelren").click(function(){
+      $("#renameOverlay").fadeOut("fast");
+      $("#renameOverlay").hide();
     });
 	
 	

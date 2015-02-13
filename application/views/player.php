@@ -23,7 +23,7 @@
 					<h3 id="artist" style="display:inline"></h3>
 				</div>
 				<div id="right1" class="pull-right" style="margin-top:2px;">
-					<a id="download" href="" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="21px;" width="21px;"></a>
+					<a id="download" download><img src="<?php echo base_url(); ?>assets/controls/download.png" height="21px;" width="21px;"></a>
 				</div>
     		</div>
 
@@ -62,7 +62,6 @@
 	
 	audio.onended = function() {
 		var sId = $("#songId").text();
-		alert(sId);
 		increment_play(sId);
 		auto_next();
 	    
@@ -70,7 +69,6 @@
 
 	function increment_play(sId)
 	{
-		alert("sample "+sId);
 		$.ajax({
 			url: '<?php echo base_url('index.php/user/increment_play')?>',
 			type:'POST',
@@ -128,7 +126,12 @@
 		songId.innerHTML = id;
 		audioSrc.src = fileSrc.concat(file);
 		audioPic.src = picSrc.concat(pic);
-		download.href = fileSrc.concat(file);
+
+	    var att = document.createAttribute("href");
+	    att.value = fileSrc.concat(file);
+	    download.setAttributeNode(att);
+		// download.attr("href");
+		// download.href = fileSrc.concat(file);
 
 		audio.load();
 		audio.play();
@@ -409,7 +412,6 @@
 			   	
 			},  
 			    error : function(e) {  
-			    	alert("asdf");
 			    alert('Error: ' + e);   
 			}
 		});

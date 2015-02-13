@@ -36,7 +36,7 @@ class User_model extends CI_Model {
         return false;
     }
 
-    public function add_user()
+public function add_user()
     {
         $data=array(
         'user_username'   =>$this->input->post('user_username'),
@@ -44,6 +44,26 @@ class User_model extends CI_Model {
         'user_password'   =>md5($this->input->post('user_password'))
         );
         $this->db->insert('user',$data);
+        $user_username=$this->input->post('user_username');
+
+        $this->add_notifOnRegister($user_username);
+       
+
+    }
+    public function add_notifOnRegister($user_username)
+    {
+        $this->db->select('user.user_id');
+        $this->db->from('user');
+        $this->db->where('user_username', $user_username);
+        $query=$this->db->get();
+        foreach($query->result() as $row){
+            $uid= $row->user_id;
+        }
+        $data=array(
+            'user_id' =>$uid,
+            'notif_count'=>0
+        );
+        $this->db->insert('notification', $data);
     }
 
     public function get_songs()

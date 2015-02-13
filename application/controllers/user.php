@@ -214,9 +214,9 @@ class User extends CI_Controller{
         }
         else
         {
-            $uid = $this->session->userdata('user_id');
+            $data['uid'] = $this->session->userdata('user_id');
             $data['title']= 'Feed';
-            $data['notif']  = $this->user_model->get_notification_count($uid);
+            $data['notif']  = $this->user_model->get_notification_count($data['uid']);
             $this->load->view('header_view_user',$data);
 
             if($this->session->userdata('user_type')==='Admin')
@@ -262,9 +262,9 @@ class User extends CI_Controller{
             $data['banlist'] = $this->user_model->get_ban_list();
             $data['bannedlist'] = $this->user_model->get_banned_list();
             $data['deletelist'] = $this->user_model->get_delete_list();
-            $uid = $this->session->userdata('user_id');
+            $data['uid'] = $this->session->userdata('user_id');
             $data['title'] = 'Admin';
-            $data['notif']  = $this->user_model->get_notification_count($uid);
+            $data['notif']  = $this->user_model->get_notification_count($data['uid']);
             $data['ban'] = $this->load->view('ban_tab',$data,true);
             $data['banned'] = $this->load->view('banned_tab',$data,true);
             $data['delete'] = $this->load->view('delete_tab',$data,true);
@@ -307,11 +307,11 @@ class User extends CI_Controller{
     }
     public function add2playlist()
     {
+        $added_from = $this->input->post('added_from');
         $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
                 'audio_id'        =>$this->input->post('audio_id')
                  );
-        print_r($data);
         $this->playlist_model->add2sequence($data); 
         $data=array(
                 'playlist_id'     =>$this->input->post('playlist_id'),
@@ -322,10 +322,13 @@ class User extends CI_Controller{
        //  error_reporting(0);
        // (int)$test=(int)$data['playlist_audio_count'];
                 
-       $this->playlist_model->add2playlist($data);
-       $playlist_name=$this->input->post('playlist_name');
-       echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
-       redirect('/user/feed', 'refresh');
+        $this->playlist_model->add2playlist($data);
+        $playlist_name=$this->input->post('playlist_name');
+        echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
+        if($added_from === "feed")       
+            redirect('/user/feed', 'refresh');
+        else
+            redirect('/user/profile', 'refresh');
     }
 
     public function unban()
@@ -360,12 +363,13 @@ class User extends CI_Controller{
         }
         else
         {
-            $uid = $this->session->userdata('user_id');
-            $data['rec'] = $this->user_model->get_user_songs($uid);            
-            $data['info'] = $this->user_model->get_info($uid);
+            $data['rec1'] = $this->playlist_model->get_playlists();
+            $data['uid'] = $this->session->userdata('user_id');
+            $data['rec'] = $this->user_model->get_user_songs($data['uid']);            
+            $data['info'] = $this->user_model->get_info($data['uid']);
             $data['playlists']=$this->playlist_model->get_playlists();
             $data['title'] = 'Profile';
-            $data['notif']  = $this->user_model->get_notification_count($uid);
+            $data['notif']  = $this->user_model->get_notification_count($data['uid']);
             $data['personal_info'] = $this->load->view('personal_info_tab',$data,true);  
             $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
             $data['playlists'] = $this->load->view('playlists_tab',$data,true); 
@@ -383,6 +387,7 @@ class User extends CI_Controller{
                 }
             $this->load->view($navbar,$data);
             $this->load->view('profile_view', $data);
+            $this->load->view('playlist_add_song', $data);
             $this->load->view('player');
             return $data;
         }
@@ -450,11 +455,11 @@ class User extends CI_Controller{
 
     public function upload_error($audio_title, $audio_genre)
     {
-    $uid = $this->session->userdata('user_id');
+    $data['uid'] = $this->session->userdata('user_id');
     $data['title']='Upload';
     $data['audio_title']= $audio_title;
     $data['audio_genre']=$audio_genre;
-    $data['notif']  = $this->user_model->get_notification_count($uid);
+    $data['notif']  = $this->user_model->get_notification_count($data['uid']);
     $this->load->view('header_view_user',$data);
 
     if($this->session->userdata('user_type')=='Admin')
@@ -473,12 +478,12 @@ class User extends CI_Controller{
 
     public function upload()
     {
-        $uid = $this->session->userdata('user_id');
+        $data['uid'] = $this->session->userdata('user_id');
         $data['title']='Upload';
         $data['audio_title']= '';
         $data['audio_file']='';
         $data['audio_genre']=''; 
-        $data['notif']  = $this->user_model->get_notification_count($uid);       
+        $data['notif']  = $this->user_model->get_notification_count($data['uid']);       
 
         $this->load->view('header_view_user',$data);
 
@@ -643,29 +648,41 @@ class User extends CI_Controller{
         //$picpath = $data['full_path'];
         //echo "<script type='text/javascript'>alert('$picpath');</script>";
     }
- 
-
+    public function rename_playlist()
+    {
+        $this->playlist_model->rename_playlist();
+        $this->profile();
+        $this->load->view('playlistrename_script');
+    }
     public function add_playlist()
     {
         $this->playlist_model->add_playlist();
-        $this->index();
+        $this->profile();
         $this->load->view('playlistadd_script');
     }
     public function delete_playlist()
     {
-        $id=$this->input->post('id');
+        $id=$this->input->post('delete');
         $this->playlist_model->row_delete($id);
-        $this->index();
+        $this->profile();
         $this->load->view('playlistdelete_script');
+    }
+    public function delfrom_playlist()
+    {
+        $pId=$this->input->post('pId');
+        $aId=$this->input->post('aId');
+        $this->playlist_model->song_delete($pId,$aId);
+        $this->profile();
+        $this->load->view('playlistsongdelete_script');
     }
     public function playlist()
     {
-        $playlist_id=$this->input->post('playlist_id');
-        $uid = $this->session->userdata('user_id');
+        $data['playlist_id']=$this->input->post('playlist_id');
+        $data['uid'] = $this->session->userdata('user_id');
         $data['playlist_name']=$this->input->post('playlist_name');
-        $data['notif']  = $this->user_model->get_notification_count($uid);
-        $data['rec']=$this->playlist_model->fetch_playlist_seq($playlist_id);
-        $data['owner']=$this->playlist_model->get_playlist_owner($playlist_id);
+        $data['notif']  = $this->user_model->get_notification_count($data['uid']);
+        $data['rec']=$this->playlist_model->fetch_playlist_seq($data['playlist_id']);
+        $data['owner']=$this->playlist_model->get_playlist_owner($data['playlist_id']);
 
 
         $data['title']= 'Playlist';

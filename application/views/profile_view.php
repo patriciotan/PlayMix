@@ -155,6 +155,9 @@
       "scrollCollapse": true,
       "paging":         false,
       "bInfo":          false,     
+      "oLanguage": {
+        "sEmptyTable":     "You don't have any songs here!"
+      },
       "aoColumnDefs": [{
         'bSortable': false, 
         'aTargets': [-6,-7]
@@ -166,6 +169,9 @@
       "paging":         false,
       "bInfo":          false,
       "bFilter":        false,
+      "oLanguage": {
+        "sEmptyTable":     "You don't have any playlists here!"
+      },
       "aoColumnDefs": [{
         'bSortable': false, 
         'aTargets': [-1,-4]

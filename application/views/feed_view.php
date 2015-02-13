@@ -34,7 +34,7 @@
         <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/plus.ico" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
         <td style="display:none"><?=$row->user_id;?></td>
-        <td class="spotify" align="left"><?=$row->audio_title;?></td>
+        <td align="left"><?=$row->audio_title;?></td>
         <td align="left"><a href="#" onclick="viewProf(this)"><?=$row->user_username;?></a></td>
         <td align="center"><?=$row->audio_date_added;?></td>
         <td align="right"><?=$row->audio_play_count;?></td>
@@ -64,8 +64,10 @@
       "scrollCollapse": true,
       "paging":         false,
       "bInfo":          false,
-      "scrollY":        "500px",
-      "aoColumnDefs": [{
+      "scrollY":        "500px",     
+      "oLanguage": {
+        "sEmptyTable":     "No songs here!"
+      },      "aoColumnDefs": [{
         'bSortable': false, 
         'aTargets': [-6,-7]
         }]
@@ -80,6 +82,7 @@
     $("#confirmOverlay").show();
     // alert(id);
     $("#audio_id").attr("value",id);
+    $("#added_from").attr("value","feed");
   
     //$("#popup-dialog").fadeIn("fast");
   }     
