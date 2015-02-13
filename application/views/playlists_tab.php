@@ -74,7 +74,8 @@
     <div id="confirmBox">     
       <h1 style="font-color:white; text-shadow:0 0"><img src="<?php echo base_url();?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>&nbsp;Delete Playlist</h1>
          <label>
-            <p style="margin-left:30px;margin-top:15px; margin-bottom:5px"> Are you sure you want to delete this playlist?</p>         </label>        
+            <p style="margin-left:30px;margin-top:15px; margin-bottom:5px"> Are you sure you want to delete this playlist?</p>         
+          </label>        
         <div id="confirmButtons">
             <button id="confirmdel" class="btn btn_red" style="width:130px">Delete</button>
             <button id="canceldel" class="btn" style="width:130px">Cancel</button>

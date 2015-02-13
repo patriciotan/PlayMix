@@ -4,7 +4,7 @@
 <div class="container" style="padding-bottom: 80px; padding-top: 80px;"> <!-- This is the div that contains the most-played songs according to the database -->
 <div class="centered" style="position:relative; width:670px;">
 
-<ul style="width:500px;"><h1><?php echo $playlist_name; ?></h1></ul>
+<ul style="width:500px;"><h1 id="theName"><?php print $playlist_name; ?></h1></ul>
 <br/>
   <table class="hover" id="mytable">  
     <thead>

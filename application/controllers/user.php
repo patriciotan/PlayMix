@@ -678,8 +678,8 @@ class User extends CI_Controller{
     public function playlist()
     {
         $data['playlist_id']=$this->input->post('playlist_id');
+        $data['playlist_name']=$this->playlist_model->get_pName($data['playlist_id']);
         $data['uid'] = $this->session->userdata('user_id');
-        $data['playlist_name']=$this->input->post('playlist_name');
         $data['notif']  = $this->user_model->get_notification_count($data['uid']);
         $data['rec']=$this->playlist_model->fetch_playlist_seq($data['playlist_id']);
         $data['owner']=$this->playlist_model->get_playlist_owner($data['playlist_id']);
