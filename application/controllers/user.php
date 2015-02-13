@@ -272,7 +272,6 @@ class User extends CI_Controller{
             $this->load->view('header_view_user',$data);
             $this->load->view('navbar_admin',$data);
             $this->load->view('admin_view', $data);
-            $this->load->view('player');
         }
     }
     public function add_ban()
@@ -497,7 +496,6 @@ class User extends CI_Controller{
         }
 
         $this->load->view('upload_view');
-        $this->load->view('player');
 
     }
     public function addAudio()

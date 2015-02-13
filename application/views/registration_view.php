@@ -37,12 +37,6 @@
           </div>
         </form>
         <?php echo form_close(); ?>
-        <div>
-          <a href="#" id="loginFb" class="social_box fb">
-            <span class="icon"><i class="fa fa-facebook"></i></span>
-            <span class="icon_title">Sign up with Facebook</span>
-          </a>
-        </div>
 
       <p><?php echo validation_errors('<p class="error">'); ?></p>
        <!-- type="submit" class="btn btn-primary" value="Submit" -->
