@@ -62,7 +62,6 @@
 	
 	audio.onended = function() {
 		var sId = $("#songId").text();
-		alert(sId);
 		increment_play(sId);
 		auto_next();
 	    
@@ -70,7 +69,6 @@
 
 	function increment_play(sId)
 	{
-		alert("sample "+sId);
 		$.ajax({
 			url: '<?php echo base_url('index.php/user/increment_play')?>',
 			type:'POST',
@@ -409,7 +407,6 @@
 			   	
 			},  
 			    error : function(e) {  
-			    	alert("asdf");
 			    alert('Error: ' + e);   
 			}
 		});

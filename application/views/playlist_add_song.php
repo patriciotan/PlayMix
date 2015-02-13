@@ -23,6 +23,7 @@
 
         <?php echo form_open("user/add2playlist"); ?>       
           <form>
+            <input type="hidden" id="added_from" name="added_from" value="">
             <input type="hidden" id="audio_id" name="audio_id" value="">
             <input type="hidden" id="playlist_id" name="playlist_id" value="">
             <input type="hidden" id="playlist_name" name="playlist_name" value="">
@@ -33,7 +34,7 @@
             <button type="submit" class="button blue">Add</button>
           </form>
         <?php echo form_close(); ?>
-            <button id="cancel" class="button gray">Cancel</button>
+            <button id="cancell" class="button gray">Cancel</button>
         </div>
           
     </div>
@@ -51,7 +52,7 @@
 
 <script>
 
-  $("#cancel").click(function(){
+  $("#cancell").click(function(){
     $("#confirmOverlay").fadeOut("fast");
     $("#confirmOverlay").hide();
   });
@@ -60,9 +61,6 @@
     {
         $("#playlist_id").val($(this).parent().parent().next().children().val());
         $("#playlist_name").val($(this).parent().parent().next().next().children().val());
-        alert($("#audio_id").val());
-        alert($("#playlist_id").val());
-        alert($("#playlist_name").val());
     });
 
 </script>

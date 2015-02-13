@@ -13,6 +13,7 @@
       <th style="display:none"></th>
       <th width="50px"></th>
       <th style="display:none"></th>
+      <th style="display:none"></th>
       <th align="left">TITLE</th>
       <th style="display:none">ARTIST</th>
       <th style="display:none" width="50px">ADDED</th>
@@ -28,19 +29,26 @@
         <td style="display:none" value="<?=$row->audio_file;?>"><?=$row->audio_file;?></td>
         <td style="display:none"><?=$row->audio_photo;?></td>
         <td style="display:none"><?=$row->audio_id;?></td>
-        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>
+        <td align="center"><input id="play" onclick="playSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/play.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="play"/></td>
         <td style="display:none"><?=$row->audio_id;?></td>
         <td style="display:none"><?=$row->user_id;?></td>
-        <td class="spotify" align="left"><?=$row->audio_title;?></td>
+        <td align="left"><?=$row->audio_title;?></td>
         <td style="display:none" align="left"><?php echo $owner; ?></a></td>
         <td style="display:none" align="center"><?=$row->audio_date_added;?></td>
         <td style="display:none" align="right"><?=$row->audio_play_count;?></td>
-        <td align="center"><input onclick="popUp(this)" type="image" src="<?php echo base_url(); ?>assets/controls/delete.png" style="float:center;margin-top:3px;z-index:5;width:15px;height:15px;" alt="logo"/></td>
-        
+        <td align="center"><input id="delete" onclick="delSong(this)" type="image" src="<?php echo base_url(); ?>assets/controls/delete.png" style="float:center;margin-top:5px;z-index:5;width:16px;height:16px;" alt="delete"/></td>
       </tr>
     <?php endforeach;?>
     </tbody>
   </table>
+
+        <?php echo form_open("user/delfrom_playlist"); ?>
+        <form>
+          <input type="hidden" id="pId" name="pId" value="<?php echo $playlist_id; ?>"/>
+          <input type="hidden" id="aId" name="aId" value=""/>
+          <input id="remSong" type="submit" onclick="return confirm('Are you sure you want to remove this song from the playlist?');" style="display:none">
+        </form>
+        <?php echo form_close(); ?>
 
 </div>
 </div>
@@ -49,9 +57,15 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-    $('#mytable').DataTable({
-      "order": [[ 9, "desc" ]]
-    });
-  });
+    $('#mytable').DataTable();
+  });  
+
+  function delSong(node){
+
+    var aId = node.parentNode.parentNode.cells[4].textContent;
+    $("#aId").attr("value",aId);
+    //alert("Value: "+$("#uid").val());
+    $("#remSong").click();
+  }
 
 </script>

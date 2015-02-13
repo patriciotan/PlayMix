@@ -99,6 +99,12 @@ class playlist_model extends CI_Model {
         $this->db->where('playlist_id', $id);
         $this->db->delete('playlist');
     }
+    public function song_delete($pId,$aId)
+    {
+        $this->db->where('playlist_id', $pId);
+        $this->db->where('audio_id', $aId);
+        $this->db->delete('sequence');
+    }
 
 }
 
