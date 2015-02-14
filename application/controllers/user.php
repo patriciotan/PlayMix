@@ -397,18 +397,37 @@ class User extends CI_Controller{
     {
         $uid = $this->session->userdata('user_id');
         $user_username = $this->input->post('user_username');       
-        $user_email = $this->input->post('user_email');       
-        $user_password = md5($this->input->post('user_password'));
+        $user_email = $this->input->post('user_email');
+
+
         
-        if($this->edit_account_info_validation() && $this->user_model->check_password($uid, $user_password))
+        if($this->edit_account_info_validation())
         {
+            //echo "<script type='text/javascript' src='base_url('assets/sweetAlerts/sweet-alert.js')'>swal('Saved!','Changes are saved.','success');</script>";
+ 
             $this->user_model->user_account_update($uid, $user_username, $user_email);
-            $this->profile();
-            echo "<script type='text/javascript'>alert('Changes are saved.');</script>";
+            
+
+            if($this->input->post('user_password')!='' && $this->input->post('new_user_password')!=''){
+                if($this->password_validation()){
+                    $user_password = md5($this->input->post('user_password'));
+                    $new_user_password = md5($this->input->post('new_user_password'));
+                    if($this->user_model->check_password($uid, $user_password)){
+                        $this->user_model->change_password2($uid, $new_user_password);
+                        echo "<script type='text/javascript'>alert('Changes are saved.');</script>";
+                    }
+                    else{
+                    echo "<script type='text/javascript'>alert('Error. Changes are not saved. Please try again.');</script>";    
+                    }
+                }
+            }       
+            redirect('/user/profile', 'refresh'); 
+            
+
         }
         else
         {
-            $this->profile(); 
+            redirect('/user/profile', 'refresh');  
             echo "<script type='text/javascript'>alert('Error. Changes are not saved. Please try again.');</script>";  
         }        
 
@@ -420,13 +439,25 @@ class User extends CI_Controller{
         // field name, error message, validation rules
         $this->form_validation->set_rules('user_username', 'User name', 'trim|required|min_length[4]|xss_clean');
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|');
-        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
         if ($this->form_validation->run() == FALSE) {
             return false;
         } else {           
             return true;
         }
     }
+
+    public function password_validation()
+    {
+        $this->load->library('form_validation');
+        // field name, error message, validation rules
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[4]');
+        $this->form_validation->set_rules('new_user_password', 'Password', 'trim|required|min_length[4]');
+        if ($this->form_validation->run() == FALSE) {
+            return false;
+        } else {           
+            return true;
+        }
+    }    
 
     function do_uploadaudio($audio_title, $audio_genre)
     {   
@@ -452,6 +483,31 @@ class User extends CI_Controller{
         }
   
     }
+
+    public function do_uploadaphoto()
+    {   
+        $config['upload_path'] = './uploads/audio_pics';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = '3000';
+        $config['file_name'] = 'apic';
+        //$config['max_width']  = '1024';
+        //$config['max_height']  = '1050';
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload("audio_photo"))
+        {
+            $error = array('error' => $this->upload->display_errors());
+            //$this->load->view("testerror", $error);
+      
+        }
+        else
+        {
+            
+            $data2 = array('upload_data' => $this->upload->data());
+            return $data2;           
+        }
+    }       
 
     public function upload_error($audio_title, $audio_genre)
     {
@@ -500,6 +556,7 @@ class User extends CI_Controller{
         $this->load->view('player');
 
     }
+
     public function addAudio()
     {
         $this->load->library('form_validation');
@@ -516,24 +573,31 @@ class User extends CI_Controller{
             $audio_title = $this->input->post('audio_title');
             $audio_genre = $this->input->post('audio_genre');
 
-            $data = $this->do_uploadaudio($audio_title, $audio_genre);
-
-            $filename = $data['upload_data']['file_name'];
             //$audiopath = "/uploads/mp3/".$filename;     
             $private = $this->input->post('audio_private');
             if($private == false)
                 { $private = 0;}
             else
                 { $private = 1;}
+            
+            
+
+            $data = $this->do_uploadaudio($audio_title, $audio_genre);
+            $filename = $data['upload_data']['file_name'];
+
+            // $data2 = $this->do_uploadaphoto();
+            // $pfilename = $data2['upload_data']['file_name'];
 
 
+            
             $data=array(
                 'user_id'           =>$this->session->userdata('user_id'),
                 'audio_title'       =>$audio_title,
                 'audio_genre'       =>$audio_genre,
                 'audio_private'     =>$private,
                 'audio_date_added'  =>date("Y/m/d"),      
-                'audio_file'        =>$filename
+                // 'audio_photo'       =>$pfilename,
+                'audio_file'        =>$filename,
             );
 
 
@@ -544,15 +608,6 @@ class User extends CI_Controller{
             redirect('/user/feed', 'refresh');     
         }
     }  
-    //public function upload_error()
-    //{
-    //    $this->load->view('upload_error_view');
-    //}
-    //public function upload_success()
-    //{
-    //    $this->load->view('upload_succes_view');
-    //    
-    //}
 
     public function update_personal_info() 
     {
@@ -562,48 +617,13 @@ class User extends CI_Controller{
 
 
         $fname = $this->input->post('user_fname');
-
-        if($fname == '') {
-            $fname = $getdata['user_fname'];
-        }            
-
         $lname = $this->input->post('user_lname');
-
-        if($lname == '') {
-            $lname = $getdata['user_lname'];
-        }
-
         $city = $this->input->post('user_city');
-        
-        if($city == '') {
-            $city = $getdata['user_city'];
-        }
-
-        $country = $this->input->post('user_country');
-
-        if($country == '') {
-            $country = $getdata['user_country'];
-        }        
-
+        $country = $this->input->post('user_country');       
         $fb = $this->input->post('user_fb');
-        if($fb == '') {
-            $fb = $getdata['user_fb'];
-        }        
-
-        $google = $this->input->post('user_google');
-        if($google == '') {
-            $google = $getdata['user_google'];
-        }        
-        $twitter = $this->input->post('user_twitter');
-        if($twitter == '') {
-            $twitter = $getdata['user_twitter'];
-        }
-
+        $google = $this->input->post('user_google'); 
+        $twitter = $this->input->post('user_twitter');    
         $bio = $this->input->post('user_bio');
-
-        if($bio == '') {
-            $bio = $getdata['user_bio'];
-        }
 
         $data = $this->do_uploadphoto();
         $filename = $data['upload_data']['file_name'];
@@ -616,7 +636,7 @@ class User extends CI_Controller{
 
         $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $picpath);
 
-        redirect('/user/profile/', 'refresh');
+        redirect('/user/profile#uploaded', 'refresh');
 
     }
 
@@ -634,7 +654,6 @@ class User extends CI_Controller{
         if ( ! $this->upload->do_upload("user_new_photo"))
         {
             $error = array('error' => $this->upload->display_errors());
-            $this->load->view("testerror", $error);
       
         }
         else
@@ -648,6 +667,8 @@ class User extends CI_Controller{
         //$picpath = $data['full_path'];
         //echo "<script type='text/javascript'>alert('$picpath');</script>";
     }
+
+
     public function rename_playlist()
     {
         $this->playlist_model->rename_playlist();
@@ -714,7 +735,8 @@ class User extends CI_Controller{
         {
             $user_id=$this->input->post('uid');
             $my_id = $this->session->userdata('user_id');
-            $data['rec'] = $this->user_model->get_user_songs($user_id);            
+            $data['rec'] = $this->user_model->get_artist_songs($user_id); 
+            $data['rec1'] = $this->playlist_model->get_playlists();           
             $data['info'] = $this->user_model->get_info($user_id);
             $artistname = $data['info']['user_name'];           
             $data['title'] = $artistname.'\'s Profile' ;  
@@ -733,7 +755,8 @@ class User extends CI_Controller{
             $this->load->view($navbar,$data);
             if($user_id!=$my_id)
                 {
-                $this->load->view("artist_profile_view", $data);                
+                $this->load->view("artist_profile_view", $data);    
+                $this->load->view('playlist_add_song', $data);            
                 $this->load->view('player');   
                 }
             else{

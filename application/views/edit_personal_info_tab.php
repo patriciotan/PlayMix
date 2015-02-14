@@ -48,7 +48,7 @@
             </div>
 
 
-            <div id="popup_pp" class="notifpopup">
+            <div id="popup_pp" class="notifpopup" style="display:none">
 
               <div id="popup_dialog_pp" class="notifpopupdialog" style="height:420px; width:430px;">
                 <legend><h1 style="font-size:18px">Choose new photo</h1></legend>

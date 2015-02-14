@@ -316,6 +316,19 @@ public function add_user()
 
     }
 
+    public function change_password2($uid, $pass)
+    {
+
+        $data = array(
+            'user_password'    => $pass,
+        );
+
+        $this->db->select('*', 'user');
+        $this->db->where('user_id', $uid);
+        $this->db->update('user', $data);
+
+    }    
+
     public function get_records()
     {
         return $this->db->get("user");
@@ -421,6 +434,30 @@ public function add_user()
         $this->db->from('user');
         $this->db->join('audio', 'user.user_id = audio.user_id');
         $this->db->order_by('audio.audio_play_count','desc');
+        $this->db->where('audio.user_id',$id);
+        $this->db->where('audio.audio_status','Okay');        
+        $query = $this->db->get();
+        if ($query->num_rows()>0) {
+            return $query;
+        }
+    }
+
+    public function get_artist_songs($id)
+    {
+        $this->db->select('audio.audio_title');
+        $this->db->select('audio.audio_id');
+        $this->db->select('audio.audio_file');
+        $this->db->select('audio.audio_id');
+        $this->db->select('audio.audio_photo');
+        $this->db->select('user.user_username');
+        $this->db->select('audio.audio_date_added');
+        $this->db->select('audio.audio_play_count');
+        //$this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('audio', 'user.user_id = audio.user_id');
+        $this->db->order_by('audio.audio_play_count','desc');
+        $this->db->where('audio.audio_private', 0);
+        $this->db->where('audio.audio_status','Okay');
         $this->db->where('audio.user_id',$id);
         $query = $this->db->get();
         if ($query->num_rows()>0) {

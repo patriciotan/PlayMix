@@ -1,12 +1,12 @@
 <div id="wrapper">
   <div class="container" >
-    <div class="centered" style="position:relative; top:150px; width:870px;">
+    <div class="centered" style="position:relative; top:120px; width:870px;">
       <!--<div>
         <button class="btn btn_red" style="float:right">Collaborate!</button>
       </div>-->
       <div class="tabbable" id="profileTab">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>
+          <li><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>
           <li><a href="#uploaded" data-toggle="tab" id="uploadedTab">Uploaded Songs</a></li>
           <li><a href="#playlists" data-toggle="tab" id="playlistsTab">Playlists</a></li>
           <li><a href="#account" data-toggle="tab" id="accountTab">Account</a></li>
@@ -82,8 +82,6 @@
       $("#account_contents").show();
     });
 
-
-
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -105,15 +103,17 @@
     $('#popup_pp').hide();
 
     $('#select_pp').click(function(){
-      $("#popup_pp").fadeIn("fast");
+      $("#popup_pp").fadeIn("slow");
+      $("#popup_pp").css("display","inline");
+      
     });
 
     $("#popup_bg").click(function(){
-      $("#popup_pp").fadeOut("fast");
+      $("#popup_pp").fadeOut("slow");
     });
 
     $("#cancel_choose").click(function(){
-      $("#popup_pp").fadeOut("fast");
+      $("#popup_pp").fadeOut("slow");
       $("#popup_pp").hide();
     });
     

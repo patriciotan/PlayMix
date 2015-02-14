@@ -14,6 +14,7 @@
     <link href="<?php echo base_url(); ?>assets/css/jquery.confirm.css"  rel="stylesheet"/>   
     <link href="<?php echo base_url(); ?>assets/DataTable/media/css/jquery.dataTables.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet"/>
+    <link href="<?php echo base_url(); ?>assets/sweetAlerts/sweet-alert.css" rel="stylesheet"/>
     <link rel="icon" href="<?php echo base_url(); ?>assets/playmix_logo_icon.ico" type="image/x-icon"/>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.0.min.js" type="text/javascript"></script>
@@ -21,6 +22,7 @@
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/DataTable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/sweetAlerts/sweet-alert.js" type="text/javascript"></script>
 
 
     

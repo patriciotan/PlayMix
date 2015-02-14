@@ -1,6 +1,6 @@
 <div id="wrapper">
   <div class="container" >
-    <div class="centered" style="position:relative; top:150px; width:870px;">
+    <div class="centered" style="position:relative; top:120px; width:870px;">
       <div>
         
           <form id="collab" method="post">
@@ -118,7 +118,19 @@
     });    
 
     $(document).ready(function(){
-        $('#songs').DataTable();
+      var uploaded = $('#songs_table').DataTable({
+      "order": [[ 9, "desc" ]],
+      "scrollCollapse": true,
+      "paging":         false,
+      "bInfo":          false,     
+      "oLanguage": {
+        "sEmptyTable":     "You don't have any songs here!"
+      },
+      "aoColumnDefs": [{
+        'bSortable': false, 
+        'aTargets': [-6,-7]
+        }]
+      });
     });
 
 </script>

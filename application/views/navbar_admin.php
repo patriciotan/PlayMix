@@ -17,7 +17,7 @@
                 <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
                 <li><a href="<?php echo base_url('index.php/user/admin'); ?>">Admin</a></li> 
                 <li id="notification_li">
-                  <span id="notification_count"><?=$notif['notif_count']?></span>
+                  <span id="notification_count" style="display:none"><?=$notif['notif_count']?></span>
                   <a href="#" id="notificationLink" style="position: relative; float:right; margin-top:7px; margin-left:13px; background: url(<?php echo base_url();?>assets/notif.png) no-repeat; background-position: 1px; background-size:20px;"></a>                                    
                 </li>    
               </ul>                        
@@ -32,9 +32,9 @@
       </div>
     </div>
 
-<div id="popup" class="notifpopup">
+<div id="popup" class="notifpopup" style="display:none">
   <div id="popup-dialog" class="notifpopupdialog">
-    <p><strong><?php echo $notif['notif_count']?></strong>&nbsp;artists want to collaborate with you. You may check your <br>e-mail for their contact information!</p>
+    <p id="popup-message"><strong><?php echo $notif['notif_count']?></strong>&nbsp;artists want to collaborate with you. You may check your <br>e-mail for their contact information!</p>
     <a href="#" id="gotthat" class="btn btn-white" style="position:relative; width:15%; margin:0 auto">Got that!</a>
   </div>
 </div>
@@ -51,8 +51,14 @@
 
     if($("#notification_count").html()=="0")
     {
-      $("#notification_count").hide();
+      $("#popup-message").html("You don't have any notifications right now."); 
     }
+
+    else if($("#notification_count").html()!="0")
+    {
+      $("#notification_count").css("display","inline");
+      $("#popup-message").html("<strong><?php echo $notif['notif_count']?></strong> artists want to collaborate with you. You may check your <br>e-mail for their contact information!");
+    }    
 
     $("#popup").click(function(){
       $("#popup").fadeOut("fast");
@@ -70,6 +76,7 @@
       $("#notificationContainer").fadeToggle(300);
       $("#notification_count").fadeOut("slow");
       $("#popup").fadeIn("fast");
+      $("#popup").css("display","inline");
       $("#popup").show();
       $("#popup-dialog").fadeIn("fast");
     });

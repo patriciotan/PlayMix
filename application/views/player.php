@@ -41,8 +41,8 @@
 					<input id="next" onclick="nextSong()" type="image" src="<?php echo base_url(); ?>assets/controls/next.png" style="height:21px; width:21px;" alt="next"/>
 		    	</div>
 		    	<div id="right2" class="pull-right">
-					<input id="shuffle" onclick="shuffle()" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle.png" style="height:25px; width:25px;" alt="shuffle"/>&nbsp;&nbsp;
-					<input id="repeat" onclick="switchRepeat()" type="image" src="<?php echo base_url(); ?>assets/controls/repeat.png" style="height:25px; width:25px;" alt="repeat"/>
+					<input id="shuffle" onclick="shuffle()" type="image" src="<?php echo base_url(); ?>assets/controls/shuffle_off.png" style="height:25px; width:25px;" alt="shuffle"/>&nbsp;&nbsp;
+					<input id="repeat" onclick="switchRepeat()" type="image" src="<?php echo base_url(); ?>assets/controls/repeat_off.png" style="height:25px; width:25px;" alt="repeat"/>
 		    		<h1 id="repeatSwitch" hidden>off</h1><h1 id="shuffleSwitch" hidden>off</h1>
 		    	</div>
 		    </div>
@@ -365,15 +365,15 @@
 		
 		if(repeatSwitch.innerHTML === "off"){
 			repeatSwitch.innerHTML = "one";
-			alert("repeat "+repeatSwitch.innerHTML);
+			$("#repeat").attr("src","<?php echo base_url(); ?>assets/controls/repeat_one.png");
 		}
 		else if(repeatSwitch.innerHTML === "one"){
 			repeatSwitch.innerHTML = "all";
-			alert("repeat "+repeatSwitch.innerHTML);
+			$("#repeat").attr("src","<?php echo base_url(); ?>assets/controls/repeat.png");
 		}
 		else{
 			repeatSwitch.innerHTML = "off";
-			alert("repeat "+repeatSwitch.innerHTML);
+			$("#repeat").attr("src","<?php echo base_url(); ?>assets/controls/repeat_off.png");
 		}
 	}
 
@@ -383,11 +383,11 @@
 
 		if(shuffleSwitch.innerHTML === "off"){
 			shuffleSwitch.innerHTML = "on";
-			alert("shuffle "+shuffleSwitch.innerHTML);
+			$("#shuffle").attr("src","<?php echo base_url(); ?>assets/controls/shuffle.png");
 		}
 		else{
 			shuffleSwitch.innerHTML = "off";
-			alert("shuffle "+shuffleSwitch.innerHTML);
+			$("#shuffle").attr("src","<?php echo base_url(); ?>assets/controls/shuffle_off.png");
 		}
 
 		var table = document.getElementById("mytable");

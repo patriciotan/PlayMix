@@ -59,6 +59,8 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
+
+
     $('#mytable').DataTable({
       "order": [[ 9, "desc" ]],
       "scrollCollapse": true,
@@ -78,6 +80,7 @@
     // $("#notificationContainer").fadeToggle(300);
     // $("#notification_count").fadeOut("slow");
     var id = node.parentNode.parentNode.cells[2].textContent;
+    $("#confirmOverlay").css("display","inline");
     $("#confirmOverlay").fadeIn("fast");
     $("#confirmOverlay").show();
     // alert(id);
