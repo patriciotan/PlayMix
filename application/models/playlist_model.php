@@ -59,6 +59,16 @@ class playlist_model extends CI_Model {
 
     }
 
+    public function get_pName($playlist_id)
+    {
+        $this->db->select('playlist_name');
+        $this->db->from('playlist');
+        $this->db->where('playlist_id', $playlist_id);
+        $query = $this->db->get();
+        
+        return $query->row()->playlist_name;
+    }
+
     public function add2sequence($data){
         $this->db->insert('sequence', $data);
     }

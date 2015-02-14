@@ -1,7 +1,7 @@
 <div id="confirmOverlay" style="display:none">
     <div id="confirmBox">
       
-      <h1 style="text-shadow:0 0; color:white; margin-left:20px"><img src="<?php echo base_url(); ?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>Add a song to a playlist...</h1>
+      <h1 style="text-shadow:0 0; color:white; margin-left:20px"><img src="<?php echo base_url(); ?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>Add to playlist</h1>
       <h3 style="margin-left:90px; margin-top:20px">Choose from your playlists:</h3></td>
         
 

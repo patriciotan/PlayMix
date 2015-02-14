@@ -5,10 +5,10 @@
    <table class="hover" id="playlists_table" style="margin-top:30px">
       <thead>
          <th style="display:none"></th>
-         <th>TITLE</th>
-         <th width="50px">ADDED</th>
+         <th align="left">TITLE</th>
+         <th width="60px">ADDED</th>
          <th width="25px"></th>     
-         <th width="20px"></th>     
+         <th width="25px"></th>     
       </thead>
       <tbody>
       <?php foreach ($playlists->result() as $row): ?>
@@ -16,8 +16,8 @@
             <td style="display:none"><?=$row->playlist_id;?></td>
             <td align="left"><a href="#" onclick="viewPlaylist(this)"><?= $row->playlist_name; ?></a></td>           
             <td style="padding-bottom:10px;" align="left"><?= $row->playlist_date_added; ?></td>  
-            <td align="right"><input onclick="renPlaylist(this)" type="image" src="<?php echo base_url(); ?>assets/controls/edit.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="edit"/></td>
-            <td><input onclick="delPlaylist(this)" type="image" src="<?php echo base_url();?>assets/img/delete_icon.ico" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>                     
+            <td align="left"><input onclick="renPlaylist(this)" type="image" src="<?php echo base_url(); ?>assets/controls/edit.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="edit"/></td>
+            <td align="left"><input onclick="delPlaylist(this)" type="image" src="<?php echo base_url();?>assets/img/delete_icon.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>                     
          </tr>
       <?php endforeach; ?>
       </tbody>
@@ -34,7 +34,7 @@
             <h3 style="margin-left:100px;margin-top:20px; margin-bottom:10px"> Playlist name</h3>
          </label>
          
-         <input style="margin-left:100px; width:240px" id="playlist_name" name="playlist_name" type="text" placeholder="Input playlist name..." value="" required="">
+         <input style="margin-left:100px; width:240px" id="playlist_name" name="playlist_name" type="text" value="" required="">
          <div id="confirmButtons">
             <input type="submit" value="Create playlist" class="btn btn_red" style="width:130px"/>
             <button id="cancel" class="btn" style="width:130px">Cancel</button>
@@ -74,7 +74,8 @@
     <div id="confirmBox">     
       <h1 style="font-color:white; text-shadow:0 0"><img src="<?php echo base_url();?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>&nbsp;Delete Playlist</h1>
          <label>
-            <p style="margin-left:30px;margin-top:15px; margin-bottom:5px"> Are you sure you want to delete this playlist?</p>         </label>        
+            <p style="margin-left:30px;margin-top:15px; margin-bottom:5px"> Are you sure you want to delete this playlist?</p>         
+          </label>        
         <div id="confirmButtons">
             <button id="confirmdel" class="btn btn_red" style="width:130px">Delete</button>
             <button id="canceldel" class="btn" style="width:130px">Cancel</button>

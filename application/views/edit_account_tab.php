@@ -5,7 +5,7 @@
                     <div style="float:left; margin-right:30px">
                         <label for="user_username">User name</label>
                         <input type="text" id="user_username" name="user_username" value="<?=$info['user_name']?>" required/>
-                        <label for="user_email">Email</label>
+                        <label for="user_email">Email address</label>
                         <input type="text" id="user_email" name="user_email" value="<?=$info['user_email']?>" required/>
                         <label for="user_password">Old Password</label>
                         <input type="password" id="user_password" name="user_password" value=""/>

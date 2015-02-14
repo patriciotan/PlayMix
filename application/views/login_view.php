@@ -26,10 +26,7 @@
 
         <div>
           <p style="font-size:13px">
-          <a href="#" id="loginFb" class="social_box fb">
-            <span class="icon"><i class="fa fa-facebook"></i></span>
-            <span class="icon_title">Log in with Facebook</span>
-          </a>or <a href="<?php echo base_url('index.php/user/registration'); ?>" id="register_form" style="display:inline">Register</a> now!
+          <a href="<?php echo base_url('index.php/user/registration'); ?>" id="register_form" style="display:inline">Register</a> now!
           </p>
         </div>
         <?php echo validation_errors('<p class="error">'); ?>
