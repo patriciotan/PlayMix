@@ -36,7 +36,7 @@
 			<h3>PlayMix Songs</h3><br/>
 			<div>
 				<!-- <table class="feed_table" style="width:250px;"> -->
-					<select name="songs[]" style="width:270px; height:292px;" multiple>
+					<select name="songs[]" style="width:270px; height:292px;" multiple required>
 					<?php foreach($songs->result() as $row): ?>
 						<option value="<?=$row->audio_id;?>"><?=$row->audio_title;?></option>
 						<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">

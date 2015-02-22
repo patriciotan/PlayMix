@@ -338,7 +338,7 @@ class User extends CI_Controller{
         	$this->feed();
         else
         	$this->profile('personal_info');
-        $this->load->view('script_banned');
+        $this->load->view('script_added_to_playlist');
     }
 
     public function unban()
@@ -591,7 +591,7 @@ class User extends CI_Controller{
         }
         else
         {
-            $data = $this->upload->data();          
+            $data = array('upload_data' => $this->upload->data());
             return $data;
         }
     }
