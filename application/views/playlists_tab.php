@@ -17,7 +17,7 @@
             <td align="left"><a href="#" onclick="viewPlaylist(this)"><?= $row->playlist_name; ?></a></td>           
             <td style="padding-bottom:10px;" align="left"><?= $row->playlist_date_added; ?></td>  
             <td align="left"><input onclick="renPlaylist(this)" type="image" src="<?php echo base_url(); ?>assets/controls/edit.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="edit"/></td>
-            <td align="left"><input onclick="delPlaylist(this)" type="image" src="<?php echo base_url();?>assets/img/delete_icon.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>                     
+            <td align="left"><input onclick="delPlaylist(this)" type="image" src="<?php echo base_url();?>assets/controls/delete.png" style="float:right;margin-top:5px;z-index:5;width:16px;height:16px;" alt="logo"/></td>                     
          </tr>
       <?php endforeach; ?>
       </tbody>

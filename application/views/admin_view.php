@@ -1,9 +1,10 @@
 <div id="wrapper">
   <div class="container" > <!-- This is the div that contains the most-played songs according to the database -->
     <div class="centered span12" style="top:100px; left:45px;">
+      <span id="open_tab" style="display:none"><?=$tab?></span>
       <div class="tabbable tabs-left" id="adminTab">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#ban" data-toggle="tab" id="banTab">Ban Users</a></li>
+          <li><a href="#ban" data-toggle="tab" id="banTab">Ban Users</a></li>
           <li><a href="#banned" data-toggle="tab" id="bannedTab">Banned Users</a></li>
           <li><a href="#delete" data-toggle="tab" id="deleteTab">Delete Songs</a></li>
         </ul>
@@ -25,6 +26,10 @@
 
 <script>
   $(document).ready(function(){
+
+    var tab = $('#open_tab').html();
+    $('.tab-pane').removeClass("active");
+    $('#'+tab).addClass('active');
 
     $('li > a').click(function() {
       $('li').removeClass();

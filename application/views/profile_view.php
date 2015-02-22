@@ -4,12 +4,13 @@
       <!--<div>
         <button class="btn btn_red" style="float:right">Collaborate!</button>
       </div>-->
+      <span id="open_tab" style="display:none"><?=$tab?></span>
       <div class="tabbable" id="profileTab">
-        <ul class="nav nav-tabs">
-          <li><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>
-          <li><a href="#uploaded" data-toggle="tab" id="uploadedTab">Uploaded Songs</a></li>
-          <li><a href="#playlists" data-toggle="tab" id="playlistsTab">Playlists</a></li>
-          <li><a href="#account" data-toggle="tab" id="accountTab">Account</a></li>
+        <ul class="nav nav-tabs" id="prof_tabs">
+          <li id="tab1"><a href="#personal_info" data-toggle="tab" id="personal_infoTab">Personal Info</a></li>
+          <li id="tab2"><a href="#uploaded" data-toggle="tab" id="uploadedTab">Uploaded Songs</a></li>
+          <li id="tab3"><a href="#playlists" data-toggle="tab" id="playlistsTab">Playlists</a></li>
+          <li id="tab4"><a href="#account" data-toggle="tab" id="accountTab">Account</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="personal_info">
@@ -38,9 +39,13 @@
 
   $(document).ready(function(){
 
+    var tab = $('#open_tab').html();
+    $('.tab-pane').removeClass("active");
+    $('#'+tab).addClass('active');
 
     $("#edit_personal_info").hide();
     $("#edit_account_info").hide();    
+    
     $('li > a').click(function() {
       $('li').removeClass();
       $(this).parent().addClass('active');

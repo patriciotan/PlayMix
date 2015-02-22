@@ -252,7 +252,7 @@ class User extends CI_Controller{
             $this->load->view('player');
         }
     }
-    public function admin()
+    public function admin($tab = 'ban')
     {
         if (($this->session->userdata('logged_in')===FALSE)) 
         {
@@ -260,6 +260,7 @@ class User extends CI_Controller{
         }
         else
         {
+        	$data['tab'] = $tab;
             $data['users'] = $this->user_model->get_all_users();
             $data['songs'] = $this->user_model->get_all_songs();
             $data['banlist'] = $this->user_model->get_ban_list();
@@ -287,7 +288,7 @@ class User extends CI_Controller{
                 $this->user_model->add_ban($user);
             }
         }
-        $this->admin();
+        $this->admin('ban');
     }
     public function add_delete()
     {
@@ -299,18 +300,18 @@ class User extends CI_Controller{
                 $this->user_model->add_delete($song);
             }
         }
-        $this->admin();
+        $this->admin('delete');
     }
     public function ban()
     {
         $this->user_model->ban_list();
-        $this->admin();
+        $this->admin('ban');
         $this->load->view('script_banned');
     }
     public function delete()
     {
         $this->user_model->delete_list();
-        $this->admin();
+        $this->admin('delete');
         $this->load->view('script_deleted');
     }
     public function add2playlist()
@@ -336,7 +337,7 @@ class User extends CI_Controller{
         if($added_from === "feed")       
         	$this->feed();
         else
-        	$this->profile();
+        	$this->profile('personal_info');
         $this->load->view('script_banned');
     }
 
@@ -350,21 +351,21 @@ class User extends CI_Controller{
                 $this->user_model->unban($user);
             }
         }
-        $this->admin();
+        $this->admin('banned');
         $this->load->view('script_unbanned');
     }
     public function ban_reset()
     {
         $this->user_model->ban_reset();
-        $this->admin();
+        $this->admin('ban');
     }
     public function delete_reset()
     {
         $this->user_model->delete_reset();
-        $this->admin();
+        $this->admin('delete');
     }
 
-    public function profile()
+    public function profile($tab = 'personal_info')
     {
         if (($this->session->userdata('logged_in')===FALSE)) 
         {
@@ -372,6 +373,7 @@ class User extends CI_Controller{
         }
         else
         {
+        	$data['tab'] = $tab;
             $data['rec1'] = $this->playlist_model->get_playlists();
             $data['uid'] = $this->session->userdata('user_id');
             $data['rec'] = $this->user_model->get_user_songs($data['uid']);            
@@ -430,13 +432,13 @@ class User extends CI_Controller{
                     }
                 }
             }       
-            $this->profile();
+            $this->profile('account');
             $this->load->view('script_account_edited');
 
         }
         else
         {
-        	$this->profile();
+        	$this->profile('account');
         	$this->load->view('script_account_not_edited');  
         }        
 
@@ -465,56 +467,6 @@ class User extends CI_Controller{
             return false;
         } else {           
             return true;
-        }
-    }    
-
-    function do_uploadaudio($audio_title, $audio_genre)
-    {   
-        $config['upload_path'] = './uploads/mp3';
-        $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
-        $config['max_size'] = '50000';
-        $config['file_name'] = 'audio';
-        //$config['max_width']  = '1024';
-        //$config['max_height']  = '1050';
-        $this->load->library('upload', $config);
-
-
-        if ( ! $this->upload->do_upload("audio_file"))
-        {
-            $error = array('error' => $this->upload->display_errors());
-            $this->upload_error($audio_title, $audio_genre); 
-      
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());          
-            return $data;
-        }
-  
-    }
-
-    public function do_uploadaphoto()
-    {   
-        $config['upload_path'] = './uploads/audio_pics';
-        $config['allowed_types'] = 'jpg|png';
-        $config['max_size'] = '3000';
-        $config['file_name'] = 'apic';
-        //$config['max_width']  = '1024';
-        //$config['max_height']  = '1050';
-
-        $this->load->library('upload', $config);
-
-        if ( ! $this->upload->do_upload("audio_photo"))
-        {
-            $error = array('error' => $this->upload->display_errors());
-            //$this->load->view("testerror", $error);
-      
-        }
-        else
-        {
-            
-            $data2 = array('upload_data' => $this->upload->data());
-            return $data2;           
         }
     }       
 
@@ -573,10 +525,11 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('audio_genre', 'Audio Genre', 'trim|max_length[20]');
         //$this->form_validation->set_rules('audio_file', 'Audio File', 'required');     
         if ($this->form_validation->run() === FALSE) {
-            echo "<script type='text/javascript'>alert('Upload failed. Please check your inputs and try again.');</script>";
-            redirect('/user/upload', 'refresh');  
+            $this->upload();
+            $this->load->view('script_not_uploaded');
         } 
-        else {
+        else 
+        {
 
             $audio_title = $this->input->post('audio_title');
             $audio_genre = $this->input->post('audio_genre');
@@ -592,6 +545,10 @@ class User extends CI_Controller{
 
             $data = $this->do_uploadaudio($audio_title, $audio_genre);
             $filename = $data['upload_data']['file_name'];
+            if($filename == NULL)
+            	echo "<script type='text/javascript'>alert('asdfasdf');</script>";
+            else
+            	echo "<script type='text/javascript'>alert('qwerqwer');</script>";
 
             // $data2 = $this->do_uploadaphoto();
             // $pfilename = $data2['upload_data']['file_name'];
@@ -607,8 +564,6 @@ class User extends CI_Controller{
                 // 'audio_photo'       =>$pfilename,
                 'audio_file'        =>$filename,
             );
-
-
           
             $this->load->model('audio_model');
             $this->audio_model->add_audio($data); 
@@ -616,6 +571,55 @@ class User extends CI_Controller{
             $this->load->view('script_uploaded');
         }
     }  
+
+    function do_uploadaudio($audio_title, $audio_genre)
+    {   
+        $config['upload_path'] = './uploads/mp3';
+        $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
+        $config['max_size'] = '50000';
+        $config['file_name'] = 'audio';
+        //$config['max_width']  = '1024';
+        //$config['max_height']  = '1050';
+        $this->load->library('upload', $config);
+
+
+        if (!$this->upload->do_upload("audio_file"))
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $this->upload_error($audio_title, $audio_genre); 
+      		echo "<script type='text/javascript'>alert('zxczxc');</script>";
+        }
+        else
+        {
+            $data = $this->upload->data();          
+            return $data;
+        }
+    }
+
+    public function do_uploadaphoto()
+    {   
+        $config['upload_path'] = './uploads/audio_pics';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = '3000';
+        $config['file_name'] = 'apic';
+        //$config['max_width']  = '1024';
+        //$config['max_height']  = '1050';
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload("audio_photo"))
+        {
+            $error = array('error' => $this->upload->display_errors());
+            //$this->load->view("testerror", $error);
+      
+        }
+        else
+        {
+            
+            $data2 = array('upload_data' => $this->upload->data());
+            return $data2;           
+        }
+    }    
 
     public function update_personal_info() 
     {
@@ -644,9 +648,45 @@ class User extends CI_Controller{
 
         $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $picpath);
 
-        $this->profile();
+        $this->profile('personal_info');
         $this->load->view('script_account_edited');
 
+    }
+
+    public function updatePhoto()
+    {
+    	$data['aid'] = $this->input->post('aid');
+    	$data['atitle'] = $this->input->post('atitle');
+
+        $data['uid'] = $this->session->userdata('user_id');
+        $data['title']="Update audio photo";
+        $data['notif']  = $this->user_model->get_notification_count($data['uid']);       
+
+        $this->load->view('header_view_user',$data);
+
+        if($this->session->userdata('user_type')==='Admin')
+        {
+            $this->load->view('navbar_admin',$data);
+        }
+        else
+        {
+            $this->load->view('navbar_user',$data);
+        }
+
+    	$this->load->view('update_view',$data);
+    }
+
+    public function update_audphoto()
+    {
+    	$aid = $this->input->post('aid');
+    	$atitle = $this->input->post('atitle');
+    	$data = $this->do_uploadaphoto();
+        $pfilename = $data['upload_data']['file_name'];
+
+        $this->load->model('audio_model');
+        $this->audio_model->update_photo($aid,$pfilename); 
+        $this->profile('uploaded');
+        $this->load->view('script_updated');
     }
 
     public function do_uploadphoto()
@@ -681,20 +721,20 @@ class User extends CI_Controller{
     public function rename_playlist()
     {
         $this->playlist_model->rename_playlist();
-        $this->profile();
+        $this->profile('playlists');
         $this->load->view('script_playlist_renamed');
     }
     public function add_playlist()
     {
         $this->playlist_model->add_playlist();
-        $this->profile();
+        $this->profile('playlists');
         $this->load->view('script_playlist_added');
     }
     public function delete_playlist()
     {
         $id=$this->input->post('delete');
         $this->playlist_model->row_delete($id);
-        $this->profile();
+        $this->profile('playlists');
         $this->load->view('script_playlist_deleted');
     }
     public function delfrom_playlist()
@@ -702,7 +742,7 @@ class User extends CI_Controller{
         $pId=$this->input->post('pId');
         $aId=$this->input->post('aId');
         $this->playlist_model->song_delete($pId,$aId);
-        $this->profile();
+        $this->profile('playlists');
         $this->load->view('script_playlist_song_deleted');
     }
     public function playlist()

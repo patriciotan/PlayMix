@@ -34,6 +34,16 @@ class audio_model extends CI_Model {
         $this->db->insert('audio',$data);
     }
 
+    public function update_photo($aid,$pfilename)
+    {
+        $data = array(
+            'audio_photo' => $pfilename
+        ); 
+        
+        $this->db->where("audio_id",$aid);
+        $this->db->update("audio", $data);
+    }
+
     
 
 }

@@ -2,11 +2,12 @@
   	$(document).ready(function(){
 
 	  	swal({   
-	  		title: "Changes not saved, please try again!",     
+	  		title: "Audio photo successfully updated!",     
 	        allowOutsideClick: true,
 	        confirmButtonText: "Got that!",
         	timer: 5000,
-	  		type: "error" 
+	  		type: "success" 
 	  	});
-	});
+
+  	});
 </script>

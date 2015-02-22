@@ -4,7 +4,7 @@
 <!-- blueimp Gallery styles -->
 </head>
 
-<div class="wrapper" style="height:500px; margin-top:50px">
+<div class="wrapper" style="height:500px; margin-top:-20px">
   <div class="container centered" style="top:14%; transform:translateY(-50%); min-width:800px">
     <!-- Upload Form -->
     <div class="centered" style="width:240px; top: 300px;">
@@ -45,16 +45,16 @@
               </label>     
               <br/>
 
-              <input type="file" id="audio_photo" name="audio_photo" accept="image/jpeg, image/png" id="audio_photo" style="display:inline; position:absolute; margin-top:40px; margin-left:47px;"  required/>    
+              <!-- <input type="file" id="audio_photo" name="audio_photo" accept="image/jpeg, image/png" id="audio_photo" style="display:inline; position:absolute; margin-top:40px; margin-left:47px;"  required/>    
               <label class="upload-img-button" for="audio_photo" style="position:absolute; margin-top:30px;width:90px">                  
               Select photo
-              </label>                   
+              </label>  -->                  
 
-              <div id="img_container" style="float:left; width:100px;height:100px; margin-top:80px; overflow:hidden">
+              <!-- <div id="img_container" style="float:left; width:100px;height:100px; margin-top:80px; overflow:hidden">
                 <img class="img_profile" id="cur_audio_photo" src="<?php echo base_url();?>assets/default.png"/>
-              </div>              
+              </div>    -->           
 
-              <div class="centered" style="margin-top:200px;">
+              <div class="centered" style="margin-top:50px;">
                 <input type="checkbox" name="audio_private" id="audio_private">Make this private</br>
               </div>
     	      </div>
