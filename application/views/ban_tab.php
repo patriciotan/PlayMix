@@ -36,7 +36,7 @@
 			<h3>PlayMix Users</h3><br/>
 			<div>
 				<!-- <table class="feed_table" style="width:250px;"> -->
-					<select name="users[]" style="width:270px; height:292px;" multiple>
+					<select name="users[]" style="width:270px; height:292px;" multiple required>
 					<?php foreach($users->result() as $row): ?>
 						<option value="<?=$row->user_id;?>"><?=$row->user_username;?></option>
 						<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
