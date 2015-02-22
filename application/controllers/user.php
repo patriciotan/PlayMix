@@ -338,7 +338,7 @@ class User extends CI_Controller{
         	$this->feed();
         else
         	$this->profile('personal_info');
-        $this->load->view('script_banned');
+        $this->load->view('script_added_to_playlist');
     }
 
     public function unban()
@@ -533,8 +533,7 @@ class User extends CI_Controller{
 
             $audio_title = $this->input->post('audio_title');
             $audio_genre = $this->input->post('audio_genre');
-
-            //$audiopath = "/uploads/mp3/".$filename;     
+   
             $private = $this->input->post('audio_private');
             if($private == false)
                 { $private = 0;}
@@ -545,23 +544,14 @@ class User extends CI_Controller{
 
             $data = $this->do_uploadaudio($audio_title, $audio_genre);
             $filename = $data['upload_data']['file_name'];
-            if($filename == NULL)
-            	echo "<script type='text/javascript'>alert('asdfasdf');</script>";
-            else
-            	echo "<script type='text/javascript'>alert('qwerqwer');</script>";
-
-            // $data2 = $this->do_uploadaphoto();
-            // $pfilename = $data2['upload_data']['file_name'];
-
-
-            
+            echo "<script type='text/javascript'>alert($filename);</script>";
+           
             $data=array(
                 'user_id'           =>$this->session->userdata('user_id'),
                 'audio_title'       =>$audio_title,
                 'audio_genre'       =>$audio_genre,
                 'audio_private'     =>$private,
                 'audio_date_added'  =>date("Y/m/d"),      
-                // 'audio_photo'       =>$pfilename,
                 'audio_file'        =>$filename,
             );
           
@@ -578,8 +568,6 @@ class User extends CI_Controller{
         $config['allowed_types'] = 'audio/mpeg|mp3|audio/x-wav|audio/x-aiff|application/ogg';
         $config['max_size'] = '50000';
         $config['file_name'] = 'audio';
-        //$config['max_width']  = '1024';
-        //$config['max_height']  = '1050';
         $this->load->library('upload', $config);
 
 
@@ -587,11 +575,10 @@ class User extends CI_Controller{
         {
             $error = array('error' => $this->upload->display_errors());
             $this->upload_error($audio_title, $audio_genre); 
-      		echo "<script type='text/javascript'>alert('zxczxc');</script>";
         }
         else
         {
-            $data = $this->upload->data();          
+            $data = array('upload_data' => $this->upload->data());         
             return $data;
         }
     }
