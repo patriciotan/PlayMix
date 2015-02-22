@@ -45,7 +45,14 @@
                 });
            },
            success: function(data){
-               alert('E-mail sent!');
+                // alert('E-mail sent!');
+                swal({   
+                  title: "Your new password was sent to email!",     
+                    allowOutsideClick: true,
+                    confirmButtonText: "Got that!",
+                    timer: 5000,
+                  type: "success" 
+                });
                 $("#colb").val("Sent!");
                 $("#colb").animate({opacity: 1.0}, 150);
                 $("#colb").click(function(e){
@@ -53,6 +60,14 @@
                 });
            },
            error: function(data) { // if error occured
+                // alert('E-mail not sent!');
+                swal({   
+                  title: "Email not sent, please try again!",     
+                    allowOutsideClick: true,
+                    confirmButtonText: "Got that!",
+                    timer: 5000,
+                  type: "error" 
+                });
                 $("#colb").animate({opacity: 1.0}, 150);
                 $("#colb").val("Error occured.please try again");
                 $("#colb").click(function(e){

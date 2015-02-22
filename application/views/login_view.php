@@ -39,9 +39,5 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		$('#loginFb').click(function(){
-			alert('This functionality will be coming soon!');
-		});
-
 	});
 </script>

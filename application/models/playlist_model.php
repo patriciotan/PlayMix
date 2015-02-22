@@ -96,12 +96,10 @@ class playlist_model extends CI_Model {
     public function get_playlists()
     {
         $user_id= $this->session->userdata('user_id');
-        $this->db->select('*');
-        $this->db->from('playlist');
         $this->db->where('user_id',$user_id);
-        $query = $this->db->get();
+        $query = $this->db->get('playlist');
       
-            return $query;
+        return $query;
      
     }
     public function row_delete($id)

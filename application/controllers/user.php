@@ -27,28 +27,28 @@ class User extends CI_Controller{
     {
         $email=$this->input->post('user_email');
         $password=md5($this->input->post('user_password'));
-        if($this->log_validation())
-        {
-            $this->index();  
-        }
-        else
-        {
-            $result=$this->user_model->login($email,$password);
-        }
+        $this->log_validation();
+    }
+    public function login_success()
+    {
+        $email=$this->input->post('user_email');
+        $password=md5($this->input->post('user_password'));
+        $result = $this->user_model->login($email,$password);
         if($result === "banned")
         {
-            $this->index();
-            $this->load->view("banned_login_script");
+            $this->logout();
+            $this->load->view("script_banned_login");
         }
         else
         {
-            if ($this->session->userdata('logged_in')===FALSE) 
+            if ($this->session->userdata('logged_in')===false) 
             { 
-                $this->index();        
+                $this->index();     
             } 
             else 
             {
                 $this->feed();
+                $this->load->view("script_logged_in");   
             }
         }
     }
@@ -59,14 +59,14 @@ class User extends CI_Controller{
         $this->form_validation->set_rules('user_email', 'Email address', 'trim|required|valid_email|callback_validate_emailpass');
         $this->form_validation->set_rules('user_password', 'Password', 'trim|required');
       
-        if ($this->form_validation->run() === FALSE) {
-            return false;
+        if ($this->form_validation->run() == FALSE) {
+            $this->index();
         } else {
-            return true;
+            $this->login_success();
         }
     }
     public function validate_emailpass() {
-        if($this->user_model->validate_emailpass($this->input->post('user_email'),$this->input->post('user_password'))) {
+        if($this->user_model->validate_emailpass($this->input->post('user_email'),md5($this->input->post('user_password')))) {
             return true;
         }
         else {
@@ -94,7 +94,7 @@ class User extends CI_Controller{
         } else {
             $this->user_model->add_user();
             $this->index();
-            $this->load->view('registered_script');
+            $this->load->view('script_registered');
         }
     }
     public function check_username() {
@@ -102,7 +102,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('check_username','This user name already exists!');
+            $this->form_validation->set_message('check_username','This user name is already taken!');
             return false;
         }
     } 
@@ -111,7 +111,7 @@ class User extends CI_Controller{
             return true;
         }
         else {
-            $this->form_validation->set_message('check_email','This email address already exists!');
+            $this->form_validation->set_message('check_email','This email address is already taken!');
             return false;
         }
     } 
@@ -178,10 +178,13 @@ class User extends CI_Controller{
                 {
                     $this->user_model->change_password($email,$newpass);
                     $this->index();
-                    $this->load->view('sent_email_script');
+                    $this->load->view('script_sent_email');
                 }
-                
-                $this->forgot();
+                else
+                {
+                	$this->forgot();
+                	$this->load->view('script_failed_email');
+                }
             }
 
     }
@@ -302,7 +305,13 @@ class User extends CI_Controller{
     {
         $this->user_model->ban_list();
         $this->admin();
-        $this->load->view('banned_script');
+        $this->load->view('script_banned');
+    }
+    public function delete()
+    {
+        $this->user_model->delete_list();
+        $this->admin();
+        $this->load->view('script_deleted');
     }
     public function add2playlist()
     {
@@ -323,11 +332,12 @@ class User extends CI_Controller{
                 
         $this->playlist_model->add2playlist($data);
         $playlist_name=$this->input->post('playlist_name');
-        echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
+        // echo "<script type='text/javascript'>alert('Song has been successfully added to $playlist_name'.);</script>";
         if($added_from === "feed")       
-            redirect('/user/feed', 'refresh');
+        	$this->feed();
         else
-            redirect('/user/profile', 'refresh');
+        	$this->profile();
+        $this->load->view('script_banned');
     }
 
     public function unban()
@@ -341,7 +351,7 @@ class User extends CI_Controller{
             }
         }
         $this->admin();
-        $this->load->view('unbanned_script');
+        $this->load->view('script_unbanned');
     }
     public function ban_reset()
     {
@@ -413,21 +423,21 @@ class User extends CI_Controller{
                     $new_user_password = md5($this->input->post('new_user_password'));
                     if($this->user_model->check_password($uid, $user_password)){
                         $this->user_model->change_password2($uid, $new_user_password);
-                        echo "<script type='text/javascript'>alert('Changes are saved.');</script>";
+                        $this->load->view('script_account_edited');
                     }
-                    else{
-                    echo "<script type='text/javascript'>alert('Error. Changes are not saved. Please try again.');</script>";    
+                    else{ 
+                        $this->load->view('script_account_not_edited');  
                     }
                 }
             }       
-            redirect('/user/profile', 'refresh'); 
-            
+            $this->profile();
+            $this->load->view('script_account_edited');
 
         }
         else
         {
-            redirect('/user/profile', 'refresh');  
-            echo "<script type='text/javascript'>alert('Error. Changes are not saved. Please try again.');</script>";  
+        	$this->profile();
+        	$this->load->view('script_account_not_edited');  
         }        
 
     }
@@ -602,8 +612,8 @@ class User extends CI_Controller{
           
             $this->load->model('audio_model');
             $this->audio_model->add_audio($data); 
-            echo "<script type='text/javascript'>alert('Song is successfully uploaded.');</script>";
-            redirect('/user/feed', 'refresh');     
+            $this->upload();
+            $this->load->view('script_uploaded');
         }
     }  
 
@@ -634,7 +644,8 @@ class User extends CI_Controller{
 
         $this->user_model->update_personal_info($id, $fname, $lname, $city, $country, $fb, $google, $twitter, $bio, $picpath);
 
-        redirect('/user/profile#uploaded', 'refresh');
+        $this->profile();
+        $this->load->view('script_account_edited');
 
     }
 
@@ -671,20 +682,20 @@ class User extends CI_Controller{
     {
         $this->playlist_model->rename_playlist();
         $this->profile();
-        $this->load->view('playlistrename_script');
+        $this->load->view('script_playlist_renamed');
     }
     public function add_playlist()
     {
         $this->playlist_model->add_playlist();
         $this->profile();
-        $this->load->view('playlistadd_script');
+        $this->load->view('script_playlist_added');
     }
     public function delete_playlist()
     {
         $id=$this->input->post('delete');
         $this->playlist_model->row_delete($id);
         $this->profile();
-        $this->load->view('playlistdelete_script');
+        $this->load->view('script_playlist_deleted');
     }
     public function delfrom_playlist()
     {
@@ -692,7 +703,7 @@ class User extends CI_Controller{
         $aId=$this->input->post('aId');
         $this->playlist_model->song_delete($pId,$aId);
         $this->profile();
-        $this->load->view('playlistsongdelete_script');
+        $this->load->view('script_playlist_song_deleted');
     }
     public function playlist()
     {
@@ -820,12 +831,12 @@ class User extends CI_Controller{
                     $getid = $this->user_model->get_user_id($email);
                     $uid = $getid['user_id'];
                     $this->user_model->add_notification($uid);
-
+                	$this->load->view('script_sent_email');
                     return true;
                 }          
                 else
                 {
-                    echo "<script type='text/javascript'>alert('Woops! E-mail failed to send. Please try again!');</script>";
+                	$this->load->view('script_failed_email');
                     return false;
                 }
             

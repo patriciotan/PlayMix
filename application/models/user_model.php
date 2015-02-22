@@ -342,9 +342,8 @@ public function add_user()
 
     public function user_account_update($user_id, $user_username, $user_email)
     {
-        $this->load->database();      
-
-        $query = $this->db->query("SELECT `user_username`,`user_email` FROM `user` WHERE `user_id`=$user_id");
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('user');
         foreach($query->result() as $row){
             $cur_username = $row->user_username;
             $cur_user_email = $row->user_email;
