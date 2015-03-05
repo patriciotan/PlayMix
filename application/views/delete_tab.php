@@ -4,7 +4,7 @@
 	}
 </style>
 
-<div class="span8" style="margin-left: 95px;">
+<div class="span8" style="margin-left: 50px;">
 	<div class="row">
 
 	<?php echo form_open("user/delete"); ?>
@@ -46,7 +46,7 @@
 					</select>
 				<!-- </table> -->
 			</div>
-			<div class="btn-group">
+			<div class="btn-group" style="margin-top:10px;">
 				<button type="submit" class="btn" style="width:135px;">Add</button>
 			</div>
 		</div>

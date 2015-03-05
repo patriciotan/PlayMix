@@ -3,12 +3,12 @@
     <div class="centered span12" style="top:100px; left:45px;">
       <span id="open_tab" style="display:none"><?=$tab?></span>
       <div class="tabbable tabs-left" id="adminTab">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" style="margin-right:-21px">
           <li><a href="#ban" data-toggle="tab" id="banTab">Ban Users</a></li>
           <li><a href="#banned" data-toggle="tab" id="bannedTab">Banned Users</a></li>
           <li><a href="#delete" data-toggle="tab" id="deleteTab">Delete Songs</a></li>
         </ul>
-        <div class="tab-content active box_container span9">
+        <div class="tab-content box_container span9" style="overflow:hidden">
           <div class="tab-pane active" id="ban">
             <?php echo $ban; ?>
           </div>

@@ -42,11 +42,23 @@
     </tbody>
   </table>
 
+<div id="deleteOverlay" class="notifpopup">
+    <div id="confirmBox">     
+      <h1 style="font-color:white; text-shadow:0 0"><img src="<?php echo base_url();?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>&nbsp;Delete Playlist</h1>
+         <label>
+            <p style="margin-left:30px;margin-top:15px; margin-bottom:5px"> Are you sure you want to delete this song from playlist?</p>         
+          </label>        
+        <div id="confirmButtons">
+            <button id="confirmdel" class="btn btn_red" style="width:130px">Delete</button>
+            <button id="canceldel" class="btn" style="width:130px">Cancel</button>
+        </div>      
+    </div>
+</div>
         <?php echo form_open("user/delfrom_playlist"); ?>
         <form>
           <input type="hidden" id="pId" name="pId" value="<?php echo $playlist_id; ?>"/>
           <input type="hidden" id="aId" name="aId" value=""/>
-          <input id="remSong" type="submit" onclick="return confirm('Are you sure you want to remove this song from the playlist?');" style="display:none">
+          <input id="remSong" type="submit" style="display:none">
         </form>
         <?php echo form_close(); ?>
 
@@ -57,6 +69,19 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
+
+    $("#deleteOverlay").hide();
+
+   $("#canceldel").click(function(){
+    $("#deleteOverlay").fadeOut("fast");
+    $("#deleteOverlay").hide();
+   });
+
+   $("#confirmdel").click(function(){
+    $("#remSong").click();
+   });    
+
+
     $('#mytable').DataTable({
       "scrollCollapse": true,
       "paging":         false,
@@ -76,7 +101,8 @@
     var aId = node.parentNode.parentNode.cells[4].textContent;
     $("#aId").attr("value",aId);
     //alert("Value: "+$("#uid").val());
-    $("#remSong").click();
+    $("#deleteOverlay").fadeIn("fast");
+    $("#deleteOverlay").show();
   }
 
 </script>

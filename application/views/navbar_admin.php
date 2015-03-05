@@ -11,7 +11,7 @@
             <div style="padding-left:50px;">
               <a class="brand" href="<?php echo base_url('index.php/user/feed/navbar_admin'); ?>"><img src="<?php echo base_url(); ?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/><img src="<?php echo base_url(); ?>assets/playmix_logo_text.png" style="float:left;margin-top:-6px; margin-left:3px; z-index:5; height:30px;" alt="logo"/></a>
             </div>
-            <div style="height: 0px" class="nav-collapse collapse">
+            <div style="height: 0px">
               <ul class="nav">
                 <li><a href="<?php echo base_url('index.php/user/profile'); ?>">Profile</a></li>
                 <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>

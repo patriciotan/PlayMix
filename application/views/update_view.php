@@ -19,8 +19,8 @@
               <input type="hidden" name="aid" value="<?=$aid?>">
               <input type="hidden" name="atitle" value="<?=$atitle?>">
 
-              <input type="file" id="audio_photo" name="audio_photo" accept="image/jpeg, image/png" id="audio_photo" style="display:inline; position:absolute;margin-top:10px; margin-left:47px;"  required/>    
-              <label class="upload-img-button" for="audio_photo" style="position:absolute;width:90px">                  
+              <input type="file" id="audio_photo" name="audio_photo" accept="image/jpeg, image/png" id="audio_photo" style="display:inline; position:absolute;margin-top:10px; margin-left:25px;"  required/>    
+              <label class="upload-img-button" for="audio_photo" style="position:absolute;z-index:20">                  
               Select photo
               </label>                   
 
