@@ -4,7 +4,7 @@
 	}
 </style>
 
-<div class="span8" style="margin-left: 95px; overflow:hidden">
+<div class="span8" style="margin-left: 50px; overflow:hidden">
 	<div class="row">
 
 	<?php echo form_open("user/ban"); ?>

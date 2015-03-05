@@ -495,26 +495,32 @@ class User extends CI_Controller{
 
     public function upload()
     {
-        $data['uid'] = $this->session->userdata('user_id');
-        $data['title']='Upload';
-        $data['audio_title']= '';
-        $data['audio_file']='';
-        $data['audio_genre']=''; 
-        $data['notif']  = $this->user_model->get_notification_count($data['uid']);       
-
-        $this->load->view('header_view_user',$data);
-
-        if($this->session->userdata('user_type')==='Admin')
+        if (($this->session->userdata('logged_in')===FALSE)) 
         {
-            $this->load->view('navbar_admin',$data);
+            $this->index();
         }
         else
         {
-            $this->load->view('navbar_user',$data);
+            $data['uid'] = $this->session->userdata('user_id');
+            $data['title']='Upload';
+            $data['audio_title']= '';
+            $data['audio_file']='';
+            $data['audio_genre']=''; 
+            $data['notif']  = $this->user_model->get_notification_count($data['uid']);       
+
+            $this->load->view('header_view_user',$data);
+
+            if($this->session->userdata('user_type')==='Admin')
+            {
+                $this->load->view('navbar_admin',$data);
+            }
+            else
+            {
+                $this->load->view('navbar_user',$data);
+            }
+
+            $this->load->view('upload_view');
         }
-
-        $this->load->view('upload_view');
-
     }
 
     public function addAudio()

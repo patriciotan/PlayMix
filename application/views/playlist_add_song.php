@@ -4,7 +4,8 @@
       <h1 style="text-shadow:0 0; color:white; margin-left:20px"><img src="<?php echo base_url(); ?>assets/playmix_logo_icon.png" style="float:left;margin-top:-5px;z-index:5; height:30px;" alt="logo"/>Add to playlist</h1>
       <h3 style="margin-left:90px; margin-top:20px">Choose from your playlists:</h3></td>
         
-
+          <?php echo form_open("user/add2playlist"); ?>  
+          <form>
         <div class="centered" style="margin-top:10px">
           <select id="chplaylist" name="playlists" style="width:300px; height:230px; position:relative; margin-left:50px;" size="5" required>
           <?php foreach($rec1->result() as $row): ?>            
@@ -14,8 +15,7 @@
         </div>
 
         <div class="centered" style="margin-bottom:40px">
-          <?php echo form_open("user/add2playlist"); ?>  
-          <form>
+
             <input type="hidden" id="added_from" name="added_from" value="">
             <input type="hidden" id="audio_id" name="audio_id" value="">
             <input type="hidden" id="cplaylist_id" name="playlist_id" value="">

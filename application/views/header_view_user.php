@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" /> 
     <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css' /> -->
     <link href="<?php echo base_url(); ?>assets/themes/default/hero_files/bootstrap.css" rel="stylesheet"/>
-    <link href="<?php echo base_url(); ?>assets/themes/default/hero_files/bootstrap-responsive.css" rel="stylesheet"/>
+<!--     <link href="<?php echo base_url(); ?>assets/themes/default/hero_files/bootstrap-responsive.css" rel="stylesheet"/> -->
     <link href="<?php echo base_url(); ?>assets/themes/default/css/general.css" rel="stylesheet"/>
     <link href="<?php echo base_url(); ?>assets/themes/default/css/custom.css" rel="stylesheet"/>
     <link href="<?php echo base_url(); ?>assets/css/jquery.confirm.css"  rel="stylesheet"/>   
