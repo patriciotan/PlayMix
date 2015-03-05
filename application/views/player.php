@@ -19,7 +19,7 @@
     			<div id="left1" class="pull-left">
 	    			<h2 id="title" style="display:inline"></h2>
 	    			<h1 id="songId" style="display:none"></h1>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h6 id="divider" style="display:inline"></h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><h6 id="divider" style="display:inline"></h6></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h3 id="artist" style="display:inline"></h3>
 				</div>
 				<div id="right1" class="pull-right" style="margin-top:2px;">
@@ -120,8 +120,8 @@
 		title.innerHTML = node.parentNode.parentNode.cells[6].textContent;
 		artist.innerHTML = node.parentNode.parentNode.cells[7].textContent;
 
-		var bullet="";
-		bullet += "&#9679;";
+		var bullet=" · ";
+		// bullet += "&#9679;";
 		divider.innerHTML = bullet;
 		songId.innerHTML = id;
 		audioSrc.src = fileSrc.concat(file);
@@ -168,8 +168,8 @@
 				title.innerHTML = songTitle;
 				artist.innerHTML = prevv.eq(7).text();
 
-				var bullet="";
-				bullet += "&#9679;";
+				var bullet=" · ";
+				// bullet += "&#9679;";
 				divider.innerHTML = bullet;
 				songId.innerHTML = id;
 				audioSrc.src = fileSrc.concat(file);
@@ -219,8 +219,8 @@
 		// alert(title.innerHTML);
 		artist.innerHTML = prevv.eq(7).text();
 
-		var bullet="";
-		bullet += "&#9679;";
+		var bullet=" · ";
+		// bullet += "&#9679;";
 		divider.innerHTML = bullet;
 		songId.innerHTML = id;
 		audioSrc.src = fileSrc.concat(file);
@@ -269,8 +269,8 @@
 					title.innerHTML = nextt.eq(6).text();
 					artist.innerHTML = nextt.eq(7).text();
 
-					var bullet="";
-					bullet += "&#9679;";
+					var bullet=" · ";
+					// bullet += "&#9679;";
 					divider.innerHTML = bullet;
 					songId.innerHTML = id;
 					audioSrc.src = fileSrc.concat(file);
@@ -288,8 +288,8 @@
 					title.innerHTML = nextt.eq(6).text();
 					artist.innerHTML = nextt.eq(7).text();
 
-					var bullet="";
-					bullet += "&#9679;";
+					var bullet=" · ";
+					// bullet += "&#9679;";
 					divider.innerHTML = bullet;
 					songId.innerHTML = id;
 					audioSrc.src = fileSrc.concat(file);
@@ -340,8 +340,8 @@
 		// alert(title.innerHTML);
 		artist.innerHTML = nextt.eq(7).text();
 
-		var bullet="";
-		bullet += "&#9679;";
+		var bullet=" · ";
+		// bullet += "&#9679;";
 		divider.innerHTML = bullet;
 		songId.innerHTML = id;
 		audioSrc.src = fileSrc.concat(file);
