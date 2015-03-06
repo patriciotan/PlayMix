@@ -107,6 +107,18 @@ overflow: hidden;
 max-width: 100%;
 }
 
+.audio-img-mask{
+display: inline-block;
+width: 85px;
+height: 90px;
+overflow: hidden;
+}
+
+.audio-img-mask img {
+width: 100%;
+height:100%;
+}
+
 .admin_container {border:1px solid #ccc; overflow-y: scroll; height: 290px;}
 .box_container {border:1px solid #ccc; height: 450px;}
 .feed_container {border:1px solid #ccc; height: 500px; margin-left:180px; margin-top: 100px;}

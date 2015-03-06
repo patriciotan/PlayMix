@@ -11,7 +11,7 @@
 	<form>
 		<div class="span3"><br />
 			<h3>Deletion List</h3><br />
-			<div class="admin_container">
+			<div class="admin_container" style="width:268px">
 				<table class="feed_table" style="width:250px;">
 					<?php if(!is_null($deletelist)) { if(is_array($deletelist->result())) { foreach($deletelist->result() as $row): ?>
 						<tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
@@ -20,7 +20,7 @@
 					<?php endforeach; } } ?>
 				</table>
 			</div><br/>
-			<div class="btn-group">
+			<div class="btn-group" style="margin-top:-10px">
 				<button type="submit" class="btn" style="width:135px;">Delete</button>
 	<?php echo form_close();?>
 	<?php echo form_open("user/delete_reset"); ?>

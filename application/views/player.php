@@ -6,12 +6,14 @@
 	</table>
 </div>
 
-<div class="navbar navbar-fixed-bottom" style="width:740px; left:50%; margin-left:-375px;">
+<div class="navbar navbar-fixed-bottom" style="width:745px; left:50%; margin-left:-375px;">
   <div class="navbar-inner" style="background-color:#363636; height:100px;">
   	<div class="row-fluid">
 
 	  	<div id="imageDiv" class="span2" style="padding-left:5px; padding-top:5px;">
-	  		<img id="audioPic" src="<?php echo base_url(); ?>assets/playmix_logo.png" height="90px;">
+	  		<div id="img_container" class="audio-img-mask" style="float:left;">
+	  			<img id="audioPic" src="<?php echo base_url(); ?>assets/playmix_logo.png">
+	  		</div>
 	  	</div>
 	    
 	    <div id="controlsDiv" class="span10">

@@ -11,7 +11,7 @@
           <div style="padding-left:50px;">
           <a class="brand" href="<?php echo base_url('index.php/user/feed'); ?>">PlayMix</a>
           </div>
-          <div style="height: 0px;" class="nav-collapse collapse">
+          <div style="height: 0px;">
             <ul class="nav">
               <li><a href="#">Profile</a></li>
               <li><a href="<?php echo base_url('index.php/user/upload')?>">Upload</a></li>
