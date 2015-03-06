@@ -304,15 +304,17 @@ class User extends CI_Controller{
     }
     public function ban()
     {
-        $this->user_model->ban_list();
+        $bool = $this->user_model->ban_list();
         $this->admin('ban');
-        $this->load->view('script_banned');
+        if($bool)
+            $this->load->view('script_banned');
     }
     public function delete()
     {
-        $this->user_model->delete_list();
+        $bool = $this->user_model->delete_list();
         $this->admin('delete');
-        $this->load->view('script_deleted');
+        if($bool)
+            $this->load->view('script_deleted');
     }
     public function add2playlist()
     {

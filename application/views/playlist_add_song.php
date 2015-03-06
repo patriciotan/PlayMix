@@ -8,7 +8,10 @@
           <form>
         <div class="centered" style="margin-top:10px">
           <select id="chplaylist" name="playlists" style="width:300px; height:230px; position:relative; margin-left:50px;" size="5" required>
-          <?php foreach($rec1->result() as $row): ?>            
+          <?php 
+            if(!empty($rec1))
+              foreach($rec1->result() as $row): 
+          ?>
               <option value="<?=$row->playlist_id;?>" class="chplaylist_options"><?=$row->playlist_name;?></option>
           <?php endforeach;?>
           </select>

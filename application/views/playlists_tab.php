@@ -11,7 +11,10 @@
          <th width="25px"></th>     
       </thead>
       <tbody>
-      <?php foreach ($playlists->result() as $row): ?>
+      <?php 
+        if(!empty($playlists))
+          foreach ($playlists->result() as $row): 
+      ?>
          <tr class="<?php echo alternator('background:#cfc', 'background:#ffc');?>">           
             <td style="display:none"><?=$row->playlist_id;?></td>
             <td align="left"><a href="#" onclick="viewPlaylist(this)"><?= $row->playlist_name; ?></a></td>           
