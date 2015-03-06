@@ -13,10 +13,10 @@
       <?php echo form_open_multipart('user/addAudio');?> <!--at this point you were gonna grab the data and put them back in case of error uploading-->
       <form class="dropzone dz-clickable">      
           <label for="audio_title">Title</label>
-          <input type="text" id="audio_title" style="height:12px"; name="audio_title" maxlength="256" value="<?php echo set_value('audio_title'); ?>" required/>
+          <input type="text" id="audio_title" name="audio_title" maxlength="256" value="<?php if($audio_title!=''){echo set_value('audio_title');} else; ?>" required/>
           
           <label for="audio_genre">Genre</label>
-          <input type="text" style="margin-bottom:5px;" list="audio_genre_list" name="audio_genre" id="audio_genre" required/>
+          <input type="text" style="margin-bottom:5px;" list="audio_genre_list" name="audio_genre" id="audio_genre" value="<?php if($audio_genre!=''){echo set_value('audio_genre');} else; ?>" required/>
           <datalist id="audio_genre_list">
             <option selected="selected" id="audio_genre" name="audio_genre"></option>
             <option>Alternative</option>

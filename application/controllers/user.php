@@ -492,7 +492,6 @@ class User extends CI_Controller{
 
     $this->load->view('upload_view', $data); 
     $this->load->view('upload_error_view');
-    $this->load->view('player');
     }
 
     public function upload()
@@ -505,7 +504,7 @@ class User extends CI_Controller{
         {
             $data['uid'] = $this->session->userdata('user_id');
             $data['title']='Upload';
-            $data['audio_title']= '';
+            $data['audio_title']='';
             $data['audio_file']='';
             $data['audio_genre']=''; 
             $data['notif']  = $this->user_model->get_notification_count($data['uid']);       
@@ -521,7 +520,7 @@ class User extends CI_Controller{
                 $this->load->view('navbar_user',$data);
             }
 
-            $this->load->view('upload_view');
+            $this->load->view('upload_view',$data);
         }
     }
 
@@ -552,21 +551,23 @@ class User extends CI_Controller{
 
             $data = $this->do_uploadaudio($audio_title, $audio_genre);
             $filename = $data['upload_data']['file_name'];
-            echo "<script type='text/javascript'>alert($filename);</script>";
-           
-            $data=array(
-                'user_id'           =>$this->session->userdata('user_id'),
-                'audio_title'       =>$audio_title,
-                'audio_genre'       =>$audio_genre,
-                'audio_private'     =>$private,
-                'audio_date_added'  =>date("Y/m/d"),      
-                'audio_file'        =>$filename,
-            );
+            
+            if($filename != ''){
+
+                $data=array(
+                    'user_id'           =>$this->session->userdata('user_id'),
+                    'audio_title'       =>$audio_title,
+                    'audio_genre'       =>$audio_genre,
+                    'audio_private'     =>$private,
+                    'audio_date_added'  =>date("Y/m/d"),      
+                    'audio_file'        =>$filename,
+                );
           
-            $this->load->model('audio_model');
-            $this->audio_model->add_audio($data); 
-            $this->upload();
-            $this->load->view('script_uploaded');
+                $this->load->model('audio_model');
+                $this->audio_model->add_audio($data); 
+                $this->upload();
+                $this->load->view('script_uploaded');
+            }
         }
     }  
 
@@ -583,6 +584,7 @@ class User extends CI_Controller{
         {
             $error = array('error' => $this->upload->display_errors());
             $this->upload_error($audio_title, $audio_genre); 
+            $this->load->view('script_not_uploaded');
         }
         else
         {

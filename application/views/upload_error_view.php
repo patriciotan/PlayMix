@@ -1,1 +1,0 @@
-<h1 style="position: relative; width: 1000px;">An error occured while uploading the file.</h1>

@@ -20,11 +20,11 @@
 					<?php endforeach; } } ?>
 				</table>
 			</div><br/>
-			<div class="btn-group" style="margin-top:-10px">
-				<button type="submit" class="btn" style="width:135px;">Ban</button>
+			<div class="btn-group">
+				<button type="submit" class="btn" style="width:100px; margin-right:20px">Ban</button>
 	<?php echo form_close();?>
 	<?php echo form_open("user/ban_reset"); ?>
-				<button type="submit" class="btn" style="width:135px;">Reset</button>
+				<button type="submit" class="btn" style="width:100px;">Reset</button>
 			</div>
 		</div>
 	</form>
@@ -50,7 +50,7 @@
 				<!-- </table> -->
 			</div>
 			<div class="btn-group" style="margin-top:10px;">
-				<button type="submit" class="btn" style="width:135px;">Add</button>
+				<button type="submit" class="btn" style="width:100px;">Add</button>
 			</div>
 		</div>
 	</form>

@@ -24,7 +24,7 @@
 					<!-- </table> -->
 				</div>
 				<div class="btn-group">
-					<button type="submit" class="btn" style="width:135px;">Unban</button>
+					<button type="submit" class="btn" style="width:100px; margin-top:10px;">Unban</button>
 				</div>
 			</div>
 		</form>
