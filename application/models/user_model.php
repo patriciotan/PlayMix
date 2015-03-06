@@ -203,6 +203,10 @@ public function add_user()
                 $this->db->update("user", $data);
                 $this->ban_reset();
             }
+            return true;
+        }
+        else {
+            return false;
         }
     }
     public function delete_list()
@@ -218,6 +222,10 @@ public function add_user()
                 $this->db->update("audio", $data);
                 $this->delete_reset();
             }
+            return true;
+        }
+        else {
+            return false;
         }
     }
     public function ban_reset()

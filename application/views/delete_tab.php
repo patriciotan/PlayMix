@@ -37,7 +37,10 @@
 			<div>
 				<!-- <table class="feed_table" style="width:250px;"> -->
 					<select name="songs[]" style="width:270px; height:292px;" multiple required>
-					<?php foreach($songs->result() as $row): ?>
+					<?php 
+						if(!empty($songs))
+							foreach($songs->result() as $row): 
+					?>
 						<option value="<?=$row->audio_id;?>"><?=$row->audio_title;?></option>
 						<!-- <tr class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
 							<td><input name="songs[]" type="checkbox" value="<?=$row->audio_id;?>" /><?=$row->audio_title;?></td>

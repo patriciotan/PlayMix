@@ -26,7 +26,10 @@
       <th align="left" width="40px">PLAYS</th>
     </thead>
     <tbody id="feedBody">
-    <?php foreach($rec->result() as $row): ?>
+    <?php 
+		if(!empty($rec))
+    		foreach($rec->result() as $row): 
+	?>
       <tr id="<?=$row->audio_id;?>" class="<?php echo alternator('background:#cfc','background:#ffc'); ?>">
         <td style="display:none" value="<?=$row->audio_file;?>"><?=$row->audio_file;?></td>
         <td style="display:none"><?=$row->audio_photo;?></td>
