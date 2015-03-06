@@ -47,7 +47,7 @@
            success: function(data){
                 // alert('E-mail sent!');
                 swal({   
-                  title: "Your new password was sent to email!",     
+                  title: "Collaboration request sent to email!",     
                     allowOutsideClick: true,
                     confirmButtonText: "Got that!",
                     timer: 5000,
@@ -62,7 +62,7 @@
            error: function(data) { // if error occured
                 // alert('E-mail not sent!');
                 swal({   
-                  title: "Email not sent, please try again!",     
+                  title: "Request not sent, please try again!",     
                     allowOutsideClick: true,
                     confirmButtonText: "Got that!",
                     timer: 5000,

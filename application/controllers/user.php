@@ -427,20 +427,23 @@ class User extends CI_Controller{
                     $new_user_password = md5($this->input->post('new_user_password'));
                     if($this->user_model->check_password($uid, $user_password)){
                         $this->user_model->change_password2($uid, $new_user_password);
+                        $this->profile('account');
                         $this->load->view('script_account_edited');
                     }
                     else{ 
+                        $this->profile('account');
                         $this->load->view('script_account_not_edited');  
                     }
                 }
-            }       
-            $this->profile('account');
-            $this->load->view('script_account_edited');
-
+                else{
+                    $this->profile('account');
+                    $this->load->view('script_account_not_edited');                     
+                }
+            }      
         }
         else
         {
-        	$this->profile('account');
+            $this->profile('account');
         	$this->load->view('script_account_not_edited');  
         }        
 
@@ -788,7 +791,7 @@ class User extends CI_Controller{
             $data['title'] = $artistname.'\'s Profile' ;  
             $data['notif']  = $this->user_model->get_notification_count($my_id);
             $data['personal_info'] = $this->load->view('artist_personal_info_tab',$data,true);  
-            $data['uploaded'] = $this->load->view('uploaded_tab',$data,true);      
+            $data['uploaded'] = $this->load->view('artist_uploaded_tab',$data,true);      
             $this->load->view('header_view_user',$data);
             if($this->session->userdata('user_type')=='Admin')
                 {
@@ -868,13 +871,13 @@ class User extends CI_Controller{
                     $getid = $this->user_model->get_user_id($email);
                     $uid = $getid['user_id'];
                     $this->user_model->add_notification($uid);
-                	$this->load->view('script_sent_email');
-                    return true;
+                	// $this->load->view('script_sent_collab');
+                 //    return true;
                 }          
                 else
                 {
-                	$this->load->view('script_failed_email');
-                    return false;
+                	// $this->load->view('script_failed_email');
+                 //    return false;
                 }
             
 
